@@ -1,0 +1,23 @@
+.signup-container{
+    height: auto;
+    min-height: 500px;
+    overflow-y: auto;
+    overflow: hidden;
+    padding: 48px 40px 36px;
+    margin: 30px auto;
+    width: 60%;
+}
+
+.title{
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    margin: 0;
+    font-family: 'Google Sans',arial,sans-serif;
+}
+
+.sub-title{
+    font-size: 16px;
+    letter-spacing: .1px;
+    line-height: 1.5;
+}
