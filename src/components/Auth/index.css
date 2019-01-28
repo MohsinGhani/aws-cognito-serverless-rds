@@ -1,23 +1,77 @@
-.signup-container{
-    height: auto;
-    min-height: 500px;
+.signup-container {
+  height: auto;
+  min-height: 500px;
+  overflow-y: auto;
+  overflow: hidden;
+  padding: 48px 40px 36px;
+  margin: 30px auto;
+  width: 65%;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  margin: 0;
+  font-family: "Google Sans", arial, sans-serif;
+}
+
+.sub-title {
+  font-size: 16px;
+  letter-spacing: 0.1px;
+  line-height: 1.5;
+}
+
+.custom-input-label {
+  color: rgba(0, 0, 0, 0.54);
+  margin: 0;
+  font-size: 0.75rem;
+  text-align: left;
+  margin-top: 8px;
+  min-height: 1em;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1em;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.figcaption {
+  font-size: 16px;
+  font-weight: 300;
+  padding: 5px 20px;
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .signup-container {
     overflow-y: auto;
     overflow: hidden;
-    padding: 48px 40px 36px;
-    margin: 30px auto;
-    width: 60%;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+  }
 }
 
-.title{
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 32px;
-    margin: 0;
-    font-family: 'Google Sans',arial,sans-serif;
+@media (min-width: 768px) and (max-width: 1024px) {
+  .signup-container {
+    overflow-y: auto;
+    overflow: hidden;
+    padding: 10px;
+    margin: 10px auto;
+    width: 95%;
+  }
 }
 
-.sub-title{
-    font-size: 16px;
-    letter-spacing: .1px;
-    line-height: 1.5;
+@media only screen and (max-width: 600px) {
+  .signup-container {
+    height: 100vh;
+    overflow-y: auto;
+    overflow: hidden;
+    padding: 10px;
+    margin: 10px auto;
+    width: 100%;
+  }
 }
