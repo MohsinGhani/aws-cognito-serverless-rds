@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   p05: {
-    padding: "5px 5px"
+    padding: "5px"
   },
   button: {
     margin: theme.spacing.unit
@@ -26,13 +26,19 @@ class SignUp extends React.Component {
     super(props);
   }
 
+  goto = path => {
+    this.props.history.push(path);
+  };
+
   render() {
     let { classes } = this.props;
     return (
       <Card className="signup-container">
         <Grid container spacing={16}>
           <Grid item md={7} sm={12} xs={12}>
-            <h1 className={`title ${classes.p05}`}>Create your Productmania Account</h1>
+            <h1 className={`title ${classes.p05}`}>
+              Create your Productmania Account
+            </h1>
             <h3 className={`sub-title ${classes.p05}`}>
               Continue to Productmania
             </h3>
@@ -92,7 +98,11 @@ class SignUp extends React.Component {
             </Grid>
 
             <Grid container className={classes.btns_parent}>
-              <Button color="primary" className={classes.button}>
+              <Button
+                onClick={() => this.goto("/signin")}
+                color="primary"
+                className={classes.button}
+              >
                 Sign in instead
               </Button>
               <Button

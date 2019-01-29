@@ -8,6 +8,16 @@
   width: 65%;
 }
 
+.signip-container {
+  height: auto;
+  overflow-y: auto;
+  overflow: hidden;
+  padding: 48px 40px 36px;
+  margin: 30px auto;
+  width: 100%;
+  max-width: 450px;
+}
+
 .title {
   font-size: 24px;
   font-weight: 400;
@@ -73,5 +83,9 @@
     padding: 10px;
     margin: 10px auto;
     width: 100%;
+  }
+
+  .signip-container {
+    height: 100vh;
   }
 }
