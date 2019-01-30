@@ -24,11 +24,58 @@ const styles = theme => ({
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      error: {
+        firstname: null,
+        lastname: null,
+        email: null,
+        password: null,
+        confirmPassword: null,
+      },
+      isSignupButtonDisabled: true
+    }
   }
 
   goto = path => {
     this.props.history.push(path);
   };
+
+  handleInput = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.firstname !== this.state.firstname || prevState.lastname !== this.state.lastname || prevState.password !== this.state.password || prevState.confirmPassword !== this.state.confirmPassword) {
+      this.validateSignupForm()
+    }
+  }
+
+  validateSignupForm = () => {
+    let { firstname, lastname, password, confirmPassword, error } = this.state
+    if (firstname.length >= 3 && lastname.length >= 3 && confirmPassword.length >= 8 && password.length >= 8 && confirmPassword === password) {
+      error = { firstname: null, lastname: null, email: null, password: null, confirmPassword: null }
+      this.setState({ isSignupButtonDisabled: false, error })
+    }
+    else if (confirmPassword && password && confirmPassword !== password) {
+      error.confirmPassword = 'Confirm Password do not match'
+      this.setState({ isSignupButtonDisabled: true, error })
+    }
+    else if (confirmPassword.length < 8 && password.length < 8) {
+      error.password = "password does not meet the requirements"
+      this.setState({ isSignupButtonDisabled: true, error })
+    }
+    else {
+      error = { firstname: null, lastname: null, email: null, password: null, confirmPassword: null }
+      this.setState({ isSignupButtonDisabled: true, error })
+    }
+  }
 
   render() {
     let { classes } = this.props;
@@ -49,6 +96,7 @@ class SignUp extends React.Component {
                   variant={"outlined"}
                   id={"firstname"}
                   fullWidth={true}
+                  onChange={this.handleInput}
                 />
               </Grid>
               <Grid item md={6} sm={12} xs={12} className={classes.p05}>
@@ -57,6 +105,7 @@ class SignUp extends React.Component {
                   variant={"outlined"}
                   id={"lastname"}
                   fullWidth={true}
+                  onChange={this.handleInput}
                 />
               </Grid>
             </Grid>
@@ -67,6 +116,7 @@ class SignUp extends React.Component {
                   variant={"outlined"}
                   id={"email"}
                   fullWidth={true}
+                  onChange={this.handleInput}
                   helperText={"You can use letters, numbers & periods"}
                 />
               </Grid>
@@ -80,15 +130,21 @@ class SignUp extends React.Component {
                   id={"password"}
                   fullWidth={true}
                   type={"password"}
+                  onChange={this.handleInput}
+                  error={this.state.error.password}
+                  helperText={this.state.error.password}
                 />
               </Grid>
               <Grid item md={6} sm={12} xs={12} className={classes.p05}>
                 <InputFieldWithEndAdornment
-                  label={"Confirm"}
+                  label={"Confirm Password"}
                   variant={"outlined"}
-                  id={"confirm"}
+                  id={"confirmPassword"}
                   fullWidth={true}
                   type={"password"}
+                  onChange={this.handleInput}
+                  error={this.state.error.confirmPassword}
+                  helperText={this.state.error.confirmPassword}
                 />
               </Grid>
               <label className={`custom-input-label ${classes.p05}`}>
@@ -109,6 +165,7 @@ class SignUp extends React.Component {
                 variant="contained"
                 color="primary"
                 className={classes.button}
+                disabled={this.state.isSignupButtonDisabled}
               >
                 Next
               </Button>
