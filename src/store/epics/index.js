@@ -1,10 +1,11 @@
 import { combineEpics } from 'redux-observable';
-import movieEpic from './movieEpic'
+import authEpic from './authEpic'
 
 const rootEpic = combineEpics(
-    movieEpic.getMovies,
-    movieEpic.getFeatureMovies,
-    movieEpic.searchMovies,
+    authEpic.signIn,
+    authEpic.signUp,
+    authEpic.confirmSignUp,
+    authEpic.resendSignUp,
 );
 
 export default rootEpic;

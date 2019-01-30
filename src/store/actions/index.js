@@ -1,5 +1,5 @@
-import { movieAction } from './movieAction'
+import { authAction } from './authAction'
 
 export {
-    movieAction
+    authAction
 }
