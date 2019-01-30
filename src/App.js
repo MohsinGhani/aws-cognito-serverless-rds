@@ -3,9 +3,14 @@ import './App.css';
 import SignUp from './components/Auth/SignUp'
 import SignIn from './components/Auth/SignIn'
 import ForgotPassword from './components/Auth/ForgotPassword'
+import ConfirmSignUp from './components/Auth/ConfirmSignUp'
 import { Provider } from 'react-redux';
 import store from './store/store'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Amplify from 'aws-amplify';
+import awsConfig from './config/awsConfig'
+
+Amplify.configure(awsConfig)
 
 class App extends Component {
   render() {
@@ -17,6 +22,7 @@ class App extends Component {
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/forgot-password" component={ForgotPassword} />
+            <Route exact path="/confirm-signup" component={ConfirmSignUp} />
           </div>
         </Router>
       </Provider>
