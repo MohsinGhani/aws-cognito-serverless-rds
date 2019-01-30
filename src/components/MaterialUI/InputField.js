@@ -16,13 +16,15 @@ class InputField extends React.Component {
       onChange,
       placeholder,
       helperText,
-      type
+      type,
+      name
     } = this.props;
     return (
       <TextField
         label={label}
         variant={variant}
         id={id}
+        name={name}
         error={error}
         disabled={disabled}
         fullWidth={fullWidth}
