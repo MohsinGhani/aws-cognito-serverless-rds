@@ -6,6 +6,7 @@ import {
 } from './../constants'
 
 const initialState = {
+    signupUser: null,
     user: null,
     authLoader: false,
     authError: null,
@@ -46,6 +47,7 @@ export default function authReducer(state = initialState, action) {
             return {
                 ...state,
                 user: null,
+                signupUser: null,
                 authLoader: true,
                 authError: null
             }
@@ -53,7 +55,7 @@ export default function authReducer(state = initialState, action) {
         case SIGNUP_SUCCESS:
             return {
                 ...state,
-                user: action.payload,
+                signupUser: action.payload,
                 authLoader: false,
                 authError: null
             }
@@ -61,7 +63,7 @@ export default function authReducer(state = initialState, action) {
         case SIGNUP_FAILURE:
             return {
                 ...state,
-                user: null,
+                signupUser: null,
                 authLoader: false,
                 authError: action.error
             }

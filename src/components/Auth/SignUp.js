@@ -1,11 +1,14 @@
-import React from "react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
+import { withRouter } from 'react-router-dom';
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import { InputField, InputFieldWithEndAdornment } from "./../MaterialUI";
 import "./index.css";
 import Hidden from "@material-ui/core/Hidden";
 import Button from "@material-ui/core/Button";
+import { authAction } from './../../store/actions'
 
 const styles = theme => ({
   p05: {
@@ -21,7 +24,7 @@ const styles = theme => ({
   }
 });
 
-class SignUp extends React.Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,11 +58,15 @@ class SignUp extends React.Component {
     if (prevState.firstname !== this.state.firstname || prevState.lastname !== this.state.lastname || prevState.password !== this.state.password || prevState.confirmPassword !== this.state.confirmPassword) {
       this.validateSignupForm()
     }
+
+    if (prevProps.authLoader && !this.props.authLoader && !this.props.authError && this.props.signupUser) {
+      this.props.history.push('/confirm-signup')
+    }
   }
 
   validateSignupForm = () => {
-    let { firstname, lastname, password, confirmPassword, error } = this.state
-    if (firstname.length >= 3 && lastname.length >= 3 && confirmPassword.length >= 8 && password.length >= 8 && confirmPassword === password) {
+    let { firstname, lastname, email, password, confirmPassword, error } = this.state
+    if (firstname.length >= 3 && lastname.length >= 3 && confirmPassword.length >= 8 && password.length >= 8 && confirmPassword === password && email) {
       error = { firstname: null, lastname: null, email: null, password: null, confirmPassword: null }
       this.setState({ isSignupButtonDisabled: false, error })
     }
@@ -77,8 +84,13 @@ class SignUp extends React.Component {
     }
   }
 
+  handleSignUp = () => {
+    let { firstname, lastname, email, password } = this.state
+    this.props.signUpAction({ firstname, lastname, email, password })
+  }
+
   render() {
-    let { classes } = this.props;
+    let { classes, authLoader, authError } = this.props;
     return (
       <Card className="signup-container">
         <Grid container spacing={16}>
@@ -89,6 +101,9 @@ class SignUp extends React.Component {
             <h3 className={`sub-title ${classes.p05}`}>
               Continue to Productmania
             </h3>
+            {
+              authError ? <p>{authError}</p> : ''
+            }
             <Grid container>
               <Grid item md={6} sm={12} xs={12} className={classes.p05}>
                 <InputField
@@ -165,7 +180,8 @@ class SignUp extends React.Component {
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                disabled={this.state.isSignupButtonDisabled}
+                disabled={this.state.isSignupButtonDisabled || authLoader}
+                onClick={this.handleSignUp}
               >
                 Next
               </Button>
@@ -194,4 +210,19 @@ class SignUp extends React.Component {
   }
 }
 
-export default withStyles(styles)(SignUp);
+const mapStateToProps = (state) => {
+  const { authReducer: { signupUser, authLoader, authError } } = state;
+  return {
+    signupUser, authLoader, authError
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signUpAction: (payload) => dispatch(authAction.signUp(payload))
+  };
+};
+
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(withRouter(withStyles(styles)(SignUp)));
