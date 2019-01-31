@@ -52,6 +52,7 @@ class SignIn extends React.Component {
     let username = email
     try {
       const user = await Auth.signIn(username, password);
+      alert('user successfully logged in')
       if (user.challengeName === 'SMS_MFA' ||
         user.challengeName === 'SOFTWARE_TOKEN_MFA') {
         // // You need to get the code from the UI inputs
@@ -88,6 +89,8 @@ class SignIn extends React.Component {
         console.log(user)
       }
     } catch (err) {
+      console.log(err);
+      alert(err.message)
       if (err.code === 'UserNotConfirmedException') {
         // The error happens if the user didn't finish the confirmation step when signing up
         // In this case you need to resend the code and confirm the user
@@ -103,12 +106,12 @@ class SignIn extends React.Component {
 
     // For advanced usage
     // You can pass an object which has the username, password and validationData which is sent to a PreAuthentication Lambda trigger
-    Auth.signIn({
-      username, // Required, the username
-      password, // Optional, the password
-      // validationData, // Optional, a random key-value pair map which can contain any key and will be passed to your PreAuthentication Lambda trigger as-is. It can be used to implement additional validations around authentication
-    }).then(user => console.log(user))
-      .catch(err => console.log(err));
+    // Auth.signIn({
+    //   username, // Required, the username
+    //   password, // Optional, the password
+    //   // validationData, // Optional, a random key-value pair map which can contain any key and will be passed to your PreAuthentication Lambda trigger as-is. It can be used to implement additional validations around authentication
+    // }).then(user => { console.log(user) })
+    //   .catch(err => { console.log(err) });
   }
 
   render() {
