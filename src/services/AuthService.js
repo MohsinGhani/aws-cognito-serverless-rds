@@ -14,20 +14,14 @@ export const signup = (user) => {
 
 
 export const confirm = (user, confirmationCode) => {
-
     return new Promise(async (resolve, reject) => {
-        try {
-            const confirmedUser = await Auth.confirmSignUp(user.user_id, confirmationCode);
-            resolve(confirmedUser);
-        } catch (error) {
-            // ALERT here we can check which error we are receiving
-            reject(error.message)
-        }
+        Auth.confirmSignUp(user.user_id, confirmationCode)
+            .then(confirmedUser => resolve(confirmedUser))
+            .catch(error => reject(error.message));
     });
 }
 
 export const login = (email, password) => {
-
     return new Promise(async (resolve, reject) => {
         try {
             const user = await Auth.signIn(email, password);
@@ -36,7 +30,6 @@ export const login = (email, password) => {
             // ALERT here we can check which error we are receiving
             reject(e.message)
         }
-
     });
 }
 

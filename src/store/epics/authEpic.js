@@ -36,24 +36,29 @@ export default class authEpic {
                         authAction.signUpFailure(res.error)
                     )
                 } else {
-                    return Observable.of(authAction.signUpSuccess({ payload: res }))
+                    return Observable.of(authAction.signUpSuccess(res))
                 }
             });
 
     static confirmSignUp = (action$) =>
         action$.ofType(CONFIRM_SIGNUP)
             .switchMap(({ payload }) => {
-                return HttpService.get(``)
-                    .switchMap((response) => {
-                        if (response.status === 200) {
+                let { user, code } = payload
+                return Observable.fromPromise(confirm(user, code))
+                    .catch((err) => {
+                        return Observable.of(authAction.confirmSignUpFailure(err.message))
+                    })
+                    .switchMap((res) => {
+                        if (res.type && res.type === 'CONFIRM_SIGNUP_FAILURE') {
+                            return Observable.of(authAction.confirmSignUpFailure(res.payload))
+                        } else {
                             return Observable.of(
-                                authAction.confirmSignUpSuccess(response.response.results)
+                                authAction.confirmSignUpSuccess(res),
+                                // authAction.signIn(res.payload)
                             )
                         }
-                    }).catch((err) => {
-                        return Observable.of(authAction.confirmSignUpFailure(`Error in Getting Movies!`))
                     })
-            })
+            });
 
     static resendSignUp = (action$) =>
         action$.ofType(RESEND_SIGNUP)

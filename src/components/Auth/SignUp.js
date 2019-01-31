@@ -28,11 +28,11 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: '',
-      lastname: '',
+      firstname: 'User',
+      lastname: 'User',
       email: '',
-      password: '',
-      confirmPassword: '',
+      password: 'Mughees605!',
+      confirmPassword: 'Mughees605!',
       error: {
         firstname: null,
         lastname: null,
@@ -111,6 +111,7 @@ class SignUp extends Component {
                   variant={"outlined"}
                   id={"firstname"}
                   fullWidth={true}
+                  value={this.state.firstname}
                   onChange={this.handleInput}
                 />
               </Grid>
@@ -120,6 +121,7 @@ class SignUp extends Component {
                   variant={"outlined"}
                   id={"lastname"}
                   fullWidth={true}
+                  value={this.state.lastname}
                   onChange={this.handleInput}
                 />
               </Grid>
@@ -131,6 +133,7 @@ class SignUp extends Component {
                   variant={"outlined"}
                   id={"email"}
                   fullWidth={true}
+                  value={this.state.email}
                   onChange={this.handleInput}
                   helperText={"You can use letters, numbers & periods"}
                 />
@@ -146,6 +149,7 @@ class SignUp extends Component {
                   fullWidth={true}
                   type={"password"}
                   onChange={this.handleInput}
+                  value={this.state.password}
                   error={this.state.error.password}
                   helperText={this.state.error.password}
                 />
@@ -158,6 +162,7 @@ class SignUp extends Component {
                   fullWidth={true}
                   type={"password"}
                   onChange={this.handleInput}
+                  value={this.state.confirmPassword}
                   error={this.state.error.confirmPassword}
                   helperText={this.state.error.confirmPassword}
                 />

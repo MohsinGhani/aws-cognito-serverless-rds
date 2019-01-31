@@ -1,5 +1,8 @@
 import React from "react";
+import { withRouter } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from 'react-redux';
+import { authAction } from './../../store/actions'
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import { InputField } from "./../MaterialUI";
@@ -28,11 +31,39 @@ const styles = theme => ({
 class ConfirmSignUp extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      confirmationCode: ''
+    }
   }
 
   goto = path => {
     this.props.history.push(path);
   };
+
+  handleInput = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
+  confirmCodeHandler = () => {
+    let { signupUser } = this.props
+    let { confirmationCode } = this.state
+    this.props.confirmSignUpAction({ user: signupUser, code: confirmationCode })
+  }
+
+  componentDidMount() {
+    let { signupUser } = this.props
+    if (!signupUser) {
+      this.goto('/signup')
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.confirmSignupLoader && !this.props.confirmSignupLoader && !this.props.confirmSignupError && this.props.confirmSignup) {
+      this.goto('/signin')
+    }
+  }
 
   render() {
     let { classes } = this.props;
@@ -47,9 +78,10 @@ class ConfirmSignUp extends React.Component {
                 <InputField
                   label={"Confirmation Code"}
                   variant={"outlined"}
-                  id={"confirm"}
+                  id={"confirmationCode"}
                   fullWidth={true}
                   type={"number"}
+                  onChange={this.handleInput}
                 />
               </Grid>
             </Grid>
@@ -67,6 +99,7 @@ class ConfirmSignUp extends React.Component {
                 variant="contained"
                 color="primary"
                 className={classes.button}
+                onClick={this.confirmCodeHandler}
               >
                 Confirm
               </Button>
@@ -78,4 +111,19 @@ class ConfirmSignUp extends React.Component {
   }
 }
 
-export default withStyles(styles)(ConfirmSignUp);
+const mapStateToProps = (state) => {
+  const { authReducer: { signupUser, confirmSignup, confirmSignupLoader, confirmSignupError } } = state;
+  return {
+    signupUser, confirmSignup, confirmSignupLoader, confirmSignupError
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    confirmSignUpAction: (payload) => dispatch(authAction.confirmSignUp(payload))
+  };
+};
+
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(withRouter(withStyles(styles)(ConfirmSignUp)));

@@ -17,7 +17,8 @@ class InputField extends React.Component {
       placeholder,
       helperText,
       type,
-      name
+      name,
+      value
     } = this.props;
     return (
       <TextField
@@ -31,6 +32,7 @@ class InputField extends React.Component {
         onChange={onChange}
         placeholder={placeholder}
         helperText={helperText}
+        value={value}
         margin="dense"
         type={type ? type : "text"}
       />

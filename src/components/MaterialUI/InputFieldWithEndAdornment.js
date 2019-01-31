@@ -36,6 +36,7 @@ class InputFieldWithEndAdornment extends React.Component {
       placeholder,
       helperText,
       name,
+      value
     } = this.props;
     return (
       <TextField
@@ -50,7 +51,7 @@ class InputFieldWithEndAdornment extends React.Component {
         placeholder={placeholder}
         helperText={helperText}
         margin="dense"
-        value={this.state.password}
+        value={value}
         onChange={(e) => { this.handleChange("password"); onChange(e) }}
         InputProps={{
           endAdornment: (
