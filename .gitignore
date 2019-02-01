@@ -27,3 +27,4 @@ yarn-error.log*
 
 # congig
 /src/config/awsConfig.js
+/src/config/credentials.js

@@ -7,6 +7,7 @@ import "./index.css";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import { Auth } from 'aws-amplify';
+import SignInWithGoogle from './SignInWithGoogle'
 
 const styles = theme => ({
   p05: {
@@ -124,6 +125,7 @@ class SignIn extends React.Component {
             <h3 className={`sub-title center ${classes.p05}`}>
               to continue to Productmania
             </h3>
+
             <Grid container>
               <Grid item md={12} sm={12} xs={12} className={classes.p05}>
                 <InputField
@@ -180,6 +182,8 @@ class SignIn extends React.Component {
                 Forgot password?
               </Button>
             </Grid>
+            
+            <SignInWithGoogle />
           </Grid>
         </Grid>
       </Card>
