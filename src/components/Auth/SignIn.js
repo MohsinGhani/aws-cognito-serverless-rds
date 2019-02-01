@@ -8,6 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import { Auth } from 'aws-amplify';
 import SignInWithGoogle from './SignInWithGoogle'
+import SignInWithFacebook from './SignInWithFacebook'
 
 const styles = theme => ({
   p05: {
@@ -182,8 +183,10 @@ class SignIn extends React.Component {
                 Forgot password?
               </Button>
             </Grid>
-            
+
             <SignInWithGoogle />
+            <br />
+            <SignInWithFacebook />
           </Grid>
         </Grid>
       </Card>
