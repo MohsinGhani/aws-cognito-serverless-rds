@@ -21,6 +21,42 @@ class AddProduct extends React.Component {
       title: '',
       description: '',
       street: '',
+      suggestions: [
+        { label: 'Afghanistan' },
+        { label: 'Aland Islands' },
+        { label: 'Albania' },
+        { label: 'Algeria' },
+        { label: 'American Samoa' },
+        { label: 'Andorra' },
+        { label: 'Angola' },
+        { label: 'Anguilla' },
+        { label: 'Antarctica' },
+        { label: 'Antigua and Barbuda' },
+        { label: 'Argentina' },
+        { label: 'Armenia' },
+        { label: 'Aruba' },
+        { label: 'Australia' },
+        { label: 'Austria' },
+        { label: 'Azerbaijan' },
+        { label: 'Bahamas' },
+        { label: 'Bahrain' },
+        { label: 'Bangladesh' },
+        { label: 'Barbados' },
+        { label: 'Belarus' },
+        { label: 'Belgium' },
+        { label: 'Belize' },
+        { label: 'Benin' },
+        { label: 'Bermuda' },
+        { label: 'Bhutan' },
+        { label: 'Bolivia, Plurinational State of' },
+        { label: 'Bonaire, Sint Eustatius and Saba' },
+        { label: 'Bosnia and Herzegovina' },
+        { label: 'Botswana' },
+        { label: 'Bouvet Island' },
+        { label: 'Brazil' },
+        { label: 'British Indian Ocean Territory' },
+        { label: 'Brunei Darussalam' },
+      ]
     }
   }
 
@@ -61,7 +97,13 @@ class AddProduct extends React.Component {
             </Grid>
 
             <Grid item md={12} sm={12} xs={12}>
-              <AutoSelectInputField />
+              <AutoSelectInputField
+                label={"Search Country"}
+                variant={"outlined"}
+                id={"country"}
+                fullWidth={true}
+                suggestions={this.state.suggestions}
+              />
             </Grid>
 
             <Grid item md={12} sm={12} xs={12}>
