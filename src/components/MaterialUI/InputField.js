@@ -18,7 +18,10 @@ class InputField extends React.Component {
       helperText,
       type,
       name,
-      value
+      value,
+      multiline,
+      rowsMax,
+      rows,
     } = this.props;
     return (
       <TextField
@@ -35,6 +38,9 @@ class InputField extends React.Component {
         value={value}
         margin="dense"
         type={type ? type : "text"}
+        multiline={multiline}
+        rowsMax={rowsMax}
+        rows={rows}
       />
     );
   }
