@@ -64,12 +64,12 @@ functions:
          method: GET
          cors: true
   
-  test:
-    handler: handler.test
-    memorySize: 512 # optional, in MB, default is 1024
+  getCategory:
+    handler: handler.getCategory
+    memorySize: 128 # optional, in MB, default is 1024
     events:
      - http:
-         path: test
+         path: getCategory
          method: GET
          cors: true
 #    The following are a few example events you can configure

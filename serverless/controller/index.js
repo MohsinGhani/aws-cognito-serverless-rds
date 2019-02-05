@@ -1,5 +1,5 @@
-const { testing } = require('./testing')
+const { getCategory } = require('./getCategory')
 
 module.exports = {
-    testing
+    getCategory
 }
