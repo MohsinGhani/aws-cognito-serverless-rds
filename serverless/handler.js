@@ -1,6 +1,12 @@
 'use strict';
 
-const { getCategory, createCategory, updateCategory, deleteCategory } = require('./controller/index')
+const {
+  getCategory,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  postSignUp
+} = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
   getCategory(event, context, callback);
@@ -16,5 +22,10 @@ module.exports.updateCategory = (event, context, callback) => {
 
 module.exports.deleteCategory = (event, context, callback) => {
   deleteCategory(event, context, callback);
+};
+
+// User API's section start
+module.exports.postSignUp = (event, context, callback) => {
+  postSignUp(event, context, callback);
 };
 
