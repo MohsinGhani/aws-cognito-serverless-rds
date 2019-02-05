@@ -1,6 +1,6 @@
 'use strict';
 
-const { getCategory } = require('./controller/index')
+const { getCategory, createCategory } = require('./controller/index')
 
 module.exports.hello = async (event, context, callback) => {
   const result = {
@@ -18,5 +18,9 @@ module.exports.hello = async (event, context, callback) => {
 
 module.exports.getCategory = (event, context, callback) => {
   getCategory(event, context, callback);
+};
+
+module.exports.createCategory = (event, context, callback) => {
+  createCategory(event, context, callback);
 };
 

@@ -1,13 +1,14 @@
 const { client } = require("./../lib/db");
 
-function getCategory(event, context, callback) {
-    return client.query(`SELECT * FROM public."Category"`)
+function createCategory(event, context, callback) {
+    let { category_id, title } = JSON.parse(event.body);
+    return client.query(`INSERT INTO public."Category" (category_id, title) VALUES('${category_id}','${title}')`)
         .then((data) => {
             const result = {
                 statusCode: 200,
                 body: JSON.stringify({
-                    data: data.rows,
-                    rowCount: data.rowCount,
+                    data: data.rows[0],
+                    message: `Successfull add category with '${category_id}' id`,
                 }),
             };
             context.succeed(result)
@@ -25,4 +26,4 @@ function getCategory(event, context, callback) {
         })
 }
 
-exports.getCategory = getCategory
+exports.createCategory = createCategory
