@@ -7,6 +7,7 @@ const { updateUser } = require('./updateUser')
 const { getUsers } = require('./getUsers')
 const { getUserById } = require('./getUserById')
 const { addProduct } = require('./addProduct')
+const { updateProduct } = require('./updateProduct')
 
 module.exports = {
     getCategory,
@@ -18,4 +19,5 @@ module.exports = {
     getUsers,
     getUserById,
     addProduct,
+    updateProduct,
 }

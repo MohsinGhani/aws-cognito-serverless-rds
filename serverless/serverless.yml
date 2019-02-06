@@ -138,6 +138,15 @@ functions:
          path: add-product
          method: POST
          cors: true
+  
+  updateProduct:
+    handler: handler.updateProduct
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:
+         path: update-product/{product_id}/{creator_id}
+         method: PUT
+         cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

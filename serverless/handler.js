@@ -9,7 +9,8 @@ const {
   updateUser,
   getUsers,
   getUserById,
-  addProduct
+  addProduct,
+  updateProduct
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -48,4 +49,8 @@ module.exports.getUserById = (event, context, callback) => {
 // Product API's section start
 module.exports.addProduct = (event, context, callback) => {
   addProduct(event, context, callback);
+};
+
+module.exports.updateProduct = (event, context, callback) => {
+  updateProduct(event, context, callback);
 };
