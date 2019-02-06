@@ -147,6 +147,24 @@ functions:
          path: update-product/{product_id}/{creator_id}
          method: PUT
          cors: true
+  
+  getProducts:
+    handler: handler.getProducts
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:
+         path: get-products
+         method: GET
+         cors: true
+  
+  getProductById:
+    handler: handler.getProductById
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:
+         path: get-product/{product_id}
+         method: GET
+         cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
