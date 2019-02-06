@@ -110,6 +110,24 @@ functions:
          path: update-user/{user_id}
          method: PUT
          cors: true
+  
+  getUsers:
+    handler: handler.getUsers
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:
+         path: get-users
+         method: GET
+         cors: true
+  
+  getUserById:
+    handler: handler.getUserById
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:
+         path: get-user/{user_id}
+         method: GET
+         cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

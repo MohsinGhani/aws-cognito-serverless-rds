@@ -4,6 +4,8 @@ const { updateCategory } = require('./updateCategory')
 const { deleteCategory } = require('./deleteCategory')
 const { postSignUp } = require('./postSignUp')
 const { updateUser } = require('./updateUser')
+const { getUsers } = require('./getUsers')
+const { getUserById } = require('./getUserById')
 
 module.exports = {
     getCategory,
@@ -11,5 +13,7 @@ module.exports = {
     updateCategory,
     deleteCategory,
     postSignUp,
-    updateUser
+    updateUser,
+    getUsers,
+    getUserById,
 }

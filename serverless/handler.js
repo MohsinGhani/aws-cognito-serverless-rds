@@ -6,7 +6,9 @@ const {
   updateCategory,
   deleteCategory,
   postSignUp,
-  updateUser
+  updateUser,
+  getUsers,
+  getUserById
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -32,5 +34,13 @@ module.exports.postSignUp = (event, context, callback) => {
 
 module.exports.updateUser = (event, context, callback) => {
   updateUser(event, context, callback);
+};
+
+module.exports.getUsers = (event, context, callback) => {
+  getUsers(event, context, callback);
+};
+
+module.exports.getUserById = (event, context, callback) => {
+  getUserById(event, context, callback);
 };
 
