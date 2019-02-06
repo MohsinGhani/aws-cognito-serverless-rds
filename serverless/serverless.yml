@@ -128,6 +128,16 @@ functions:
          path: get-user/{user_id}
          method: GET
          cors: true
+
+  ################ PRODUCT SECTION START ###################
+  addProduct:
+    handler: handler.addProduct
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:
+         path: add-product
+         method: POST
+         cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

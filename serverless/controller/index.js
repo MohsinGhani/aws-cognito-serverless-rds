@@ -6,6 +6,7 @@ const { postSignUp } = require('./postSignUp')
 const { updateUser } = require('./updateUser')
 const { getUsers } = require('./getUsers')
 const { getUserById } = require('./getUserById')
+const { addProduct } = require('./addProduct')
 
 module.exports = {
     getCategory,
@@ -16,4 +17,5 @@ module.exports = {
     updateUser,
     getUsers,
     getUserById,
+    addProduct,
 }
