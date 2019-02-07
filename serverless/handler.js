@@ -12,7 +12,8 @@ const {
   addProduct,
   updateProduct,
   getProducts,
-  getProductById
+  getProductById,
+  likeProduct
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -63,4 +64,10 @@ module.exports.getProducts = (event, context, callback) => {
 
 module.exports.getProductById = (event, context, callback) => {
   getProductById(event, context, callback);
+};
+
+// Like or dislike product section start
+
+module.exports.likeProduct = (event, context, callback) => {
+  likeProduct(event, context, callback);
 };

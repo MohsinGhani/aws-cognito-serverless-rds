@@ -10,6 +10,7 @@ const { addProduct } = require('./addProduct')
 const { updateProduct } = require('./updateProduct')
 const { getProducts } = require('./getProducts')
 const { getProductById } = require('./getProductById')
+const { likeProduct } = require('./likeProduct')
 
 module.exports = {
     getCategory,
@@ -24,4 +25,5 @@ module.exports = {
     updateProduct,
     getProducts,
     getProductById,
+    likeProduct,
 }
