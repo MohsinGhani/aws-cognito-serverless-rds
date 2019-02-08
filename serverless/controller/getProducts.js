@@ -1,7 +1,14 @@
 const { client } = require("./../lib/db");
 
 function getProducts(event, context, callback) {
-    return client.query(`SELECT * FROM public."Product"`)
+    const getAllProductsQuery = `
+        SELECT P.* , 
+            (SELECT COUNT(PL.action) as _like FROM public."Product_Like" PL WHERE PL.product_id=P.product_id AND PL.action=true),
+            (SELECT COUNT(PL.action) as _dislike FROM public."Product_Like" PL WHERE PL.product_id=P.product_id AND PL.action=false),
+            (SELECT COUNT(PL.action) as _action FROM public."Product_Like" PL WHERE PL.product_id=P.product_id)
+        FROM public."Product" P
+    `
+    return client.query(getAllProductsQuery)
         .then((data) => {
             const result = {
                 statusCode: 200,
