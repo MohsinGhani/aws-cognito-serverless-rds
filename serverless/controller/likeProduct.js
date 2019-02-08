@@ -1,29 +1,32 @@
 const { client } = require("./../lib/db");
+const { sendSuccessRes, sendErrorRes } = require('./../lib/sendResponse')
 
 function likeProduct(event, context, callback) {
     let { product_id, user_id, action } = JSON.parse(event.body);
-    return client.query(`INSERT INTO public."Product_Like" (product_id, user_id, action) VALUES('${product_id}','${user_id}', '${action}')`)
-        .then((data) => {
-            const result = {
-                statusCode: 200,
-                body: JSON.stringify({
-                    data: data.rows[0],
-                    message: `Successfull ${action ? 'like' : 'dislike'} product '${product_id}'`,
-                }),
-            };
-            context.succeed(result)
-        })
-        .catch((err) => {
-            const error = {
-                statusCode: 500,
-                body: JSON.stringify({
-                    error: err,
-                    message: err.message,
-                    stack: err.stack,
-                }),
-            };
-            context.succeed(error)
-        })
+    if (!product_id || !user_id) sendErrorRes(context, 500, { message: `request body is invalid` })
+
+    client.query(`SELECT EXISTS(SELECT * from public."Product_Like" WHERE user_id='${user_id}' AND product_id='${product_id}')`).then((data) => {
+        if (data.rows) {
+            client.query(`UPDATE public."Product_Like" SET action='${action}' WHERE user_id='${user_id}' AND product_id='${product_id}' RETURNING *`)
+                .then((data) => {
+                    sendSuccessRes(context, 200, data.rows[0], `Successfull ${action ? 'like' : 'dislike'} product '${product_id}'`)
+                })
+                .catch((err) => {
+                    sendErrorRes(context, 500, err)
+                })
+        }
+        else {
+            client.query(`INSERT INTO public."Product_Like" (product_id, user_id, action) VALUES('${product_id}','${user_id}', '${action}') RETURNING *`)
+                .then((data) => {
+                    sendSuccessRes(context, 200, data.rows[0], `Successfull ${action ? 'like' : 'dislike'} product '${product_id}'`)
+                })
+                .catch((err) => {
+                    sendErrorRes(context, 500, err)
+                })
+        }
+    }).catch((err) => {
+        sendErrorRes(context, 500, err)
+    })
 }
 
 exports.likeProduct = likeProduct
