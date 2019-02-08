@@ -6,7 +6,7 @@ function likeProduct(event, context, callback) {
     if (!product_id || !user_id) sendErrorRes(context, 500, { message: `request body is invalid` })
 
     client.query(`SELECT EXISTS(SELECT * from public."Product_Like" WHERE user_id='${user_id}' AND product_id='${product_id}')`).then((data) => {
-        if (data.rows) {
+        if (data.rows[0] && data.rows[0].exists) {
             client.query(`UPDATE public."Product_Like" SET action='${action}' WHERE user_id='${user_id}' AND product_id='${product_id}' RETURNING *`)
                 .then((data) => {
                     sendSuccessRes(context, 200, data.rows[0], `Successfull ${action ? 'like' : 'dislike'} product '${product_id}'`)
