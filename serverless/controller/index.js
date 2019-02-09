@@ -12,6 +12,7 @@ const { getProducts } = require('./getProducts')
 const { getProductById } = require('./getProductById')
 const { likeProduct } = require('./likeProduct')
 const { doComment } = require('./doComment')
+const { updateComment } = require('./updateComment')
 
 module.exports = {
     getCategory,
@@ -28,4 +29,5 @@ module.exports = {
     getProductById,
     likeProduct,
     doComment,
+    updateComment,
 }

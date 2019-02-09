@@ -14,7 +14,8 @@ const {
   getProducts,
   getProductById,
   likeProduct,
-  doComment
+  doComment,
+  updateComment
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -75,4 +76,8 @@ module.exports.likeProduct = (event, context, callback) => {
 // comment on product section start
 module.exports.doComment = (event, context, callback) => {
   doComment(event, context, callback);
+};
+
+module.exports.updateComment = (event, context, callback) => {
+  updateComment(event, context, callback);
 };
