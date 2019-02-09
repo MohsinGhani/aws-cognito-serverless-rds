@@ -166,6 +166,7 @@ functions:
          method: GET
          cors: true
 
+  ################ LIKE SECTION START ###################
   likeProduct:
     handler: handler.likeProduct
     memorySize: 512 # optional, in MB, default is 1024
@@ -175,6 +176,7 @@ functions:
          method: POST
          cors: true
 
+  ################ COMMENT SECTION START ###################
   doComment:
     handler: handler.doComment
     memorySize: 512 # optional, in MB, default is 1024
