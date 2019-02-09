@@ -6,12 +6,19 @@ import { InputField, AutoSelectInputField } from "./../MaterialUI";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import TopNav from './../common/TopNav'
+import Location from './../common/Location'
 import Hidden from "@material-ui/core/Hidden";
+import Fab from '@material-ui/core/Fab';
+import NavigationIcon from '@material-ui/icons/Navigation';
+import Icon from '@material-ui/core/Icon';
 import "./index.css";
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
+  },
+  margin: {
+    margin: '10px 0 0 0',
   }
 });
 
@@ -57,7 +64,8 @@ class AddProduct extends React.Component {
         { label: 'Brazil' },
         { label: 'British Indian Ocean Territory' },
         { label: 'Brunei Darussalam' },
-      ]
+      ],
+      getLocation: false
     }
   }
 
@@ -69,6 +77,7 @@ class AddProduct extends React.Component {
 
   render() {
     let { classes } = this.props;
+    let { getLocation } = this.state;
     return (
       <div>
         <TopNav />
@@ -137,6 +146,17 @@ class AddProduct extends React.Component {
                   onChange={this.handleInput}
                 />
               </Grid>
+              <Grid item md={12} sm={12} xs={12}>
+                <Button onClick={() => this.setState({ getLocation: true })} fullWidth variant="contained" className={classes.margin}>
+                  <Icon>location_on</Icon> Get Current Location
+                </Button>
+              </Grid>
+              <Grid item md={12} sm={12} xs={12}>
+                <Button fullWidth variant="contained" color="primary" className={classes.margin}>
+                  Submit
+                </Button>
+              </Grid>
+              {getLocation ? <Location /> : ''}
             </Grid>
             <Hidden smDown>
               <Grid item md={5} sm={12} xs={12}>
