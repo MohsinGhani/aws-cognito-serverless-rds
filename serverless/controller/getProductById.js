@@ -1,38 +1,39 @@
 const { client } = require("./../lib/db");
+const { sendSuccessRes, sendErrorRes } = require('./../lib/sendResponse')
 
 function getProductById(event, context, callback) {
     let { product_id } = event.pathParameters
-    return client.query(`SELECT * FROM public."Product" WHERE product_id='${product_id}'`)
+    const getProductsQuery = `
+        SELECT P.*, 
+                (SELECT COUNT(PL.action) as _like FROM public."Product_Like" PL WHERE PL.product_id=P.product_id AND PL.action=true),
+                (SELECT COUNT(PL.action) as _dislike FROM public."Product_Like" PL WHERE PL.product_id=P.product_id AND PL.action=false),
+                (SELECT COUNT(PL.action) as _action FROM public."Product_Like" PL WHERE PL.product_id=P.product_id),
+                _comments
+            FROM public."Product" P
+            LEFT JOIN LATERAL (
+                SELECT
+                json_agg(
+                    json_build_object(
+                        'comment_id', com.comment_id,
+                        'user_id', com.user_id,
+                        'comment', com.comment,
+                        'time', com.time
+                    ) 
+                ) _comments
+                FROM public."Comment" com WHERE com.product_id=P.product_id
+            )_comments ON true
+        WHERE product_id='${product_id}'
+    `
+    return client.query(getProductsQuery)
         .then((data) => {
             if (data.rowCount) {
-                const result = {
-                    statusCode: 200,
-                    body: JSON.stringify({
-                        data: data.rows[0],
-                        rowCount: data.rowCount,
-                    }),
-                };
-                context.succeed(result)
+                sendSuccessRes(context, 200, data.rows[0], `here is your desired product with '${product_id}' id`)
             } else {
-                const result = {
-                    statusCode: 404,
-                    body: JSON.stringify({
-                        message: `'${product_id}' id does not exist`,
-                    }),
-                };
-                context.succeed(result)
+                sendErrorRes(context, 404, { message: `'${product_id}' id does not exist` })
             }
         })
         .catch((err) => {
-            const error = {
-                statusCode: 500,
-                body: JSON.stringify({
-                    error: err,
-                    message: err.message,
-                    stack: err.stack,
-                }),
-            };
-            context.succeed(error)
+            sendErrorRes(context, 500, err)
         })
 }
 

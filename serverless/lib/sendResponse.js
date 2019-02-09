@@ -1,9 +1,10 @@
-const sendSuccessRes = (context, statusCode, data, message) => {
+const sendSuccessRes = (context, statusCode, data, message, rowCount) => {
     const result = {
         statusCode,
         body: JSON.stringify({
             data,
-            message
+            message,
+            rowCount: rowCount ? rowCount : undefined
         }),
     };
     context.succeed(result)
