@@ -171,7 +171,7 @@ class TopNav extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                            Material-UI
+                            Productmania
                         </Typography>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>

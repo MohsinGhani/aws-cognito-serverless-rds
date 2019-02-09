@@ -6,6 +6,7 @@ import { InputField, AutoSelectInputField } from "./../MaterialUI";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import TopNav from './../common/TopNav'
+import Hidden from "@material-ui/core/Hidden";
 import "./index.css";
 
 const styles = theme => ({
@@ -73,48 +74,75 @@ class AddProduct extends React.Component {
         <TopNav />
         <div className="container">
           <Grid container className={classes.root} spacing={16}>
-            <Grid item md={12} sm={12} xs={12}>
-              <InputField
-                label={"Title"}
-                variant={"outlined"}
-                id={"title"}
-                fullWidth={true}
-                onChange={this.handleInput}
-              />
-            </Grid>
+            <Grid item md={7} sm={12} xs={12}>
+              <Grid item md={12} sm={12} xs={12}>
+                <InputField
+                  label={"Title"}
+                  variant={"outlined"}
+                  id={"title"}
+                  fullWidth={true}
+                  onChange={this.handleInput}
+                />
+              </Grid>
 
-            <Grid item md={12} sm={12} xs={12}>
-              <InputField
-                label={"Description"}
-                variant={"outlined"}
-                id={"description"}
-                fullWidth={true}
-                onChange={this.handleInput}
-                multiline={true}
-                rowsMax={'4'}
-                rows={'4'}
-              />
-            </Grid>
+              <Grid item md={12} sm={12} xs={12}>
+                <InputField
+                  label={"Description"}
+                  variant={"outlined"}
+                  id={"description"}
+                  fullWidth={true}
+                  onChange={this.handleInput}
+                  multiline={true}
+                  rowsMax={'4'}
+                  rows={'4'}
+                />
+              </Grid>
 
-            <Grid item md={12} sm={12} xs={12}>
-              <AutoSelectInputField
-                label={"Search Country"}
-                variant={"outlined"}
-                id={"country"}
-                fullWidth={true}
-                suggestions={this.state.suggestions}
-              />
-            </Grid>
+              <Grid item md={12} sm={12} xs={12}>
+                <AutoSelectInputField
+                  label={"Search Country"}
+                  variant={"outlined"}
+                  id={"country"}
+                  fullWidth={true}
+                  suggestions={this.state.suggestions}
+                />
+              </Grid>
 
-            <Grid item md={12} sm={12} xs={12}>
-              <InputField
-                label={"Street Address"}
-                variant={"outlined"}
-                id={"street"}
-                fullWidth={true}
-                onChange={this.handleInput}
-              />
+              <Grid item md={12} sm={12} xs={12}>
+                <AutoSelectInputField
+                  label={"State or Province"}
+                  variant={"outlined"}
+                  id={"province"}
+                  fullWidth={true}
+                  suggestions={this.state.suggestions}
+                />
+              </Grid>
+
+              <Grid item md={12} sm={12} xs={12}>
+                <AutoSelectInputField
+                  label={"Search City"}
+                  variant={"outlined"}
+                  id={"city"}
+                  fullWidth={true}
+                  suggestions={this.state.suggestions}
+                />
+              </Grid>
+
+              <Grid item md={12} sm={12} xs={12}>
+                <InputField
+                  label={"Street Address"}
+                  variant={"outlined"}
+                  id={"street"}
+                  fullWidth={true}
+                  onChange={this.handleInput}
+                />
+              </Grid>
             </Grid>
+            <Hidden smDown>
+              <Grid item md={5} sm={12} xs={12}>
+                Should be image here
+            </Grid>
+            </Hidden>
           </Grid>
         </div>
       </div>

@@ -56,7 +56,7 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
 
 const styles = theme => ({
   root: {
-    height: 250,
+    // height: 250,
     flexGrow: 1,
   },
   container: {
@@ -64,7 +64,7 @@ const styles = theme => ({
   },
   suggestionsContainerOpen: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 1001,
     marginTop: theme.spacing.unit,
     left: 0,
     right: 0,
