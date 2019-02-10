@@ -1,13 +1,13 @@
 import { Auth } from 'aws-amplify'
 
 export const signup = (user) => {
-    const { email, password } = user;
+    const { email, password, firstname, lastname, phone } = user;
     return new Promise((resolve, reject) => {
         Auth.signUp({
             username: email,
             password
         })
-            .then(u => resolve({ email: u.user.username, user_id: u.userSub, confirmed: u.userConfirmed }))
+            .then(u => resolve({ email: u.user.username, user_id: u.userSub, confirmed: u.userConfirmed, firstname, lastname, phone }))
             .catch(error => reject(error));
     });
 }
@@ -25,7 +25,6 @@ export const login = (email, password) => {
     return new Promise(async (resolve, reject) => {
         try {
             const user = await Auth.signIn(email, password);
-            debugger
             resolve(user);
         } catch (e) {
             // ALERT here we can check which error we are receiving

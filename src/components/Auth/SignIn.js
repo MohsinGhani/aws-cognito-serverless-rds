@@ -8,7 +8,6 @@ import { InputField, InputFieldWithEndAdornment } from "./../MaterialUI";
 import "./index.css";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
-import { Auth } from 'aws-amplify';
 import SignInWithGoogle from './SignInWithGoogle'
 import SignInWithFacebook from './SignInWithFacebook'
 import { authAction } from './../../store/actions'

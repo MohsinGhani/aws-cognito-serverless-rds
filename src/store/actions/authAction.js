@@ -2,6 +2,7 @@
 import {
     SIGNIN, SIGNIN_SUCCESS, SIGNIN_FAILURE,
     SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE,
+    POST_SIGNUP, POST_SIGNUP_SUCCESS, POST_SIGNUP_FAILURE,
     CONFIRM_SIGNUP, CONFIRM_SIGNUP_SUCCESS, CONFIRM_SIGNUP_FAILURE,
     RESEND_SIGNUP, RESEND_SIGNUP_SUCCESS, RESEND_SIGNUP_FAILURE,
 } from './../constants'
@@ -52,6 +53,28 @@ export class authAction {
     }
 
     /////////////
+    static postSignUp(payload) {
+        return {
+            type: POST_SIGNUP,
+            payload
+        }
+    }
+
+    static postSignUpSuccess(payload) {
+        return {
+            type: POST_SIGNUP_SUCCESS,
+            payload
+        }
+    }
+
+    static postSignUpFailure(error) {
+        return {
+            type: POST_SIGNUP_FAILURE,
+            error
+        }
+    }
+
+    /////////////
     static confirmSignUp(payload) {
         return {
             type: CONFIRM_SIGNUP,
@@ -72,7 +95,7 @@ export class authAction {
             error
         }
     }
-    
+
     /////////////
     static resendSignUp(payload) {
         return {

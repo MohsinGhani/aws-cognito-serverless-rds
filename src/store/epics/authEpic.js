@@ -1,7 +1,8 @@
-import { SIGNIN, SIGNUP, CONFIRM_SIGNUP, RESEND_SIGNUP } from './../constants'
+import { SIGNIN, SIGNUP, POST_SIGNUP, CONFIRM_SIGNUP, RESEND_SIGNUP } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { authAction } from './../actions/index'
 import { HttpService } from '../../services/http';
+import path from './../../config/path'
 import { login, signup, confirm } from "../../services/AuthService";
 
 export default class authEpic {
@@ -45,18 +46,18 @@ export default class authEpic {
             .switchMap(({ payload }) => {
                 return Observable.fromPromise(signup(payload))
                     .catch((err) => {
-                        return Observable.of(
-                            authAction.signUpFailure(err.message)
-                        )
+                        return Observable.of(authAction.signUpFailure(err.message))
                     })
             })
             .switchMap((res) => {
                 if (res.type && res.type === 'SIGNUP_FAILURE') {
-                    return Observable.of(
-                        authAction.signUpFailure(res.error)
-                    )
+                    return Observable.of(authAction.signUpFailure(res.error))
                 } else {
-                    return Observable.of(authAction.signUpSuccess(res))
+                    debugger
+                    return Observable.of(
+                        authAction.signUpSuccess(res),
+                        authAction.postSignUp(res)
+                    )
                 }
             });
 
@@ -79,6 +80,22 @@ export default class authEpic {
                         }
                     })
             });
+
+    static postSignUp = (action$) =>
+        action$.ofType(POST_SIGNUP)
+            .switchMap(({ payload }) => {
+                debugger
+                return HttpService.post(path.POST_SIGNUP, payload)
+                    .switchMap((response) => {
+                        if (response.status === 200) {
+                            return Observable.of(
+                                authAction.postSignUpSuccess(response.response.results)
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(authAction.postSignUpFailure(`${err}`))
+                    })
+            })
 
     static resendSignUp = (action$) =>
         action$.ofType(RESEND_SIGNUP)
