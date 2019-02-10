@@ -12,7 +12,7 @@ function postSignUp(event, context, callback) {
         '${verified}',
         '${phone}',
         now()
-    )`
+    ) RETURNING *`
     return client.query(SignUpUserQuery)
         .then((data) => {
             const result = {

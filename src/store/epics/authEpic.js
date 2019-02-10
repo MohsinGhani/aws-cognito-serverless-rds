@@ -87,12 +87,14 @@ export default class authEpic {
                 debugger
                 return HttpService.post(path.POST_SIGNUP, payload)
                     .switchMap((response) => {
+                        debugger
                         if (response.status === 200) {
                             return Observable.of(
                                 authAction.postSignUpSuccess(response.response.results)
                             )
                         }
                     }).catch((err) => {
+                        debugger
                         return Observable.of(authAction.postSignUpFailure(`${err}`))
                     })
             })

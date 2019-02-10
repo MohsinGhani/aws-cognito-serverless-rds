@@ -7,7 +7,7 @@ export const signup = (user) => {
             username: email,
             password
         })
-            .then(u => resolve({ email: u.user.username, user_id: u.userSub, confirmed: u.userConfirmed, firstname, lastname, phone }))
+            .then(u => resolve({ email: u.user.username, user_id: u.userSub, verified: u.userConfirmed, firstname, lastname, phone }))
             .catch(error => reject(error));
     });
 }

@@ -31,3 +31,4 @@ yarn-error.log*
 
 /serverless/node_modules
 /serverless/config/credentials.js
+/serverless/.serverless
