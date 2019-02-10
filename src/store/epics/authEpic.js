@@ -2,7 +2,7 @@ import { SIGNIN, SIGNUP, CONFIRM_SIGNUP, RESEND_SIGNUP } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { authAction } from './../actions/index'
 import { HttpService } from '../../services/http';
-import { login, signup, confirm, logout } from "../../services/AuthService";
+import { signup, confirm } from "../../services/AuthService";
 
 export default class authEpic {
     static signIn = (action$) =>

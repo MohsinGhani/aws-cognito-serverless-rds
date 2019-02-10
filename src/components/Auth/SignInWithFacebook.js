@@ -71,7 +71,7 @@ class SignInWithFacebook extends React.Component {
 
     initFB() {
         const fb = window.FB;
-        console.log('FB SDK inited');
+        console.log('FB SDK inited', fb);
     }
 
     fbAsyncInit() {

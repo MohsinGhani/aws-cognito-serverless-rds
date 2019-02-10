@@ -26,9 +26,9 @@ const styles = theme => ({
 });
 
 class ForgotPassword extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   goto = path => {
     this.props.history.push(path);

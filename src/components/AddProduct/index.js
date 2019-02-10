@@ -1,15 +1,11 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import { InputField, AutoSelectInputField } from "./../MaterialUI";
-import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import TopNav from './../common/TopNav'
 import Location from './../common/Location'
-import Hidden from "@material-ui/core/Hidden";
-import Fab from '@material-ui/core/Fab';
-import NavigationIcon from '@material-ui/icons/Navigation';
+// import Hidden from "@material-ui/core/Hidden";
 import Icon from '@material-ui/core/Icon';
 import "./index.css";
 
@@ -83,6 +79,11 @@ class AddProduct extends React.Component {
         <TopNav />
         <div className="container">
           <Grid container className={classes.root} spacing={16}>
+            {/* <Hidden smDown> */}
+              <Grid item md={5} sm={12} xs={12}>
+                Should be image here
+            </Grid>
+            {/* </Hidden> */}
             <Grid item md={7} sm={12} xs={12}>
               <Grid item md={12} sm={12} xs={12}>
                 <InputField
@@ -158,11 +159,6 @@ class AddProduct extends React.Component {
               </Grid>
               {getLocation ? <Location /> : ''}
             </Grid>
-            <Hidden smDown>
-              <Grid item md={5} sm={12} xs={12}>
-                Should be image here
-            </Grid>
-            </Hidden>
           </Grid>
         </div>
       </div>

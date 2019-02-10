@@ -6,7 +6,7 @@ const Category = ({ title, img }) => {
     return (
         <Card className={'c-p text-center'}>
             <div>
-                <img src={img} height={100} width={100}/>
+                <img alt={title} src={img} height={100} width={100}/>
             </div>
             {title}
         </Card>

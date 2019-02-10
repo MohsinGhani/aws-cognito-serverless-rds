@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify'
 
 export const signup = (user) => {
-    const { email, password, firstname, lastname, } = user;
+    const { email, password } = user;
     return new Promise((resolve, reject) => {
         Auth.signUp({
             username: email,
@@ -37,7 +37,7 @@ export const logout = () => {
 
     return new Promise(async (resolve, reject) => {
         try {
-            const logout = await Auth.signOut();
+            await Auth.signOut();
             resolve(true);
         } catch (error) {
             reject(error)

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -7,7 +6,6 @@ import parse from 'autosuggest-highlight/parse';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
-import Popper from '@material-ui/core/Popper';
 import { withStyles } from '@material-ui/core/styles';
 
 function renderInputComponent(inputProps) {
@@ -144,12 +142,12 @@ class AutoSelectInputField extends React.Component {
       error,
       disabled,
       fullWidth,
-      onChange,
+      // onChange,
       placeholder,
       helperText,
       type,
       name,
-      value,
+      // value,
     } = this.props;
 
     const autosuggestProps = {
@@ -167,7 +165,6 @@ class AutoSelectInputField extends React.Component {
           {...autosuggestProps}
           inputProps={{
             classes,
-            placeholder: 'Search a country',
             value: this.state.single,
             onChange: this.handleChange('single'),
             label,

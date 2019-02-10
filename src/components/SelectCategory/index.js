@@ -1,11 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import { InputField, InputFieldWithEndAdornment } from "./../MaterialUI";
 import "./index.css";
-import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
 import Category from './Category'
 import TopNav from './../common/TopNav'
 
