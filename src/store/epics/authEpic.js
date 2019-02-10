@@ -2,22 +2,42 @@ import { SIGNIN, SIGNUP, CONFIRM_SIGNUP, RESEND_SIGNUP } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { authAction } from './../actions/index'
 import { HttpService } from '../../services/http';
-import { signup, confirm } from "../../services/AuthService";
+import { login, signup, confirm } from "../../services/AuthService";
 
 export default class authEpic {
     static signIn = (action$) =>
         action$.ofType(SIGNIN)
             .switchMap(({ payload }) => {
-                return HttpService.get(``)
-                    .switchMap((response) => {
-                        if (response.status === 200) {
-                            return Observable.of(
-                                authAction.signInSuccess(response.response.results)
-                            )
-                        }
-                    }).catch((err) => {
-                        return Observable.of(authAction.signInFailure(`Error in Getting Movies!`))
+                const { email, password } = payload
+                return Observable.fromPromise(login(email, password))
+                    .catch((err) => {
+                        debugger
+                        return Observable.of(
+                            authAction.signInFailure(err)
+                        )
                     })
+                    .switchMap((res) => {
+                        debugger
+                        if (res.type && res.type === 'SIGNIN_FAILURE') {
+                            return Observable.of(
+                                authAction.signInFailure(res.error)
+                            )
+                        } else {
+                            return Observable.of(
+                                authAction.signInSuccess(res)
+                            );
+                        }
+                    })
+                // return HttpService.get(``)
+                //     .switchMap((response) => {
+                //         if (response.status === 200) {
+                //             return Observable.of(
+                //                 authAction.signInSuccess(response.response.results)
+                //             )
+                //         }
+                //     }).catch((err) => {
+                //         return Observable.of(authAction.signInFailure(`Error in Getting Movies!`))
+                //     })
             })
 
     static signUp = (action$) =>

@@ -1,5 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import { InputField, InputFieldWithEndAdornment } from "./../MaterialUI";
@@ -9,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import { Auth } from 'aws-amplify';
 import SignInWithGoogle from './SignInWithGoogle'
 import SignInWithFacebook from './SignInWithFacebook'
+import { authAction } from './../../store/actions'
 
 const styles = theme => ({
   p05: {
@@ -49,72 +52,9 @@ class SignIn extends React.Component {
     })
   }
 
-  async login() {
+  login = () => {
     let { email, password } = this.state
-    let username = email
-    try {
-      const user = await Auth.signIn(username, password);
-      alert('user successfully logged in')
-      if (user.challengeName === 'SMS_MFA' ||
-        user.challengeName === 'SOFTWARE_TOKEN_MFA') {
-        // // You need to get the code from the UI inputs
-        // // and then trigger the following function with a button click
-        // const code = getCodeFromUserInput();
-        // // If MFA is enabled, sign-in should be confirmed with the confirmation code
-        // const loggedUser = await Auth.confirmSignIn(
-        //   user,   // Return object from Auth.signIn()
-        //   code,   // Confirmation code  
-        //   mfaType // MFA Type e.g. SMS, TOTP.
-        // );
-      } else if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
-        // const { requiredAttributes } = user.challengeParam; // the array of required attributes, e.g ['email', 'phone_number']
-        // You need to get the new password and required attributes from the UI inputs
-        // and then trigger the following function with a button click
-        // For example, the email and phone_number are required attributes
-        // const { username, email, phone_number } = getInfoFromUserInput();
-        const loggedUser = await Auth.completeNewPassword(
-          user,               // the Cognito User Object
-          password,       // the new password
-          // OPTIONAL, the required attributes
-          {
-            email,
-            // phone_number,
-          }
-        );
-        console.log('loggedUser', loggedUser)
-      } else if (user.challengeName === 'MFA_SETUP') {
-        // This happens when the MFA method is TOTP
-        // The user needs to setup the TOTP before using it
-        // More info please check the Enabling MFA part
-        Auth.setupTOTP(user);
-      } else {
-        // The user directly signs in
-        console.log(user)
-      }
-    } catch (err) {
-      console.log(err);
-      alert(err.message)
-      if (err.code === 'UserNotConfirmedException') {
-        // The error happens if the user didn't finish the confirmation step when signing up
-        // In this case you need to resend the code and confirm the user
-        // About how to resend the code and confirm the user, please check the signUp part
-      } else if (err.code === 'PasswordResetRequiredException') {
-        // The error happens when the password is reset in the Cognito console
-        // In this case you need to call forgotPassword to reset the password
-        // Please check the Forgot Password part.
-      } else {
-        console.log(err);
-      }
-    }
-
-    // For advanced usage
-    // You can pass an object which has the username, password and validationData which is sent to a PreAuthentication Lambda trigger
-    // Auth.signIn({
-    //   username, // Required, the username
-    //   password, // Optional, the password
-    //   // validationData, // Optional, a random key-value pair map which can contain any key and will be passed to your PreAuthentication Lambda trigger as-is. It can be used to implement additional validations around authentication
-    // }).then(user => { console.log(user) })
-    //   .catch(err => { console.log(err) });
+    this.props.signInAction({ email, password })
   }
 
   render() {
@@ -195,4 +135,19 @@ class SignIn extends React.Component {
   }
 }
 
-export default withStyles(styles)(SignIn);
+const mapStateToProps = (state) => {
+  const { authReducer: { signupUser, authLoader, authError } } = state;
+  return {
+    signupUser, authLoader, authError
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signInAction: (payload) => dispatch(authAction.signIn(payload))
+  };
+};
+
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(withRouter(withStyles(styles)(SignIn)));
