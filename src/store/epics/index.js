@@ -7,6 +7,7 @@ const rootEpic = combineEpics(
     authEpic.confirmSignUp,
     authEpic.resendSignUp,
     authEpic.postSignUp,
+    authEpic.postConfirm,
 );
 
 export default rootEpic;

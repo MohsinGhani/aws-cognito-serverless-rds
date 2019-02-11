@@ -1,4 +1,4 @@
-import { SIGNIN, SIGNUP, POST_SIGNUP, CONFIRM_SIGNUP, RESEND_SIGNUP } from './../constants'
+import { SIGNIN, SIGNUP, POST_SIGNUP, CONFIRM_SIGNUP, RESEND_SIGNUP, POST_CONFIRM } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { authAction } from './../actions/index'
 import { HttpService } from '../../services/http';
@@ -27,16 +27,6 @@ export default class authEpic {
                             );
                         }
                     })
-                // return HttpService.get(``)
-                //     .switchMap((response) => {
-                //         if (response.status === 200) {
-                //             return Observable.of(
-                //                 authAction.signInSuccess(response.response.results)
-                //             )
-                //         }
-                //     }).catch((err) => {
-                //         return Observable.of(authAction.signInFailure(`Error in Getting Movies!`))
-                //     })
             })
 
     static signUp = (action$) =>
@@ -72,7 +62,7 @@ export default class authEpic {
                         } else {
                             return Observable.of(
                                 authAction.confirmSignUpSuccess(res),
-                                // authAction.signIn(res.payload)
+                                authAction.postConfirm({ user_id: res.user_id })
                             )
                         }
                     })
@@ -90,6 +80,21 @@ export default class authEpic {
                         }
                     }).catch((err) => {
                         return Observable.of(authAction.postSignUpFailure(`${err}`))
+                    })
+            })
+
+    static postConfirm = (action$) =>
+        action$.ofType(POST_CONFIRM)
+            .switchMap(({ payload }) => {
+                return HttpService.put(`${path.POST_CONFIRMATION}/${payload.user_id}`)
+                    .switchMap(({ response }) => {
+                        if (response.status === 200) {
+                            return Observable.of(
+                                authAction.postConfirmSuccess(response.data)
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(authAction.postConfirmFailure(`${err}`))
                     })
             })
 

@@ -3,6 +3,7 @@ import {
     SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE,
     POST_SIGNUP, POST_SIGNUP_SUCCESS, POST_SIGNUP_FAILURE,
     CONFIRM_SIGNUP, CONFIRM_SIGNUP_SUCCESS, CONFIRM_SIGNUP_FAILURE,
+    POST_CONFIRM, POST_CONFIRM_SUCCESS, POST_CONFIRM_FAILURE,
     RESEND_SIGNUP, RESEND_SIGNUP_SUCCESS, RESEND_SIGNUP_FAILURE,
 } from './../constants'
 
@@ -71,6 +72,7 @@ export default function authReducer(state = initialState, action) {
 
         //////////////////
         case POST_SIGNUP:
+        case POST_CONFIRM:
             return {
                 ...state,
                 user: null,
@@ -80,6 +82,7 @@ export default function authReducer(state = initialState, action) {
             }
 
         case POST_SIGNUP_SUCCESS:
+        case POST_CONFIRM_SUCCESS:
             return {
                 ...state,
                 signupUser: action.payload,
@@ -88,6 +91,7 @@ export default function authReducer(state = initialState, action) {
             }
 
         case POST_SIGNUP_FAILURE:
+        case POST_CONFIRM_FAILURE:
             return {
                 ...state,
                 signupUser: null,
