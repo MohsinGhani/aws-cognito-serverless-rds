@@ -27,4 +27,18 @@ export class HttpService {
             createXHR: () => new XMLHttpRequest()
         });
     }
+
+    //Post request HTTP service
+    static put(url, body, headers = { 'Content-Type': 'application/json' }) {
+        return ajax({
+            url,
+            method: 'PUT',
+            body,
+            headers,
+            async: true,
+            crossDomain: true,
+            responseType: 'json',
+            createXHR: () => new XMLHttpRequest()
+        });
+    }
 }
