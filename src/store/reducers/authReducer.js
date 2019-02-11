@@ -5,6 +5,7 @@ import {
     CONFIRM_SIGNUP, CONFIRM_SIGNUP_SUCCESS, CONFIRM_SIGNUP_FAILURE,
     POST_CONFIRM, POST_CONFIRM_SUCCESS, POST_CONFIRM_FAILURE,
     RESEND_SIGNUP, RESEND_SIGNUP_SUCCESS, RESEND_SIGNUP_FAILURE,
+    IS_LOGGED_IN, IS_LOGGED_IN_SUCCESS, IS_LOGGED_IN_FAILURE,
 } from './../constants'
 
 const initialState = {
@@ -16,6 +17,8 @@ const initialState = {
     confirmSignup: null,
     confirmSignupLoader: null,
     confirmSignupError: null,
+
+    isLoggedIn: false
 }
 
 export default function authReducer(state = initialState, action) {
@@ -25,7 +28,8 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 user: null,
                 authLoader: true,
-                authError: null
+                authError: null,
+                isLoggedIn: false
             }
 
         case SIGNIN_SUCCESS:
@@ -33,7 +37,8 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 user: action.payload,
                 authLoader: false,
-                authError: null
+                authError: null,
+                isLoggedIn: true
             }
 
         case SIGNIN_FAILURE:
@@ -41,7 +46,8 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 user: null,
                 authLoader: false,
-                authError: action.error
+                authError: action.error,
+                isLoggedIn: false
             }
 
         //////////////////
@@ -68,6 +74,25 @@ export default function authReducer(state = initialState, action) {
                 signupUser: null,
                 authLoader: false,
                 authError: action.error
+            }
+
+        //////////////////
+        case IS_LOGGED_IN:
+            return {
+                ...state,
+                isLoggedIn: false
+            }
+
+        case IS_LOGGED_IN_SUCCESS:
+            return {
+                ...state,
+                isLoggedIn: true
+            }
+
+        case IS_LOGGED_IN_FAILURE:
+            return {
+                ...state,
+                isLoggedIn: false
             }
 
         //////////////////

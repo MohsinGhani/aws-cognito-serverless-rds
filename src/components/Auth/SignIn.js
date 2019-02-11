@@ -56,6 +56,10 @@ class SignIn extends React.Component {
     this.props.signInAction({ email, password })
   }
 
+  componentDidMount(){
+    this.props.isLoggedInAction()
+  }
+
   render() {
     let { classes } = this.props;
     return (
@@ -143,7 +147,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signInAction: (payload) => dispatch(authAction.signIn(payload))
+    signInAction: (payload) => dispatch(authAction.signIn(payload)),
+    isLoggedInAction: (payload) => dispatch(authAction.isLoggedIn(payload)),
   };
 };
 

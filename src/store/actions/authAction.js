@@ -6,6 +6,7 @@ import {
     CONFIRM_SIGNUP, CONFIRM_SIGNUP_SUCCESS, CONFIRM_SIGNUP_FAILURE,
     POST_CONFIRM, POST_CONFIRM_SUCCESS, POST_CONFIRM_FAILURE,
     RESEND_SIGNUP, RESEND_SIGNUP_SUCCESS, RESEND_SIGNUP_FAILURE,
+    IS_LOGGED_IN, IS_LOGGED_IN_SUCCESS, IS_LOGGED_IN_FAILURE,
 } from './../constants'
 
 export class authAction {
@@ -115,6 +116,28 @@ export class authAction {
     static postConfirmFailure(error) {
         return {
             type: POST_CONFIRM_FAILURE,
+            error
+        }
+    }
+
+    /////////////
+    static isLoggedIn(payload) {
+        return {
+            type: IS_LOGGED_IN,
+            payload
+        }
+    }
+
+    static isLoggedInSuccess(payload) {
+        return {
+            type: IS_LOGGED_IN_SUCCESS,
+            payload
+        }
+    }
+
+    static isLoggedInFailure(error) {
+        return {
+            type: IS_LOGGED_IN_FAILURE,
             error
         }
     }

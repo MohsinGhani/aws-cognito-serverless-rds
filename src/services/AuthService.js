@@ -117,3 +117,11 @@ export const forgotPassword = (username) => {
 export const confirmNewPassword = (user, oldPassword, newPassword) => {
     return Auth.forgotPasswordSubmit(user, oldPassword, newPassword)
 };
+
+export const isLoggedIn = (user, confirmationCode) => {
+    return new Promise(async (resolve, reject) => {
+        Auth.currentAuthenticatedUser()
+            .then(user => resolve(user))
+            .catch(err => reject(err.message));
+    });
+}

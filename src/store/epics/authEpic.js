@@ -1,9 +1,17 @@
-import { SIGNIN, SIGNUP, POST_SIGNUP, CONFIRM_SIGNUP, RESEND_SIGNUP, POST_CONFIRM } from './../constants'
+import {
+    SIGNIN,
+    SIGNUP,
+    POST_SIGNUP,
+    CONFIRM_SIGNUP,
+    RESEND_SIGNUP,
+    POST_CONFIRM,
+    IS_LOGGED_IN
+} from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { authAction } from './../actions/index'
 import { HttpService } from '../../services/http';
 import path from './../../config/path'
-import { login, signup, confirm } from "../../services/AuthService";
+import { login, signup, confirm, isLoggedIn } from "../../services/AuthService";
 
 export default class authEpic {
     static signIn = (action$) =>
@@ -46,6 +54,24 @@ export default class authEpic {
                         authAction.postSignUp(res)
                     )
                 }
+            });
+
+    static isLoggedIn = (action$) =>
+        action$.ofType(IS_LOGGED_IN)
+            .switchMap(() => {
+                return Observable.fromPromise(isLoggedIn())
+                    .catch((err) => {
+                        return Observable.of(authAction.isLoggedInFailure(err.message))
+                    })
+                    .switchMap((res) => {
+                        if (res.type && res.type === 'IS_LOGGED_IN_FAILURE') {
+                            return Observable.of(authAction.isLoggedInFailure(res))
+                        } else {
+                            return Observable.of(
+                                authAction.isLoggedInSuccess(res)
+                            )
+                        }
+                    })
             });
 
     static confirmSignUp = (action$) =>
