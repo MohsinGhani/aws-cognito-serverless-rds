@@ -5,7 +5,8 @@ import {
     CONFIRM_SIGNUP,
     RESEND_SIGNUP,
     POST_CONFIRM,
-    IS_LOGGED_IN
+    IS_LOGGED_IN,
+    GET_USER_BY_ID
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { authAction } from './../actions/index'
@@ -31,7 +32,8 @@ export default class authEpic {
                             )
                         } else {
                             return Observable.of(
-                                authAction.signInSuccess(res)
+                                authAction.signInSuccess(res),
+                                authAction.getUserById({ user_id: res.username })
                             );
                         }
                     })
@@ -68,7 +70,8 @@ export default class authEpic {
                             return Observable.of(authAction.isLoggedInFailure(res))
                         } else {
                             return Observable.of(
-                                authAction.isLoggedInSuccess(res)
+                                authAction.isLoggedInSuccess(res),
+                                authAction.getUserById({ user_id: res.username })
                             )
                         }
                     })
@@ -135,7 +138,22 @@ export default class authEpic {
                             )
                         }
                     }).catch((err) => {
-                        return Observable.of(authAction.resendSignUpFailure(`Error in Getting Movies!`))
+                        return Observable.of(authAction.resendSignUpFailure(``))
+                    })
+            })
+
+    static getUserById = (action$) =>
+        action$.ofType(GET_USER_BY_ID)
+            .switchMap(({ payload }) => {
+                return HttpService.get(`${path.GET_USER_BY_ID}/${payload.user_id}`)
+                    .switchMap(({ response }) => {
+                        if (response.status === 200) {
+                            return Observable.of(
+                                authAction.getUserByIdSuccess(response.data)
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(authAction.getUserByIdFailure({ error: err.message }))
                     })
             })
 }

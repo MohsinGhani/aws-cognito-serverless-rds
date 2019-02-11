@@ -9,6 +9,7 @@ const rootEpic = combineEpics(
     authEpic.postSignUp,
     authEpic.postConfirm,
     authEpic.isLoggedIn,
+    authEpic.getUserById,
 );
 
 export default rootEpic;

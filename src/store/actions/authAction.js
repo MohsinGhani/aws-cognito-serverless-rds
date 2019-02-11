@@ -7,6 +7,7 @@ import {
     POST_CONFIRM, POST_CONFIRM_SUCCESS, POST_CONFIRM_FAILURE,
     RESEND_SIGNUP, RESEND_SIGNUP_SUCCESS, RESEND_SIGNUP_FAILURE,
     IS_LOGGED_IN, IS_LOGGED_IN_SUCCESS, IS_LOGGED_IN_FAILURE,
+    GET_USER_BY_ID, GET_USER_BY_ID_SUCCESS, GET_USER_BY_ID_FAILURE,
 } from './../constants'
 
 export class authAction {
@@ -160,6 +161,28 @@ export class authAction {
     static resendSignUpFailure(error) {
         return {
             type: RESEND_SIGNUP_FAILURE,
+            error
+        }
+    }
+
+    /////////////
+    static getUserById(payload) {
+        return {
+            type: GET_USER_BY_ID,
+            payload
+        }
+    }
+
+    static getUserByIdSuccess(payload) {
+        return {
+            type: GET_USER_BY_ID_SUCCESS,
+            payload
+        }
+    }
+
+    static getUserByIdFailure(error) {
+        return {
+            type: GET_USER_BY_ID_FAILURE,
             error
         }
     }
