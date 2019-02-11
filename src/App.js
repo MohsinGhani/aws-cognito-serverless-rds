@@ -8,9 +8,10 @@ import SelectCategory from './components/SelectCategory'
 import AddProduct from './components/AddProduct'
 import { Provider } from 'react-redux';
 import store from './store/store'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Amplify from 'aws-amplify';
 import awsConfig from './config/awsConfig'
+import PrivateRoute from './components/common/PrivateRoute';
 
 Amplify.configure(awsConfig)
 
@@ -25,8 +26,10 @@ class App extends Component {
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/forgot-password" component={ForgotPassword} />
             <Route exact path="/confirm-signup" component={ConfirmSignUp} />
-            <Route exact path="/select-category" component={SelectCategory} />
-            <Route exact path="/add-product" component={AddProduct} />
+            <Switch>
+              <PrivateRoute exact path="/select-category" component={SelectCategory} />
+              <PrivateRoute exact path="/add-product" component={AddProduct} />
+            </Switch>
           </div>
         </Router>
       </Provider>

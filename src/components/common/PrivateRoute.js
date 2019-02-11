@@ -10,13 +10,10 @@ const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => {
             render={props =>
                 isAuthenticated ? (
                     <div>
-                        <div className="container">
-                            <Component {...props} />
-                        </div>
-                        <Footer />
+                        <Component {...props} />
                     </div>
                 ) : (
-                        <Redirect to="/login" />
+                        <Redirect to="/signin" />
                     )
             }
         />
@@ -28,7 +25,7 @@ PrivateRoute.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.userAuth.isAuthenticated
+    isAuthenticated: state.authReducer.isLoggedIn
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

@@ -63,7 +63,7 @@ export default class authEpic {
             .switchMap(() => {
                 return Observable.fromPromise(isLoggedIn())
                     .catch((err) => {
-                        return Observable.of(authAction.isLoggedInFailure(err.message))
+                        return Observable.of(authAction.isLoggedInFailure(err))
                     })
                     .switchMap((res) => {
                         if (res.type && res.type === 'IS_LOGGED_IN_FAILURE') {

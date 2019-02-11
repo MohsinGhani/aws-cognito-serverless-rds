@@ -56,8 +56,17 @@ class SignIn extends React.Component {
     this.props.signInAction({ email, password })
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.isLoggedInAction()
+    if (this.props.isLoggedIn) {
+      this.goto('/select-category')
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.isLoggedIn) {
+      this.goto('/select-category')
+    }
   }
 
   render() {
@@ -139,9 +148,9 @@ class SignIn extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { authReducer: { signupUser, authLoader, authError } } = state;
+  const { authReducer: { signupUser, authLoader, authError, isLoggedIn } } = state;
   return {
-    signupUser, authLoader, authError
+    signupUser, authLoader, authError, isLoggedIn
   }
 }
 
