@@ -1,4 +1,5 @@
 const { client } = require("./../lib/db");
+const { sendSuccessRes, sendErrorRes } = require('./../lib/sendResponse')   
 
 function postSignUp(event, context, callback) {
     let { user_id, firstname, lastname, email, verified, phone } = JSON.parse(event.body);
@@ -15,25 +16,10 @@ function postSignUp(event, context, callback) {
     ) RETURNING *`
     return client.query(SignUpUserQuery)
         .then((data) => {
-            const result = {
-                statusCode: 200,
-                body: JSON.stringify({
-                    data: data.rows[0],
-                    message: `Successfull add user in database with '${user_id}' id`,
-                }),
-            };
-            context.succeed(result)
+            sendSuccessRes(context, 200, data.rows[0], `Successfull add user in database with '${user_id}' id`)
         })
         .catch((err) => {
-            const error = {
-                statusCode: 500,
-                body: JSON.stringify({
-                    error: err,
-                    message: err.message,
-                    stack: err.stack,
-                }),
-            };
-            context.succeed(error)
+            sendErrorRes(context, 500, err)
         })
 }
 
