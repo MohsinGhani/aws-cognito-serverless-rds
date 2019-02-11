@@ -8,6 +8,7 @@ const sendSuccessRes = (context, statusCode, data, message, rowCount) => {
         body: JSON.stringify({
             data,
             message,
+            status: statusCode,
             rowCount: rowCount ? rowCount : undefined
         }),
     };
