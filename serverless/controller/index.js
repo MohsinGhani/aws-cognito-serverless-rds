@@ -13,6 +13,7 @@ const { getProductById } = require('./getProductById')
 const { likeProduct } = require('./likeProduct')
 const { doComment } = require('./doComment')
 const { updateComment } = require('./updateComment')
+const { postConfirmation } = require('./postConfirmation')
 
 module.exports = {
     getCategory,
@@ -30,4 +31,5 @@ module.exports = {
     likeProduct,
     doComment,
     updateComment,
+    postConfirmation,
 }
