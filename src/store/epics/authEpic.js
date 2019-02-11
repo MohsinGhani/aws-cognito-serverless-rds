@@ -12,13 +12,11 @@ export default class authEpic {
                 const { email, password } = payload
                 return Observable.fromPromise(login(email, password))
                     .catch((err) => {
-                        debugger
                         return Observable.of(
                             authAction.signInFailure(err)
                         )
                     })
                     .switchMap((res) => {
-                        debugger
                         if (res.type && res.type === 'SIGNIN_FAILURE') {
                             return Observable.of(
                                 authAction.signInFailure(res.error)
@@ -53,7 +51,6 @@ export default class authEpic {
                 if (res.type && res.type === 'SIGNUP_FAILURE') {
                     return Observable.of(authAction.signUpFailure(res.error))
                 } else {
-                    debugger
                     return Observable.of(
                         authAction.signUpSuccess(res),
                         authAction.postSignUp(res)
@@ -84,17 +81,14 @@ export default class authEpic {
     static postSignUp = (action$) =>
         action$.ofType(POST_SIGNUP)
             .switchMap(({ payload }) => {
-                debugger
                 return HttpService.post(path.POST_SIGNUP, payload)
-                    .switchMap((response) => {
-                        debugger
+                    .switchMap(({ response }) => {
                         if (response.status === 200) {
                             return Observable.of(
-                                authAction.postSignUpSuccess(response.response.results)
+                                authAction.postSignUpSuccess(response.data)
                             )
                         }
                     }).catch((err) => {
-                        debugger
                         return Observable.of(authAction.postSignUpFailure(`${err}`))
                     })
             })
