@@ -7,6 +7,8 @@ import TopNav from './../common/TopNav'
 import Location from './../common/Location'
 import SelectCategory from './../SelectCategory'
 import Icon from '@material-ui/core/Icon';
+import { Address } from "./../../services/address"
+
 import "./index.css";
 
 const styles = theme => ({
@@ -27,43 +29,44 @@ class AddProduct extends React.Component {
       description: '',
       street: '',
       suggestions: [
-        { label: 'Afghanistan' },
-        { label: 'Aland Islands' },
-        { label: 'Albania' },
-        { label: 'Algeria' },
-        { label: 'American Samoa' },
-        { label: 'Andorra' },
-        { label: 'Angola' },
-        { label: 'Anguilla' },
-        { label: 'Antarctica' },
-        { label: 'Antigua and Barbuda' },
-        { label: 'Argentina' },
-        { label: 'Armenia' },
-        { label: 'Aruba' },
-        { label: 'Australia' },
-        { label: 'Austria' },
-        { label: 'Azerbaijan' },
-        { label: 'Bahamas' },
-        { label: 'Bahrain' },
-        { label: 'Bangladesh' },
-        { label: 'Barbados' },
-        { label: 'Belarus' },
-        { label: 'Belgium' },
-        { label: 'Belize' },
-        { label: 'Benin' },
-        { label: 'Bermuda' },
-        { label: 'Bhutan' },
-        { label: 'Bolivia, Plurinational State of' },
-        { label: 'Bonaire, Sint Eustatius and Saba' },
-        { label: 'Bosnia and Herzegovina' },
-        { label: 'Botswana' },
-        { label: 'Bouvet Island' },
-        { label: 'Brazil' },
-        { label: 'British Indian Ocean Territory' },
-        { label: 'Brunei Darussalam' },
+        { name: 'Afghanistan' },
+        { name: 'Aland Islands' },
+        { name: 'Albania' },
+        { name: 'Algeria' },
+        { name: 'American Samoa' },
+        { name: 'Andorra' },
+        { name: 'Angola' },
+        { name: 'Anguilla' },
+        { name: 'Antarctica' },
+        { name: 'Antigua and Barbuda' },
+        { name: 'Argentina' },
+        { name: 'Armenia' },
+        { name: 'Aruba' },
+        { name: 'Australia' },
+        { name: 'Austria' },
+        { name: 'Azerbaijan' },
+        { name: 'Bahamas' },
+        { name: 'Bahrain' },
+        { name: 'Bangladesh' },
+        { name: 'Barbados' },
+        { name: 'Belarus' },
+        { name: 'Belgium' },
+        { name: 'Belize' },
+        { name: 'Benin' },
+        { name: 'Bermuda' },
+        { name: 'Bhutan' },
+        { name: 'Bolivia, Plurinational State of' },
+        { name: 'Bonaire, Sint Eustatius and Saba' },
+        { name: 'Bosnia and Herzegovina' },
+        { name: 'Botswana' },
+        { name: 'Bouvet Island' },
+        { name: 'Brazil' },
+        { name: 'British Indian Ocean Territory' },
+        { name: 'Brunei Darussalam' },
       ],
       getLocation: false,
-      isSelectCatModal: true
+      isSelectCatModal: true,
+      countries: null
     }
   }
 
@@ -73,9 +76,78 @@ class AddProduct extends React.Component {
     })
   }
 
+  componentDidMount() {
+    Address.getCountries()
+      .then((res) => {
+        return res.json()
+      })
+      .then((res) => {
+        let countries = []
+        Object.keys(res.result).map((key, i) => {
+          countries.push({ name: res.result[key], code: key })
+        })
+        this.setState({ countries })
+      })
+      .catch((err) => {
+        console.log(err, "catch")
+      })
+  }
+
+  onChangeCountry = (e) => {
+    debugger
+    let countryCode = e.target.value
+    let address = this.state.address
+    address.country = this.state.getCountriesData[countryCode]
+    this.setState({
+      countryCode: e.target.value,
+      address
+    })
+    Address.GetState(countryCode)
+      .then((res) => {
+        return res.json()
+      })
+      .then((res) => {
+        this.setState({
+          getStateData: res.result
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  onChangeState = (e) => {
+    debugger
+    let countryCode = this.state.countryCode
+    let StateCode = e.target.value
+    let address = this.state.address
+    address.state = this.state.getStateData[StateCode]
+    this.setState({
+      address
+    })
+    Address.GetCities(countryCode, StateCode)
+      .then((res) => {
+        return res.json()
+      })
+      .then((res) => {
+        this.setState({
+          getCitiesData: res.result
+        })
+      })
+  }
+
+  onChangeCities = (e) => {
+    let citiesKey = e.target.value
+    let address = this.state.address
+    address.city = this.state.getCitiesData[citiesKey]
+    this.setState({
+      address
+    })
+  }
+
   render() {
     let { classes } = this.props;
-    let { getLocation, isSelectCatModal, selectedCategory } = this.state;
+    let { getLocation, isSelectCatModal, selectedCategory, countries } = this.state;
     return (
       <div>
         <SelectCategory
@@ -132,7 +204,7 @@ class AddProduct extends React.Component {
                   variant={"outlined"}
                   id={"country"}
                   fullWidth={true}
-                  suggestions={this.state.suggestions}
+                  suggestions={countries}
                 />
               </Grid>
 

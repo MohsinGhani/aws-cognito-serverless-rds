@@ -29,8 +29,8 @@ function renderInputComponent(inputProps) {
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-  const matches = match(suggestion.label, query);
-  const parts = parse(suggestion.label, matches);
+  const matches = match(suggestion.name, query);
+  const parts = parse(suggestion.name, matches);
 
   return (
     <MenuItem selected={isHighlighted} component="div">
@@ -117,7 +117,7 @@ class AutoSelectInputField extends React.Component {
       ? []
       : suggestions.filter(suggestion => {
         const keep =
-          count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+          count < 5 && suggestion.name.slice(0, inputLength).toLowerCase() === inputValue;
 
         if (keep) {
           count += 1;
@@ -128,7 +128,7 @@ class AutoSelectInputField extends React.Component {
   }
 
   getSuggestionValue = (suggestion) => {
-    return suggestion.label;
+    return suggestion.name;
   }
 
 
