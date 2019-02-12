@@ -59,13 +59,13 @@ class SignIn extends React.Component {
   componentDidMount() {
     this.props.isLoggedInAction()
     if (this.props.isLoggedIn) {
-      this.goto('/select-category')
+      this.goto('/add-product')
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn) {
-      this.goto('/select-category')
+      this.goto('/add-product')
     }
   }
 

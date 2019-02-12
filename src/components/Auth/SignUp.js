@@ -60,7 +60,7 @@ class SignUp extends Component {
     }
 
     if (prevProps.authLoader && !this.props.authLoader && !this.props.authError && this.props.signupUser) {
-      this.props.history.push('/confirm-signup')
+      this.goto('/confirm-signup')
     }
   }
 
@@ -87,6 +87,19 @@ class SignUp extends Component {
   handleSignUp = () => {
     let { firstname, lastname, email, password } = this.state
     this.props.signUpAction({ firstname, lastname, email, password })
+  }
+
+  componentDidMount() {
+    this.props.isLoggedInAction()
+    if (this.props.isLoggedIn) {
+      this.goto('/add-product')
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.isLoggedIn) {
+      this.goto('/add-product')
+    }
   }
 
   render() {
@@ -216,15 +229,16 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { authReducer: { signupUser, authLoader, authError } } = state;
+  const { authReducer: { signupUser, authLoader, authError, isLoggedIn } } = state;
   return {
-    signupUser, authLoader, authError
+    signupUser, authLoader, authError, isLoggedIn
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signUpAction: (payload) => dispatch(authAction.signUp(payload))
+    signUpAction: (payload) => dispatch(authAction.signUp(payload)),
+    isLoggedInAction: (payload) => dispatch(authAction.isLoggedIn(payload)),
   };
 };
 
