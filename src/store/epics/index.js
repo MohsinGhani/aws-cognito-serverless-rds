@@ -1,5 +1,6 @@
 import { combineEpics } from 'redux-observable';
 import authEpic from './authEpic'
+import ProductEpic from './ProductEpic'
 
 const rootEpic = combineEpics(
     authEpic.signIn,
@@ -10,6 +11,8 @@ const rootEpic = combineEpics(
     authEpic.postConfirm,
     authEpic.isLoggedIn,
     authEpic.getUserById,
+
+    ProductEpic.getCategories
 );
 
 export default rootEpic;

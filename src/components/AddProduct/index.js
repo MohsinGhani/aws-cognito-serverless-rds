@@ -81,6 +81,7 @@ class AddProduct extends React.Component {
         <SelectCategory
           open={isSelectCatModal}
           handleClose={() => this.setState({ isSelectCatModal: false })}
+          selectCategory={(cat) => this.setState({ selectedCategory: cat, isSelectCatModal: false })}
         />
         <TopNav />
         <div className="container">
