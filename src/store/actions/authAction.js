@@ -8,6 +8,7 @@ import {
     RESEND_SIGNUP, RESEND_SIGNUP_SUCCESS, RESEND_SIGNUP_FAILURE,
     IS_LOGGED_IN, IS_LOGGED_IN_SUCCESS, IS_LOGGED_IN_FAILURE,
     GET_USER_BY_ID, GET_USER_BY_ID_SUCCESS, GET_USER_BY_ID_FAILURE,
+    LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE,
 } from './../constants'
 
 export class authAction {
@@ -183,6 +184,28 @@ export class authAction {
     static getUserByIdFailure(error) {
         return {
             type: GET_USER_BY_ID_FAILURE,
+            error
+        }
+    }
+
+    /////////////
+    static logout(payload) {
+        return {
+            type: LOGOUT,
+            payload
+        }
+    }
+
+    static logoutSuccess(payload) {
+        return {
+            type: LOGOUT_SUCCESS,
+            payload
+        }
+    }
+
+    static logoutFailure(error) {
+        return {
+            type: LOGOUT_FAILURE,
             error
         }
     }

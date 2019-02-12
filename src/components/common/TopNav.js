@@ -16,11 +16,13 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { connect } from 'react-redux';
+import { authAction } from './../../store/actions'
 
 const styles = theme => ({
     root: {
         width: '100%',
-        marginBottom : '15px'
+        marginBottom: '15px'
     },
     grow: {
         flexGrow: 1,
@@ -111,6 +113,10 @@ class TopNav extends React.Component {
         this.setState({ mobileMoreAnchorEl: null });
     };
 
+    logout = () => {
+        this.props.logoutAction()
+    }
+
     render() {
         const { anchorEl, mobileMoreAnchorEl } = this.state;
         const { classes } = this.props;
@@ -127,6 +133,7 @@ class TopNav extends React.Component {
             >
                 <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
                 <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+                <MenuItem onClick={this.logout}>Logout</MenuItem>
             </Menu>
         );
 
@@ -159,6 +166,12 @@ class TopNav extends React.Component {
                         <AccountCircle />
                     </IconButton>
                     <p>Profile</p>
+                </MenuItem>
+                <MenuItem onClick={this.logout}>
+                    <IconButton color="inherit">
+                        <NotificationsIcon />
+                    </IconButton>
+                    <p>Logout</p>
                 </MenuItem>
             </Menu>
         );
@@ -224,4 +237,19 @@ TopNav.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TopNav);
+const mapStateToProps = (state) => {
+    const { authReducer: { } } = state;
+    return {
+
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logoutAction: () => dispatch(authAction.logout()),
+    };
+};
+
+export default connect(
+    mapStateToProps, mapDispatchToProps
+)(withStyles(styles)(TopNav));

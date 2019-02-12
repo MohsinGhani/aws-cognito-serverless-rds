@@ -6,13 +6,14 @@ import {
     RESEND_SIGNUP,
     POST_CONFIRM,
     IS_LOGGED_IN,
-    GET_USER_BY_ID
+    GET_USER_BY_ID,
+    LOGOUT
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { authAction } from './../actions/index'
 import { HttpService } from '../../services/http';
 import path from './../../config/path'
-import { login, signup, confirm, isLoggedIn } from "../../services/AuthService";
+import { login, signup, confirm, isLoggedIn, logout } from "../../services/AuthService";
 
 export default class authEpic {
     static signIn = (action$) =>
@@ -54,6 +55,24 @@ export default class authEpic {
                     return Observable.of(
                         authAction.signUpSuccess(res),
                         authAction.postSignUp(res)
+                    )
+                }
+            });
+
+    static logout = (action$) =>
+        action$.ofType(LOGOUT)
+            .switchMap(({ }) => {
+                return Observable.fromPromise(logout())
+                    .catch((err) => {
+                        return Observable.of(authAction.logoutFailure(err.message))
+                    })
+            })
+            .switchMap((res) => {
+                if (res.type && res.type === 'LOGOUT_FAILURE') {
+                    return Observable.of(authAction.logoutFailure(res.error))
+                } else {
+                    return Observable.of(
+                        authAction.logoutSuccess(res)
                     )
                 }
             });

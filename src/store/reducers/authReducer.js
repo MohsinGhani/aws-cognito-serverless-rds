@@ -7,6 +7,7 @@ import {
     RESEND_SIGNUP, RESEND_SIGNUP_SUCCESS, RESEND_SIGNUP_FAILURE,
     IS_LOGGED_IN, IS_LOGGED_IN_SUCCESS, IS_LOGGED_IN_FAILURE,
     GET_USER_BY_ID, GET_USER_BY_ID_SUCCESS, GET_USER_BY_ID_FAILURE,
+    LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE,
 } from './../constants'
 
 const initialState = {
@@ -48,6 +49,34 @@ export default function authReducer(state = initialState, action) {
                 user: null,
                 authLoader: false,
                 authError: action.error,
+                isLoggedIn: false
+            }
+
+        /////////////
+        case LOGOUT:
+            return {
+                ...state,
+                user: null,
+                authLoader: true,
+                authError: null,
+                isLoggedIn: false
+            }
+
+        case LOGOUT_SUCCESS:
+            return {
+                ...state,
+                user: null,
+                authLoader: true,
+                authError: null,
+                isLoggedIn: false
+            }
+
+        case LOGOUT_FAILURE:
+            return {
+                ...state,
+                user: null,
+                authLoader: true,
+                authError: null,
                 isLoggedIn: false
             }
 

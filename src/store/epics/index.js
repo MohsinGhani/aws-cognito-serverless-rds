@@ -11,6 +11,7 @@ const rootEpic = combineEpics(
     authEpic.postConfirm,
     authEpic.isLoggedIn,
     authEpic.getUserById,
+    authEpic.logout,
 
     ProductEpic.getCategories
 );

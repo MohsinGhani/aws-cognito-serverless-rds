@@ -30,6 +30,10 @@ export const RESEND_SIGNUP = 'RESEND_SIGNUP'
 export const RESEND_SIGNUP_SUCCESS = 'RESEND_SIGNUP_SUCCESS'
 export const RESEND_SIGNUP_FAILURE = 'RESEND_SIGNUP_FAILURE'
 
+export const LOGOUT = 'LOGOUT'
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
+
 //////////////////// PRODUCT ////////////////////////////
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS'
