@@ -5,7 +5,7 @@ import { InputField, AutoSelectInputField } from "./../MaterialUI";
 import Button from "@material-ui/core/Button";
 import TopNav from './../common/TopNav'
 import Location from './../common/Location'
-// import Hidden from "@material-ui/core/Hidden";
+import SelectCategory from './../SelectCategory'
 import Icon from '@material-ui/core/Icon';
 import "./index.css";
 
@@ -22,6 +22,7 @@ class AddProduct extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedCategory: null,
       title: '',
       description: '',
       street: '',
@@ -61,7 +62,8 @@ class AddProduct extends React.Component {
         { label: 'British Indian Ocean Territory' },
         { label: 'Brunei Darussalam' },
       ],
-      getLocation: false
+      getLocation: false,
+      isSelectCatModal: true
     }
   }
 
@@ -73,18 +75,33 @@ class AddProduct extends React.Component {
 
   render() {
     let { classes } = this.props;
-    let { getLocation } = this.state;
+    let { getLocation, isSelectCatModal, selectedCategory } = this.state;
     return (
       <div>
+        <SelectCategory
+          open={isSelectCatModal}
+          handleClose={() => this.setState({ isSelectCatModal: false })}
+        />
         <TopNav />
         <div className="container">
           <Grid container className={classes.root} spacing={16}>
             {/* <Hidden smDown> */}
-              <Grid item md={5} sm={12} xs={12}>
-                Should be image here
+            <Grid item md={5} sm={12} xs={12}>
+              Should be image here
             </Grid>
             {/* </Hidden> */}
             <Grid item md={7} sm={12} xs={12}>
+              <Grid item md={12} sm={12} xs={12}>
+                <InputField
+                  label={"Selected Category"}
+                  variant={"outlined"}
+                  id={"selectedCategory"}
+                  value={selectedCategory ? selectedCategory.title : ''}
+                  fullWidth={true}
+                  onClick={() => this.setState({ isSelectCatModal: true })}
+                />
+              </Grid>
+
               <Grid item md={12} sm={12} xs={12}>
                 <InputField
                   label={"Title"}

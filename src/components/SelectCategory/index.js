@@ -5,11 +5,35 @@ import "./index.css";
 import Category from './Category'
 import TopNav from './../common/TopNav'
 
+import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
-  }
+  },
+  appBar: {
+    position: 'relative',
+  },
+  flex: {
+    flex: 1,
+  },
 });
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
 
 class SelectCategory extends React.Component {
   constructor(props) {
@@ -36,24 +60,44 @@ class SelectCategory extends React.Component {
   }
 
   render() {
-    let { classes } = this.props;
+    let { classes, open, handleClose } = this.props;
     return (
       <div>
-        <TopNav />
-        <div className="container">
-          <Grid container className={classes.root} spacing={16}>
-            {
-              this.state.categories.map((category, index) => {
-                return (
-                  <Grid key={index} className={'p5'} item xs={6} md={2} sm={4}>
-                    <Category title={category.title} img={category.img} />
-                  </Grid>
-                )
-              })
-            }
-          </Grid>
-        </div>
-      </div>
+        <Dialog
+          fullScreen
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+        >
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+              <IconButton color="inherit" onClick={handleClose} aria-label="Close">
+                <CloseIcon />
+              </IconButton>
+              <Typography variant="h6" color="inherit" className={classes.flex}>
+                Select Category
+              </Typography>
+              <Button color="inherit" onClick={handleClose}>
+                Close
+              </Button>
+            </Toolbar>
+          </AppBar>
+          <div className="container">
+            <br />
+            <Grid container className={classes.root} spacing={16}>
+              {
+                this.state.categories.map((category, index) => {
+                  return (
+                    <Grid key={index} className={'p5'} item xs={6} md={2} sm={4}>
+                      <Category title={category.title} img={category.img} />
+                    </Grid>
+                  )
+                })
+              }
+            </Grid>
+          </div>
+        </Dialog>
+      </div >
     );
   }
 }
