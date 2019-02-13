@@ -38,7 +38,9 @@ class AddProduct extends React.Component {
       selectedState: '',
       cities: [],
       citiesOrignalObj: null,
-      selectedCity: ''
+      selectedCity: '',
+      latitude: '',
+      longitude: ''
     }
   }
 
@@ -126,7 +128,7 @@ class AddProduct extends React.Component {
 
   render() {
     let { classes } = this.props;
-    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity } = this.state;
+    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude } = this.state;
     return (
       <div>
         <SelectCategory
@@ -209,10 +211,10 @@ class AddProduct extends React.Component {
                   suggestions={cities}
                   onSelect={this.handleInput}
                   disabled={!selectedState}
-                  />
+                />
               </Grid>
 
-              <Grid item md={12} sm={12} xs={12}>
+              {/* <Grid item md={12} sm={12} xs={12}>
                 <InputField
                   label={"Street Address"}
                   variant={"outlined"}
@@ -221,9 +223,41 @@ class AddProduct extends React.Component {
                   onChange={this.handleInput}
                   disabled={!selectedCity}
                 />
-              </Grid>
+              </Grid> */}
+
+              {
+                latitude ?
+                  <Grid item md={12} sm={12} xs={12}>
+                    <InputField
+                      label={"Latitude"}
+                      variant={"outlined"}
+                      fullWidth={true}
+                      disabled={true}
+                      value={latitude}
+                    />
+                  </Grid> : ''
+              }
+
+              {
+                longitude ?
+                  <Grid item md={12} sm={12} xs={12}>
+                    <InputField
+                      label={"Longitude"}
+                      variant={"outlined"}
+                      fullWidth={true}
+                      disabled={true}
+                      value={longitude}
+                    />
+                  </Grid> : ''
+              }
               <Grid item md={12} sm={12} xs={12}>
-                <Button onClick={() => this.setState({ getLocation: true })} fullWidth variant="contained" className={classes.margin}>
+                <Button
+                  onClick={() => this.setState({ getLocation: true })}
+                  fullWidth
+                  variant="contained"
+                  className={classes.margin}
+                  disabled={!selectedCity}
+                >
                   <Icon>location_on</Icon> Get Current Location
                 </Button>
               </Grid>
@@ -232,7 +266,7 @@ class AddProduct extends React.Component {
                   Submit
                 </Button>
               </Grid>
-              {getLocation ? <Location /> : ''}
+              {getLocation ? <Location handleLocation={(latitude, longitude) => { this.setState({ latitude, longitude }) }} /> : ''}
             </Grid>
           </Grid>
         </div>
