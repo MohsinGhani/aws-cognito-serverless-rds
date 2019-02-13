@@ -28,45 +28,17 @@ class AddProduct extends React.Component {
       title: '',
       description: '',
       street: '',
-      suggestions: [
-        { name: 'Afghanistan' },
-        { name: 'Aland Islands' },
-        { name: 'Albania' },
-        { name: 'Algeria' },
-        { name: 'American Samoa' },
-        { name: 'Andorra' },
-        { name: 'Angola' },
-        { name: 'Anguilla' },
-        { name: 'Antarctica' },
-        { name: 'Antigua and Barbuda' },
-        { name: 'Argentina' },
-        { name: 'Armenia' },
-        { name: 'Aruba' },
-        { name: 'Australia' },
-        { name: 'Austria' },
-        { name: 'Azerbaijan' },
-        { name: 'Bahamas' },
-        { name: 'Bahrain' },
-        { name: 'Bangladesh' },
-        { name: 'Barbados' },
-        { name: 'Belarus' },
-        { name: 'Belgium' },
-        { name: 'Belize' },
-        { name: 'Benin' },
-        { name: 'Bermuda' },
-        { name: 'Bhutan' },
-        { name: 'Bolivia, Plurinational State of' },
-        { name: 'Bonaire, Sint Eustatius and Saba' },
-        { name: 'Bosnia and Herzegovina' },
-        { name: 'Botswana' },
-        { name: 'Bouvet Island' },
-        { name: 'Brazil' },
-        { name: 'British Indian Ocean Territory' },
-        { name: 'Brunei Darussalam' },
-      ],
       getLocation: false,
       isSelectCatModal: true,
-      countries: null
+      countries: [],
+      selectedCountry: '',
+      countriesOrignalObj: null,
+      states: [],
+      statesOrignalObj: null,
+      selectedState: '',
+      cities: [],
+      citiesOrignalObj: null,
+      selectedCity: ''
     }
   }
 
@@ -86,53 +58,41 @@ class AddProduct extends React.Component {
         Object.keys(res.result).map((key, i) => {
           countries.push({ name: res.result[key], code: key })
         })
-        this.setState({ countries })
+        this.setState({ countries, countriesOrignalObj: res.result })
       })
       .catch((err) => {
         console.log(err, "catch")
       })
   }
 
-  onChangeCountry = (e) => {
-    debugger
-    let countryCode = e.target.value
-    let address = this.state.address
-    address.country = this.state.getCountriesData[countryCode]
-    this.setState({
-      countryCode: e.target.value,
-      address
-    })
+  onChangeCountry = (countryCode) => {
     Address.GetState(countryCode)
       .then((res) => {
         return res.json()
       })
       .then((res) => {
-        this.setState({
-          getStateData: res.result
+        let states = []
+        Object.keys(res.result).map((key, i) => {
+          states.push({ name: res.result[key], code: key })
         })
+        this.setState({ states, statesOrignalObj: res.result })
       })
       .catch((err) => {
         console.log(err)
       })
   }
 
-  onChangeState = (e) => {
-    debugger
-    let countryCode = this.state.countryCode
-    let StateCode = e.target.value
-    let address = this.state.address
-    address.state = this.state.getStateData[StateCode]
-    this.setState({
-      address
-    })
+  onChangeState = (countryCode, StateCode) => {
     Address.GetCities(countryCode, StateCode)
       .then((res) => {
         return res.json()
       })
       .then((res) => {
-        this.setState({
-          getCitiesData: res.result
+        let cities = []
+        Object.keys(res.result).map((key, i) => {
+          cities.push({ name: res.result[key], code: key })
         })
+        this.setState({ cities, citiesOrignalObj: res.result })
       })
   }
 
@@ -145,9 +105,28 @@ class AddProduct extends React.Component {
     })
   }
 
+  getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedCountry !== this.state.selectedCountry && this.state.selectedCountry) {
+      // handle selectedCountry onChange
+      let key = this.getKeyByValue(this.state.countriesOrignalObj, this.state.selectedCountry)
+      if (key) this.onChangeCountry(key)
+    }
+
+    if (prevState.selectedState !== this.state.selectedState && this.state.selectedState) {
+      // handle selectedState onChange
+      let countryCode = this.getKeyByValue(this.state.countriesOrignalObj, this.state.selectedCountry)
+      let stateCode = this.getKeyByValue(this.state.statesOrignalObj, this.state.selectedState)
+      if (countryCode && stateCode) this.onChangeState(countryCode, stateCode)
+    }
+  }
+
   render() {
     let { classes } = this.props;
-    let { getLocation, isSelectCatModal, selectedCategory, countries } = this.state;
+    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity } = this.state;
     return (
       <div>
         <SelectCategory
@@ -202,9 +181,10 @@ class AddProduct extends React.Component {
                 <AutoSelectInputField
                   label={"Search Country"}
                   variant={"outlined"}
-                  id={"country"}
+                  id={"selectedCountry"}
                   fullWidth={true}
                   suggestions={countries}
+                  onSelect={this.handleInput}
                 />
               </Grid>
 
@@ -212,9 +192,11 @@ class AddProduct extends React.Component {
                 <AutoSelectInputField
                   label={"State or Province"}
                   variant={"outlined"}
-                  id={"province"}
+                  id={"selectedState"}
                   fullWidth={true}
-                  suggestions={this.state.suggestions}
+                  suggestions={states}
+                  onSelect={this.handleInput}
+                  disabled={!selectedCountry}
                 />
               </Grid>
 
@@ -222,10 +204,12 @@ class AddProduct extends React.Component {
                 <AutoSelectInputField
                   label={"Search City"}
                   variant={"outlined"}
-                  id={"city"}
+                  id={"selectedCity"}
                   fullWidth={true}
-                  suggestions={this.state.suggestions}
-                />
+                  suggestions={cities}
+                  onSelect={this.handleInput}
+                  disabled={!selectedState}
+                  />
               </Grid>
 
               <Grid item md={12} sm={12} xs={12}>
@@ -235,6 +219,7 @@ class AddProduct extends React.Component {
                   id={"street"}
                   fullWidth={true}
                   onChange={this.handleInput}
+                  disabled={!selectedCity}
                 />
               </Grid>
               <Grid item md={12} sm={12} xs={12}>
