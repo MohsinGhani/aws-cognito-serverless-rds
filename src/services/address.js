@@ -12,8 +12,6 @@ export class Address {
         })
     }
     static GetCities(countryCode, StateCode) {
-        console.log(countryCode)
-        console.log(StateCode)
         return fetch(path.city + countryCode + path.city1 + StateCode, {
             mehtod: 'GET'
         })

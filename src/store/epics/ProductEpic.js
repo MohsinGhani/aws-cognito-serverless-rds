@@ -1,5 +1,6 @@
 import {
-    GET_CATEGORIES
+    GET_CATEGORIES,
+    SAVE_PRODUCT
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { ProductAction } from './../actions/index'
@@ -19,6 +20,21 @@ export default class ProductEpic {
                         }
                     }).catch((err) => {
                         return Observable.of(ProductAction.getCategoriesFailure({ error: err.message }))
+                    })
+            })
+
+    static saveProduct = (action$) =>
+        action$.ofType(SAVE_PRODUCT)
+            .switchMap(({ payload }) => {
+                return HttpService.post(path.SAVE_PRODUCT, payload)
+                    .switchMap(({ response }) => {
+                        if (response.status === 200) {
+                            return Observable.of(
+                                ProductAction.saveProductSuccess(response.data)
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(ProductAction.saveProductFailure({ error: err.message }))
                     })
             })
 }

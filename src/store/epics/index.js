@@ -13,7 +13,8 @@ const rootEpic = combineEpics(
     authEpic.getUserById,
     authEpic.logout,
 
-    ProductEpic.getCategories
+    ProductEpic.getCategories,
+    ProductEpic.saveProduct,
 );
 
 export default rootEpic;
