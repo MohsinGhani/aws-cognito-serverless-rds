@@ -8,7 +8,9 @@ import Location from './../common/Location'
 import SelectCategory from './../SelectCategory'
 import Icon from '@material-ui/core/Icon';
 import { Address } from "./../../services/address"
-
+import uuidv1 from 'uuid/v1'
+import { connect } from 'react-redux';
+import { ProductAction } from './../../store/actions'
 import "./index.css";
 
 const styles = theme => ({
@@ -40,7 +42,8 @@ class AddProduct extends React.Component {
       citiesOrignalObj: null,
       selectedCity: '',
       latitude: '',
-      longitude: ''
+      longitude: '',
+      isSaveButtonDisable: true
     }
   }
 
@@ -108,7 +111,7 @@ class AddProduct extends React.Component {
   }
 
   getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
+    return Object.keys(object ? object : {}).find(key => object[key] === value);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -124,11 +127,46 @@ class AddProduct extends React.Component {
       let stateCode = this.getKeyByValue(this.state.statesOrignalObj, this.state.selectedState)
       if (countryCode && stateCode) this.onChangeState(countryCode, stateCode)
     }
+
+    if (this.state && this.state.isSaveButtonDisable) {
+      if (this.validateSaveButton()) this.setState({ isSaveButtonDisable: false })
+    }
+  }
+
+  onSaveProduct = () => {
+    const { selectedCategory, title, description, selectedCountry, selectedState, selectedCity, latitude, longitude } = this.state
+    const { user, saveProductAction } = this.props
+    saveProductAction({
+      product_id: uuidv1(),
+      title,
+      description,
+      category_id: selectedCategory.category_id,
+      country: selectedCountry,
+      state: selectedState,
+      city: selectedCity,
+      latitude,
+      longitude,
+      creator_id: user.user_id
+    })
+  }
+
+  validateSaveButton = () => {
+    const { selectedCategory, title, description, selectedCountry, selectedState, selectedCity, latitude, longitude } = this.state
+    return (
+      title.length >= 3 &&
+      description.length >= 3 &&
+      selectedCategory &&
+      selectedCountry &&
+      selectedCity &&
+      latitude &&
+      longitude &&
+      this.props.user
+    )
   }
 
   render() {
     let { classes } = this.props;
-    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude } = this.state;
+    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude, isSaveButtonDisable } = this.state;
     return (
       <div>
         <SelectCategory
@@ -262,7 +300,7 @@ class AddProduct extends React.Component {
                 </Button>
               </Grid>
               <Grid item md={12} sm={12} xs={12}>
-                <Button fullWidth variant="contained" color="primary" className={classes.margin}>
+                <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} variant="contained" color="primary" className={classes.margin}>
                   Submit
                 </Button>
               </Grid>
@@ -275,4 +313,27 @@ class AddProduct extends React.Component {
   }
 }
 
-export default withStyles(styles)(AddProduct);
+const mapStateToProps = (state) => {
+  const {
+    ProductReducer: {
+      categories, getCategoriesLoader, getCategoriesError,
+      savedProduct, saveProductLoader, saveProductError,
+    },
+    authReducer: { user }
+  } = state;
+  return {
+    categories, getCategoriesLoader, getCategoriesError,
+    savedProduct, saveProductLoader, saveProductError,
+    user
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveProductAction: (payload) => dispatch(ProductAction.saveProduct(payload))
+  };
+};
+
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(withStyles(styles)(AddProduct));
