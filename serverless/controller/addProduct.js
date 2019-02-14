@@ -2,8 +2,8 @@ const { client } = require("./../lib/db");
 const { sendSuccessRes, sendErrorRes } = require('./../lib/sendResponse')
 
 function addProduct(event, context, callback) {
-    const { product_id, title, description, country, state, city, street_address, latitude, longitude, creator_id } = JSON.parse(event.body);
-    const addProductQuery = `INSERT INTO public."Product" (product_id, title, description, country, state, city, street_address, latitude, longitude, creator_id, created_date) 
+    const { product_id, title, description, country, state, city, street_address, latitude, longitude, creator_id, category_id } = JSON.parse(event.body);
+    const addProductQuery = `INSERT INTO public."Product" (product_id, title, description, country, state, city, street_address, latitude, longitude, creator_id, category_id, created_date) 
     VALUES(
         '${product_id}',
         '${title}',
@@ -15,6 +15,7 @@ function addProduct(event, context, callback) {
         '${latitude}',
         '${longitude}',
         '${creator_id}',
+        '${category_id}',
         now()
     )`
 
