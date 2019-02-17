@@ -14,6 +14,7 @@ const { likeProduct } = require('./likeProduct')
 const { doComment } = require('./doComment')
 const { updateComment } = require('./updateComment')
 const { postConfirmation } = require('./postConfirmation')
+const { uploadFile } = require('./uploadFile')
 
 module.exports = {
     getCategory,
@@ -32,4 +33,5 @@ module.exports = {
     doComment,
     updateComment,
     postConfirmation,
+    uploadFile
 }

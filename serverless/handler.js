@@ -16,7 +16,8 @@ const {
   likeProduct,
   doComment,
   updateComment,
-  postConfirmation
+  postConfirmation,
+  uploadFile
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -85,4 +86,8 @@ module.exports.doComment = (event, context, callback) => {
 
 module.exports.updateComment = (event, context, callback) => {
   updateComment(event, context, callback);
+};
+
+module.exports.uploadFile = (event, context, callback) => {
+  uploadFile(event, context, callback);
 };
