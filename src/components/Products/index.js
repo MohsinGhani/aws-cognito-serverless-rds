@@ -1,18 +1,10 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import { InputField, AutoSelectInputField } from "./../MaterialUI";
-import Button from "@material-ui/core/Button";
 import TopNav from './../common/TopNav'
-import Location from './../common/Location'
-import SelectCategory from './../SelectCategory'
-import Icon from '@material-ui/core/Icon';
-import { Address } from "./../../services/address"
-import uuidv1 from 'uuid/v1'
 import { connect } from 'react-redux';
 import { ProductAction } from './../../store/actions'
 import "./index.css";
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
+import ReactMapboxGl from "react-mapbox-gl";
 import { Marker } from "react-mapbox-gl";
 import credentials from '../../config/credentials'
 
@@ -42,14 +34,14 @@ class Products extends React.Component {
   }
 
   render() {
-    let { classes, products, getProductsLoader, getProductsError } = this.props;
-    let { } = this.state;
+    let { products, getProductsLoader, getProductsError } = this.props;
+    // let { } = this.state;
     return (
       <div>
         <TopNav />
         <div>
           <Map
-            style="mapbox://styles/mapbox/streets-v9"
+            style={"mapbox://styles/mapbox/streets-v9"}
             containerStyle={{
               height: "80vh",
               width: "95vw",
@@ -64,7 +56,7 @@ class Products extends React.Component {
                     anchor="bottom"
                     onClick={()=>console.log(product)}
                   >
-                    <img src={require('./../../assets/img/marker.png')} width='20px' height='25' />
+                    <img src={require('./../../assets/img/marker.png')} alt="marker" width='20px' height='25' />
                   </Marker>
                 )
               })

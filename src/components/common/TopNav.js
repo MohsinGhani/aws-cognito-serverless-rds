@@ -5,7 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
@@ -13,7 +12,6 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
@@ -152,16 +150,24 @@ class TopNav extends React.Component {
                 onClose={this.handleMobileMenuClose}
             >
                 <MenuItem onClick={this.handleProfileMenuOpen}>
-                    <IconButton color="inherit">
-                        <AccountCircle />
+                    <IconButton color="inherit" title="Add Product" onClick={() => this.goto('/')}>
+                        <Icon>format_list_bulleted</Icon> <span style={{ fontSize: '14px', paddingLeft: '10px' }}>Products</span>
                     </IconButton>
-                    <p>Profile</p>
+                </MenuItem>
+                <MenuItem onClick={this.handleProfileMenuOpen}>
+                    <IconButton color="inherit" title="Add Product" onClick={() => this.goto('/add-product')}>
+                        <Icon>add_circle</Icon> <span style={{ fontSize: '14px', paddingLeft: '10px' }}>Add Product</span>
+                    </IconButton>
+                </MenuItem>
+                <MenuItem onClick={this.handleProfileMenuOpen}>
+                    <IconButton color="inherit">
+                        <AccountCircle /> <span style={{ fontSize: '14px', paddingLeft: '10px' }}>Profile</span>
+                    </IconButton>
                 </MenuItem>
                 <MenuItem onClick={this.logout}>
                     <IconButton color="inherit">
-                        <NotificationsIcon />
+                        <Icon>input</Icon> <span style={{ fontSize: '14px', paddingLeft: '10px' }}>Logout</span>
                     </IconButton>
-                    <p>Logout</p>
                 </MenuItem>
             </Menu>
         );

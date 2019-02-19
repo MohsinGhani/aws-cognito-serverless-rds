@@ -158,6 +158,7 @@ class AddProduct extends React.Component {
       selectedCategory &&
       selectedCountry &&
       selectedCity &&
+      selectedState &&
       latitude &&
       longitude &&
       this.props.user
