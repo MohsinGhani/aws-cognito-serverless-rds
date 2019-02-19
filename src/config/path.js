@@ -7,6 +7,7 @@ export default class path {
     // products
     static GET_CATEGORIES = `${credentials.BASE_URL}/getCategory`;
     static SAVE_PRODUCT = `${credentials.BASE_URL}/add-product`;
+    static GET_PRODUCTS = `${credentials.BASE_URL}/get-products`;
 
     // ADDRESS
     static countries = "https://geodata.solutions/api/api.php?type=getCountries";

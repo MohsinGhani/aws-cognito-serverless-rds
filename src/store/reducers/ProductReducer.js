@@ -1,6 +1,7 @@
 import {
     GET_CATEGORIES, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE,
     SAVE_PRODUCT, SAVE_PRODUCT_SUCCESS, SAVE_PRODUCT_FAILURE,
+    GET_PRODUCTS, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE,
 } from './../constants'
 
 const initialState = {
@@ -11,6 +12,10 @@ const initialState = {
     savedProduct: null,
     saveProductLoader: false,
     saveProductError: null,
+
+    products: null,
+    getProductsLoader: false,
+    getProductsError: null,
 }
 
 export default function ProductReducer(state = initialState, action) {
@@ -62,6 +67,31 @@ export default function ProductReducer(state = initialState, action) {
                 savedProduct: null,
                 saveProductLoader: false,
                 saveProductError: action.error
+            }
+
+        //////////////
+        case GET_PRODUCTS:
+            return {
+                ...state,
+                products: null,
+                getProductsLoader: true,
+                getProductsError: null
+            }
+
+        case GET_PRODUCTS_SUCCESS:
+            return {
+                ...state,
+                products: action.payload,
+                getProductsLoader: false,
+                getProductsError: null
+            }
+
+        case GET_PRODUCTS_FAILURE:
+            return {
+                ...state,
+                products: null,
+                getProductsLoader: false,
+                getProductsError: action.error
             }
 
         default:

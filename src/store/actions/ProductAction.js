@@ -2,6 +2,7 @@
 import {
     GET_CATEGORIES, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE,
     SAVE_PRODUCT, SAVE_PRODUCT_SUCCESS, SAVE_PRODUCT_FAILURE,
+    GET_PRODUCTS, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE,
 } from './../constants'
 
 export class ProductAction {
@@ -26,7 +27,7 @@ export class ProductAction {
             error
         }
     }
-    
+
     //////////////////
     static saveProduct(payload) {
         return {
@@ -45,6 +46,28 @@ export class ProductAction {
     static saveProductFailure(error) {
         return {
             type: SAVE_PRODUCT_FAILURE,
+            error
+        }
+    }
+
+    //////////////////
+    static getProducts(payload) {
+        return {
+            type: GET_PRODUCTS,
+            payload
+        }
+    }
+
+    static getProductsSuccess(payload) {
+        return {
+            type: GET_PRODUCTS_SUCCESS,
+            payload
+        }
+    }
+
+    static getProductsFailure(error) {
+        return {
+            type: GET_PRODUCTS_FAILURE,
             error
         }
     }
