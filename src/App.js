@@ -28,6 +28,7 @@ class App extends Component {
             <Route exact path="/forgot-password" component={ForgotPassword} />
             <Route exact path="/confirm-signup" component={ConfirmSignUp} />
             <Switch>
+              {/* <PrivateRoute exact path="/" component={Products} /> */}
               <PrivateRoute exact path="/select-category" component={SelectCategory} />
               <PrivateRoute exact path="/add-product" component={AddProduct} />
             </Switch>

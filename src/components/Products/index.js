@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { ProductAction } from './../../store/actions'
 import "./index.css";
 import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
+import { Marker } from "react-mapbox-gl";
 import credentials from '../../config/credentials'
 
 const Map = ReactMapboxGl({
@@ -41,26 +42,36 @@ class Products extends React.Component {
   }
 
   render() {
-    let { classes } = this.props;
+    let { classes, products, getProductsLoader, getProductsError } = this.props;
     let { } = this.state;
     return (
       <div>
         <TopNav />
-        <Map
-          style="mapbox://styles/mapbox/streets-v9"
-          containerStyle={{
-            height: "80vh",
-            width: "95vw",
-            margin: '0 auto'
-          }}
+        <div>
+          <Map
+            style="mapbox://styles/mapbox/streets-v9"
+            containerStyle={{
+              height: "70vh",
+              width: "95vw",
+              margin: '0 auto',
+              marginBottom: '20px'
+            }}
           >
-          <Layer
-            type="symbol"
-            id="marker"
-            layout={{ "icon-image": "marker-15" }}>
-            <Feature coordinates={[24.870168300000003, 67.0528005]} />
-          </Layer>
-        </Map>
+            {
+              !getProductsLoader && products && products.map((product) => {
+                return (
+                  <Marker
+                    coordinates={[product.longitude, product.latitude]}
+                    anchor="bottom"
+                    onClick={()=>console.log(product)}
+                  >
+                    <img src={require('./../../assets/img/marker.png')} width='20px' height='25' />
+                  </Marker>
+                )
+              })
+            }
+          </Map>
+        </div>
       </div>
     );
   }
@@ -71,12 +82,14 @@ const mapStateToProps = (state) => {
     ProductReducer: {
       categories, getCategoriesLoader, getCategoriesError,
       savedProduct, saveProductLoader, saveProductError,
+      products, getProductsLoader, getProductsError,
     },
     authReducer: { user }
   } = state;
   return {
     categories, getCategoriesLoader, getCategoriesError,
     savedProduct, saveProductLoader, saveProductError,
+    products, getProductsLoader, getProductsError,
     user
   }
 }
