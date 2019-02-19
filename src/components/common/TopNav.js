@@ -18,6 +18,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import { authAction } from './../../store/actions'
+import Icon from '@material-ui/core/Icon';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -117,6 +119,10 @@ class TopNav extends React.Component {
         this.props.logoutAction()
     }
 
+    goto = (path) => {
+        this.props.history.push(path)
+    }
+
     render() {
         const { anchorEl, mobileMoreAnchorEl } = this.state;
         const { classes } = this.props;
@@ -145,22 +151,6 @@ class TopNav extends React.Component {
                 open={isMobileMenuOpen}
                 onClose={this.handleMobileMenuClose}
             >
-                <MenuItem>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <MailIcon />
-                        </Badge>
-                    </IconButton>
-                    <p>Messages</p>
-                </MenuItem>
-                <MenuItem>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={11} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                    <p>Notifications</p>
-                </MenuItem>
                 <MenuItem onClick={this.handleProfileMenuOpen}>
                     <IconButton color="inherit">
                         <AccountCircle />
@@ -200,15 +190,11 @@ class TopNav extends React.Component {
                         </div>
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
-                            <IconButton color="inherit">
-                                <Badge badgeContent={4} color="secondary">
-                                    <MailIcon />
-                                </Badge>
+                            <IconButton color="inherit" title="Add Product" onClick={() => this.goto('/')}>
+                                <Icon>format_list_bulleted</Icon>
                             </IconButton>
-                            <IconButton color="inherit">
-                                <Badge badgeContent={17} color="secondary">
-                                    <NotificationsIcon />
-                                </Badge>
+                            <IconButton color="inherit" title="Add Product" onClick={() => this.goto('/add-product')}>
+                                <Icon>add_circle</Icon>
                             </IconButton>
                             <IconButton
                                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
@@ -252,4 +238,4 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(
     mapStateToProps, mapDispatchToProps
-)(withStyles(styles)(TopNav));
+)(withRouter(withStyles(styles)(TopNav)));

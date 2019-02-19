@@ -51,10 +51,9 @@ class Products extends React.Component {
           <Map
             style="mapbox://styles/mapbox/streets-v9"
             containerStyle={{
-              height: "70vh",
+              height: "80vh",
               width: "95vw",
-              margin: '0 auto',
-              marginBottom: '20px'
+              margin: '0 auto'
             }}
           >
             {
