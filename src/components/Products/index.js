@@ -12,6 +12,12 @@ import uuidv1 from 'uuid/v1'
 import { connect } from 'react-redux';
 import { ProductAction } from './../../store/actions'
 import "./index.css";
+import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
+import credentials from '../../config/credentials'
+
+const Map = ReactMapboxGl({
+  accessToken: credentials.MAP_ACCESS_TOCKEN
+});
 
 const styles = theme => ({
   root: {
@@ -26,6 +32,7 @@ class Products extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      map: null
     }
   }
 
@@ -39,6 +46,21 @@ class Products extends React.Component {
     return (
       <div>
         <TopNav />
+        <Map
+          style="mapbox://styles/mapbox/streets-v9"
+          containerStyle={{
+            height: "80vh",
+            width: "95vw",
+            margin: '0 auto'
+          }}
+          >
+          <Layer
+            type="symbol"
+            id="marker"
+            layout={{ "icon-image": "marker-15" }}>
+            <Feature coordinates={[24.870168300000003, 67.0528005]} />
+          </Layer>
+        </Map>
       </div>
     );
   }
