@@ -131,6 +131,10 @@ class AddProduct extends React.Component {
     if (this.state && this.state.isSaveButtonDisable) {
       if (this.validateSaveButton()) this.setState({ isSaveButtonDisable: false })
     }
+    // savedProduct, saveProductLoader, saveProductError,
+    if (this.props.savedProduct && !this.props.saveProductLoader && prevProps.saveProductLoader) {
+      this.goto('/')
+    }
   }
 
   onSaveProduct = () => {
@@ -163,6 +167,10 @@ class AddProduct extends React.Component {
       longitude &&
       this.props.user
     )
+  }
+
+  goto = (path) => {
+    this.props.history.push(path)
   }
 
   render() {
@@ -252,17 +260,6 @@ class AddProduct extends React.Component {
                   disabled={!selectedState}
                 />
               </Grid>
-
-              {/* <Grid item md={12} sm={12} xs={12}>
-                <InputField
-                  label={"Street Address"}
-                  variant={"outlined"}
-                  id={"street"}
-                  fullWidth={true}
-                  onChange={this.handleInput}
-                  disabled={!selectedCity}
-                />
-              </Grid> */}
 
               {
                 latitude ?

@@ -17,7 +17,7 @@ function addProduct(event, context, callback) {
         '${creator_id}',
         '${category_id}',
         now()
-    )`
+    ) RETURNING *`
 
     return client.query(addProductQuery)
         .then((data) => {

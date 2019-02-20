@@ -75,7 +75,11 @@ export default function ProductReducer(state = initialState, action) {
                 ...state,
                 products: null,
                 getProductsLoader: true,
-                getProductsError: null
+                getProductsError: null,
+
+                savedProduct: null,
+                saveProductLoader: false,
+                saveProductError: null
             }
 
         case GET_PRODUCTS_SUCCESS:
