@@ -7,6 +7,7 @@ import "./index.css";
 import ReactMapboxGl from "react-mapbox-gl";
 import { Marker } from "react-mapbox-gl";
 import credentials from '../../config/credentials'
+import ProductDetailModal from './ProductDetailModal'
 
 const Map = ReactMapboxGl({
   accessToken: credentials.MAP_ACCESS_TOCKEN
@@ -25,7 +26,9 @@ class Products extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      map: null
+      map: null,
+      product: null,
+      isOpenDetailDialog: false
     }
   }
 
@@ -35,9 +38,14 @@ class Products extends React.Component {
 
   render() {
     let { products, getProductsLoader, getProductsError } = this.props;
-    // let { } = this.state;
+    let { product, isOpenDetailDialog } = this.state;
     return (
       <div>
+        <ProductDetailModal
+          product={product}
+          open={isOpenDetailDialog}
+          handleDetailDialog={(action) => this.setState({ isOpenDetailDialog: action })}
+        />
         <TopNav />
         <div>
           <Map
@@ -49,12 +57,13 @@ class Products extends React.Component {
             }}
           >
             {
-              !getProductsLoader && products && products.map((product) => {
+              !getProductsLoader && products && products.map((product, i) => {
                 return (
                   <Marker
                     coordinates={[product.longitude, product.latitude]}
                     anchor="bottom"
-                    onClick={()=>console.log(product)}
+                    onClick={() => this.setState({ product, isOpenDetailDialog: true })}
+                    key={i}
                   >
                     <img src={require('./../../assets/img/marker.png')} alt="marker" width='20px' height='25' />
                   </Marker>
