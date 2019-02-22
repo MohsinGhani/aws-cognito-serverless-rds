@@ -2,7 +2,8 @@ import {
     GET_CATEGORIES,
     SAVE_PRODUCT,
     GET_PRODUCTS,
-    GET_PRODUCT_BY_ID
+    GET_PRODUCT_BY_ID,
+    LIKE_DISLIKE_PRODUCT
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { ProductAction } from './../actions/index'
@@ -10,6 +11,23 @@ import { HttpService } from '../../services/http';
 import path from './../../config/path'
 
 export default class ProductEpic {
+
+    static likeProduct = (action$) =>
+        action$.ofType(LIKE_DISLIKE_PRODUCT)
+            .switchMap(({ payload }) => {
+                return HttpService.post(path.LIKE_OR_DISLIKE, payload)
+                    .switchMap(({ response }) => {
+                        if (response.status === 200) {
+                            return Observable.of(
+                                ProductAction.likeProductSuccess(response.data),
+                                ProductAction.getProductById({ product_id: response.data.product_id }),
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(ProductAction.likeProductFailure({ error: err.message }))
+                    })
+            })
+
     static getCategories = (action$) =>
         action$.ofType(GET_CATEGORIES)
             .switchMap(({ payload }) => {

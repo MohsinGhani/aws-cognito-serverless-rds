@@ -17,6 +17,7 @@ const rootEpic = combineEpics(
     ProductEpic.saveProduct,
     ProductEpic.getProducts,
     ProductEpic.getProductById,
+    ProductEpic.likeProduct,
 );
 
 export default rootEpic;

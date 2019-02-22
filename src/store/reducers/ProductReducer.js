@@ -3,6 +3,7 @@ import {
     SAVE_PRODUCT, SAVE_PRODUCT_SUCCESS, SAVE_PRODUCT_FAILURE,
     GET_PRODUCTS, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE,
     GET_PRODUCT_BY_ID, GET_PRODUCT_BY_ID_SUCCESS, GET_PRODUCT_BY_ID_FAILURE,
+    LIKE_DISLIKE_PRODUCT, LIKE_DISLIKE_PRODUCT_SUCCESS, LIKE_DISLIKE_PRODUCT_FAILURE,
 } from './../constants'
 
 const initialState = {
@@ -21,10 +22,40 @@ const initialState = {
     product: null,
     getProductByIdLoader: false,
     getProductByIdError: null,
+
+    liked: null,
+    likeProductLoader: false,
+    likeProductError: null,
 }
 
 export default function ProductReducer(state = initialState, action) {
     switch (action.type) {
+        ///////////////////////
+        case LIKE_DISLIKE_PRODUCT:
+            return {
+                ...state,
+                liked: null,
+                likeProductLoader: true,
+                likeProductError: null
+            }
+
+        case LIKE_DISLIKE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                liked: action.payload,
+                likeProductLoader: false,
+                likeProductError: null
+            }
+
+        case LIKE_DISLIKE_PRODUCT_FAILURE:
+            return {
+                ...state,
+                liked: null,
+                likeProductLoader: false,
+                likeProductError: action.error
+            }
+
+        ////////////////////
         case GET_CATEGORIES:
             return {
                 ...state,

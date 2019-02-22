@@ -4,10 +4,33 @@ import {
     SAVE_PRODUCT, SAVE_PRODUCT_SUCCESS, SAVE_PRODUCT_FAILURE,
     GET_PRODUCTS, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE,
     GET_PRODUCT_BY_ID, GET_PRODUCT_BY_ID_SUCCESS, GET_PRODUCT_BY_ID_FAILURE,
+    LIKE_DISLIKE_PRODUCT, LIKE_DISLIKE_PRODUCT_SUCCESS, LIKE_DISLIKE_PRODUCT_FAILURE,
 } from './../constants'
 
 export class ProductAction {
+    /////////////////
+    static likeProduct(payload) {
+        return {
+            type: LIKE_DISLIKE_PRODUCT,
+            payload
+        }
+    }
 
+    static likeProductSuccess(payload) {
+        return {
+            type: LIKE_DISLIKE_PRODUCT_SUCCESS,
+            payload
+        }
+    }
+
+    static likeProductFailure(error) {
+        return {
+            type: LIKE_DISLIKE_PRODUCT_FAILURE,
+            error
+        }
+    }
+
+    /////////////////
     static getCategories(payload) {
         return {
             type: GET_CATEGORIES,

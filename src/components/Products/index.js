@@ -2,7 +2,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TopNav from './../common/TopNav'
 import { connect } from 'react-redux';
-import { ProductAction } from './../../store/actions'
+import { ProductAction, authAction } from './../../store/actions'
 import "./index.css";
 import ReactMapboxGl from "react-mapbox-gl";
 import { Marker } from "react-mapbox-gl";
@@ -33,6 +33,7 @@ class Products extends React.Component {
   }
 
   componentDidMount() {
+    this.props.isLoggedIn()
     this.props.getProductsAction()
   }
 
@@ -96,7 +97,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProductsAction: () => dispatch(ProductAction.getProducts())
+    getProductsAction: () => dispatch(ProductAction.getProducts()),
+    isLoggedIn: () => dispatch(authAction.isLoggedIn()),
   };
 };
 

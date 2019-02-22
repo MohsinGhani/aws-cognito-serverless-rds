@@ -32,9 +32,7 @@ function Transition(props) {
 class ProductDetailModal extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-
-        }
+        this.state = {}
     }
 
     componentDidMount() {
@@ -45,6 +43,21 @@ class ProductDetailModal extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.product_id !== this.props.product_id && this.props.product_id) {
             this.props.getProductByIdAction({ product_id: this.props.product_id })
+        }
+    }
+
+    handleLikeAndDislikeProduct = (action) => {
+        const { user, product_id, likeProductAction } = this.props
+        let payload = {
+            user_id: user.user_id,
+            product_id,
+            action
+        }
+        if (user.user_id && product_id) {
+            likeProductAction(payload)
+        }
+        else {
+            alert('user id or product id is missing')
         }
     }
 
@@ -66,7 +79,7 @@ class ProductDetailModal extends React.Component {
                             <Typography variant="h6" color="inherit" className={classes.flex}>
                                 Product Modal
                             </Typography>
-                            <Button color="inherit" onClick={this.handleClose}>
+                            <Button color="inherit" onClick={() => handleDetailDialog(null)}>
                                 Close
                             </Button>
                         </Toolbar>
@@ -94,11 +107,11 @@ class ProductDetailModal extends React.Component {
                                         <ListItemText primary={'City'} secondary={product.city} />
                                     </ListItem>
                                     <Divider />
-                                    <ListItem button>
+                                    <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(true) }}>
                                         <ListItemText primary={'Like'} secondary={product._like} />
                                     </ListItem>
                                     <Divider />
-                                    <ListItem button>
+                                    <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(false) }}>
                                         <ListItemText primary={'Dislike'} secondary={product._dislike} />
                                     </ListItem>
                                     <Divider />
@@ -119,19 +132,22 @@ ProductDetailModal.propTypes = {
 const mapStateToProps = (state) => {
     const {
         ProductReducer: {
-            product, getProductByIdLoader, getProductByIdError
+            product, getProductByIdLoader, getProductByIdError,
+            liked, likeProductLoader, likeProductError
         },
         authReducer: { user }
     } = state;
     return {
         product, getProductByIdLoader, getProductByIdError,
+        liked, likeProductLoader, likeProductError,
         user
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getProductByIdAction: (payload) => dispatch(ProductAction.getProductById(payload))
+        getProductByIdAction: (payload) => dispatch(ProductAction.getProductById(payload)),
+        likeProductAction: (payload) => dispatch(ProductAction.likeProduct(payload)),
     };
 };
 
