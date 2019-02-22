@@ -42,7 +42,7 @@ class Products extends React.Component {
     return (
       <div>
         <ProductDetailModal
-          product={product}
+          product_id={product ? product.product_id : null}
           open={isOpenDetailDialog}
           handleDetailDialog={(action) => this.setState({ isOpenDetailDialog: action })}
         />

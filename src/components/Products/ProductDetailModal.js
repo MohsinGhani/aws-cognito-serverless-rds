@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import { connect } from 'react-redux';
+import { ProductAction } from './../../store/actions'
 
 const styles = {
     appBar: {
@@ -32,6 +34,17 @@ class ProductDetailModal extends React.Component {
         super(props)
         this.state = {
 
+        }
+    }
+
+    componentDidMount() {
+        let { product_id, getProductByIdAction } = this.props
+        if (product_id) getProductByIdAction({ product_id })
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.product_id !== this.props.product_id && this.props.product_id) {
+            this.props.getProductByIdAction({ product_id: this.props.product_id })
         }
     }
 
@@ -103,4 +116,25 @@ ProductDetailModal.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProductDetailModal);
+const mapStateToProps = (state) => {
+    const {
+        ProductReducer: {
+            product, getProductByIdLoader, getProductByIdError
+        },
+        authReducer: { user }
+    } = state;
+    return {
+        product, getProductByIdLoader, getProductByIdError,
+        user
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getProductByIdAction: (payload) => dispatch(ProductAction.getProductById(payload))
+    };
+};
+
+export default connect(
+    mapStateToProps, mapDispatchToProps
+)(withStyles(styles)(ProductDetailModal));
