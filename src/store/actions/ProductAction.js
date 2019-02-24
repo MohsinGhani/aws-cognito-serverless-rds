@@ -5,9 +5,32 @@ import {
     GET_PRODUCTS, GET_PRODUCTS_SUCCESS, GET_PRODUCTS_FAILURE,
     GET_PRODUCT_BY_ID, GET_PRODUCT_BY_ID_SUCCESS, GET_PRODUCT_BY_ID_FAILURE,
     LIKE_DISLIKE_PRODUCT, LIKE_DISLIKE_PRODUCT_SUCCESS, LIKE_DISLIKE_PRODUCT_FAILURE,
+    DO_COMMENT_ON_PRODUCT, DO_COMMENT_ON_PRODUCT_SUCCESS, DO_COMMENT_ON_PRODUCT_FAILURE,
 } from './../constants'
 
 export class ProductAction {
+    /////////////////
+    static doCommentOnProduct(payload) {
+        return {
+            type: DO_COMMENT_ON_PRODUCT,
+            payload
+        }
+    }
+
+    static doCommentOnProductSuccess(payload) {
+        return {
+            type: DO_COMMENT_ON_PRODUCT_SUCCESS,
+            payload
+        }
+    }
+
+    static doCommentOnProductFailure(error) {
+        return {
+            type: DO_COMMENT_ON_PRODUCT_FAILURE,
+            error
+        }
+    }
+    
     /////////////////
     static likeProduct(payload) {
         return {

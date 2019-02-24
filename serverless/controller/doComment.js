@@ -10,7 +10,7 @@ function doComment(event, context, callback) {
         '${product_id}',
         '${comment}',
         now()
-    )`
+    ) RETURNING *`
 
     return client.query(saveCommentQuery)
         .then((data) => {

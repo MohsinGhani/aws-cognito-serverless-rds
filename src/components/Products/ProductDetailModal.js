@@ -15,6 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import { connect } from 'react-redux';
 import { ProductAction } from './../../store/actions'
+import CommentModal from './CommentModal'
 
 const styles = {
     appBar: {
@@ -32,7 +33,9 @@ function Transition(props) {
 class ProductDetailModal extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            showCommentModal: false
+        }
     }
 
     componentDidMount() {
@@ -63,8 +66,13 @@ class ProductDetailModal extends React.Component {
 
     render() {
         const { classes, open, handleDetailDialog, product } = this.props;
+        const { showCommentModal } = this.state;
         return (
             <div>
+                <CommentModal
+                    open={showCommentModal}
+                    handleClose={() => this.setState({ showCommentModal: false  })}
+                />
                 <Dialog
                     fullScreen
                     open={open}
@@ -115,6 +123,23 @@ class ProductDetailModal extends React.Component {
                                         <ListItemText primary={'Dislike'} secondary={product._dislike} />
                                     </ListItem>
                                     <Divider />
+                                    {
+                                        (() => {
+                                            if (product && product._comments) {
+                                                return product._comments.map((comment, i) => {
+                                                    return (
+                                                        <ListItem key={i} button onClick={() => { this.handleLikeAndDislikeProduct(false) }}>
+                                                            <ListItemText secondary={comment.comment} />
+                                                        </ListItem>
+                                                    )
+                                                })
+                                            }
+                                        })()
+                                    }
+                                    <Divider />
+                                    <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }}>
+                                        <ListItemText secondary={'Add Comment'} />
+                                    </ListItem>
                                 </List>
                                 : ''
                         }

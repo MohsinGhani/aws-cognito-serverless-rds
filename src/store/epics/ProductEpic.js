@@ -3,7 +3,8 @@ import {
     SAVE_PRODUCT,
     GET_PRODUCTS,
     GET_PRODUCT_BY_ID,
-    LIKE_DISLIKE_PRODUCT
+    LIKE_DISLIKE_PRODUCT,
+    DO_COMMENT_ON_PRODUCT
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { ProductAction } from './../actions/index'
@@ -55,6 +56,22 @@ export default class ProductEpic {
                         }
                     }).catch((err) => {
                         return Observable.of(ProductAction.saveProductFailure({ error: err.message }))
+                    })
+            })
+
+    static doCommentOnProduct = (action$) =>
+        action$.ofType(DO_COMMENT_ON_PRODUCT)
+            .switchMap(({ payload }) => {
+                return HttpService.post(path.DO_COMMENT_ON_PRODUCT, payload)
+                    .switchMap(({ response }) => {
+                        if (response.status === 200) {
+                            return Observable.of(
+                                ProductAction.doCommentOnProductSuccess(response.data),
+                                ProductAction.getProductById({ product_id: payload.product_id }),
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(ProductAction.doCommentOnProductFailure({ error: err.message }))
                     })
             })
 
