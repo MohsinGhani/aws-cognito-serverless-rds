@@ -5,6 +5,7 @@ import {
     GET_PRODUCT_BY_ID, GET_PRODUCT_BY_ID_SUCCESS, GET_PRODUCT_BY_ID_FAILURE,
     LIKE_DISLIKE_PRODUCT, LIKE_DISLIKE_PRODUCT_SUCCESS, LIKE_DISLIKE_PRODUCT_FAILURE,
     DO_COMMENT_ON_PRODUCT, DO_COMMENT_ON_PRODUCT_SUCCESS, DO_COMMENT_ON_PRODUCT_FAILURE,
+    SEARCH, SEARCH_SUCCESS, SEARCH_FAILURE,
 } from './../constants'
 
 const initialState = {
@@ -29,12 +30,41 @@ const initialState = {
     likeProductError: null,
 
     commented: null,
-    likeProductLoader: false,
-    likeProductError: null,
+    doCommentLoader: false,
+    doCommentError: null,
+
+    searchedProducts: null,
+    searchLoader: false,
+    searchError: null,
 }
 
 export default function ProductReducer(state = initialState, action) {
     switch (action.type) {
+        ///////////////////////
+        case SEARCH:
+            return {
+                ...state,
+                searchedProducts: null,
+                searchLoader: true,
+                searchError: null
+            }
+
+        case SEARCH_SUCCESS:
+            return {
+                ...state,
+                searchedProducts: action.payload,
+                searchLoader: false,
+                searchError: null
+            }
+
+        case SEARCH_FAILURE:
+            return {
+                ...state,
+                searchedProducts: null,
+                searchLoader: false,
+                searchError: action.error
+            }
+
         ///////////////////////
         case DO_COMMENT_ON_PRODUCT:
             return {

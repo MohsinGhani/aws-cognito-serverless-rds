@@ -6,9 +6,32 @@ import {
     GET_PRODUCT_BY_ID, GET_PRODUCT_BY_ID_SUCCESS, GET_PRODUCT_BY_ID_FAILURE,
     LIKE_DISLIKE_PRODUCT, LIKE_DISLIKE_PRODUCT_SUCCESS, LIKE_DISLIKE_PRODUCT_FAILURE,
     DO_COMMENT_ON_PRODUCT, DO_COMMENT_ON_PRODUCT_SUCCESS, DO_COMMENT_ON_PRODUCT_FAILURE,
+    SEARCH, SEARCH_SUCCESS, SEARCH_FAILURE,
 } from './../constants'
 
 export class ProductAction {
+    /////////////////
+    static search(payload) {
+        return {
+            type: SEARCH,
+            payload
+        }
+    }
+
+    static searchSuccess(payload) {
+        return {
+            type: SEARCH_SUCCESS,
+            payload
+        }
+    }
+
+    static searchFailure(error) {
+        return {
+            type: SEARCH_FAILURE,
+            error
+        }
+    }
+    
     /////////////////
     static doCommentOnProduct(payload) {
         return {

@@ -38,7 +38,7 @@ class Products extends React.Component {
   }
 
   render() {
-    let { products, getProductsLoader, getProductsError } = this.props;
+    let { products, getProductsLoader, getProductsError, searchedProducts, searchLoader, searchError } = this.props;
     let { product, isOpenDetailDialog } = this.state;
     return (
       <div>
@@ -58,7 +58,7 @@ class Products extends React.Component {
             }}
           >
             {
-              !getProductsLoader && products && products.map((product, i) => {
+              !getProductsLoader && !searchLoader && !searchedProducts && products && products.map((product, i) => {
                 return (
                   <Marker
                     coordinates={[product.longitude, product.latitude]}
@@ -71,6 +71,22 @@ class Products extends React.Component {
                 )
               })
             }
+
+            {
+              !getProductsLoader && !searchLoader && searchedProducts && searchedProducts.map((product, i) => {
+                return (
+                  <Marker
+                    coordinates={[product.longitude, product.latitude]}
+                    anchor="bottom"
+                    onClick={() => this.setState({ product, isOpenDetailDialog: true })}
+                    key={i}
+                  >
+                    <img src={require('./../../assets/img/marker.png')} alt="marker" width='20px' height='25' />
+                  </Marker>
+                )
+              })
+            }
+
           </Map>
         </div>
       </div>
@@ -84,6 +100,7 @@ const mapStateToProps = (state) => {
       categories, getCategoriesLoader, getCategoriesError,
       savedProduct, saveProductLoader, saveProductError,
       products, getProductsLoader, getProductsError,
+      searchedProducts, searchLoader, searchError
     },
     authReducer: { user }
   } = state;
@@ -91,6 +108,7 @@ const mapStateToProps = (state) => {
     categories, getCategoriesLoader, getCategoriesError,
     savedProduct, saveProductLoader, saveProductError,
     products, getProductsLoader, getProductsError,
+    searchedProducts, searchLoader, searchError,
     user
   }
 }

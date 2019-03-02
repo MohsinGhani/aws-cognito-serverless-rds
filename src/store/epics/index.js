@@ -19,6 +19,7 @@ const rootEpic = combineEpics(
     ProductEpic.getProductById,
     ProductEpic.likeProduct,
     ProductEpic.doCommentOnProduct,
+    ProductEpic.search,
 );
 
 export default rootEpic;

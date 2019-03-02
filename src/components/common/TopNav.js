@@ -15,7 +15,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
-import { authAction } from './../../store/actions'
+import { authAction, ProductAction } from './../../store/actions'
 import Icon from '@material-ui/core/Icon';
 import { withRouter } from 'react-router-dom';
 
@@ -94,6 +94,7 @@ class TopNav extends React.Component {
     state = {
         anchorEl: null,
         mobileMoreAnchorEl: null,
+        query: ''
     };
 
     handleProfileMenuOpen = event => {
@@ -121,8 +122,16 @@ class TopNav extends React.Component {
         this.props.history.push(path)
     }
 
+    handleSearch = (e) => {
+        this.setState({
+            [e.target.id]: e.target.value
+        }, () => {
+            this.props.searchAction({ query: this.state.query })
+        })
+    }
+
     render() {
-        const { anchorEl, mobileMoreAnchorEl } = this.state;
+        const { anchorEl, mobileMoreAnchorEl, query } = this.state;
         const { classes } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -192,6 +201,9 @@ class TopNav extends React.Component {
                                     root: classes.inputRoot,
                                     input: classes.inputInput,
                                 }}
+                                value={query}
+                                onChange={this.handleSearch}
+                                id='query'
                             />
                         </div>
                         <div className={classes.grow} />
@@ -230,15 +242,16 @@ TopNav.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const { authReducer: { } } = state;
+    const { ProductReducer: { searchedProducts, searchLoader, searchError } } = state;
     return {
-
+        searchedProducts, searchLoader, searchError
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         logoutAction: () => dispatch(authAction.logout()),
+        searchAction: (payload) => dispatch(ProductAction.search(payload)),
     };
 };
 

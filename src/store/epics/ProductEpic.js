@@ -4,7 +4,8 @@ import {
     GET_PRODUCTS,
     GET_PRODUCT_BY_ID,
     LIKE_DISLIKE_PRODUCT,
-    DO_COMMENT_ON_PRODUCT
+    DO_COMMENT_ON_PRODUCT,
+    SEARCH
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { ProductAction } from './../actions/index'
@@ -26,6 +27,21 @@ export default class ProductEpic {
                         }
                     }).catch((err) => {
                         return Observable.of(ProductAction.likeProductFailure({ error: err.message }))
+                    })
+            })
+
+    static search = (action$) =>
+        action$.ofType(SEARCH)
+            .switchMap(({ payload }) => {
+                return HttpService.get(`${path.SEARCH}/${payload.query}`)
+                    .switchMap(({ response }) => {
+                        if (response.status === 200) {
+                            return Observable.of(
+                                ProductAction.searchSuccess(response.data)
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(ProductAction.searchFailure({ error: err.message }))
                     })
             })
 
