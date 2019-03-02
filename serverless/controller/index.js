@@ -15,6 +15,7 @@ const { doComment } = require('./doComment')
 const { updateComment } = require('./updateComment')
 const { postConfirmation } = require('./postConfirmation')
 const { uploadFile } = require('./uploadFile')
+const { search } = require('./search')
 
 module.exports = {
     getCategory,
@@ -33,5 +34,6 @@ module.exports = {
     doComment,
     updateComment,
     postConfirmation,
-    uploadFile
+    uploadFile,
+    search
 }

@@ -17,7 +17,8 @@ const {
   doComment,
   updateComment,
   postConfirmation,
-  uploadFile
+  uploadFile,
+  search
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -90,4 +91,8 @@ module.exports.updateComment = (event, context, callback) => {
 
 module.exports.uploadFile = (event, context, callback) => {
   uploadFile(event, context, callback);
+};
+
+module.exports.search = (event, context, callback) => {
+  search(event, context, callback);
 };

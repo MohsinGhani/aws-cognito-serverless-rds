@@ -210,7 +210,17 @@ functions:
     events:
      - http:  
          path: upload-file
+         contentHandling: CONVERT_TO_BINARY
          method: POST
+         cors: true
+  
+  search:
+    handler: handler.search
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:  
+         path: search/{query}
+         method: GET
          cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
