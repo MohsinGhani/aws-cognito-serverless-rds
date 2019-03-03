@@ -66,7 +66,7 @@ export default function authReducer(state = initialState, action) {
             return {
                 ...state,
                 user: null,
-                authLoader: true,
+                authLoader: false,
                 authError: null,
                 isLoggedIn: false
             }
@@ -75,7 +75,7 @@ export default function authReducer(state = initialState, action) {
             return {
                 ...state,
                 user: null,
-                authLoader: true,
+                authLoader: false,
                 authError: null,
                 isLoggedIn: false
             }

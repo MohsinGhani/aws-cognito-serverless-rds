@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import SignInWithGoogle from './SignInWithGoogle'
 import SignInWithFacebook from './SignInWithFacebook'
 import { authAction } from './../../store/actions'
+import ReactLoading from 'react-loading';
 
 const styles = theme => ({
   p05: {
@@ -70,7 +71,7 @@ class SignIn extends React.Component {
   }
 
   render() {
-    let { classes } = this.props;
+    let { classes, authError, authLoader } = this.props;
     return (
       <Card className="signip-container">
         <Grid container spacing={16}>
@@ -79,6 +80,10 @@ class SignIn extends React.Component {
             <h3 className={`sub-title center ${classes.p05}`}>
               to continue to Productmania
             </h3>
+
+            {
+              authError ? <p className="text-alert">{JSON.stringify(authError)}</p> : ''
+            }
 
             <Grid container>
               <Grid item md={12} sm={12} xs={12} className={classes.p05}>
@@ -114,8 +119,15 @@ class SignIn extends React.Component {
                 className={classes.button}
                 fullWidth
                 onClick={this.login}
+                disabled={authLoader}
               >
-                Login
+                {
+                  authLoader ?
+                    <div>
+                      <ReactLoading type={'spin'} color={'#fff'} height={'25px'} width={'25px'} />
+                    </div> :
+                    'Login'
+                }
               </Button>
             </Grid>
             <Divider />

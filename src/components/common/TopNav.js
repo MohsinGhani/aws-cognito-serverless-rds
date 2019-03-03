@@ -132,7 +132,7 @@ class TopNav extends React.Component {
 
     render() {
         const { anchorEl, mobileMoreAnchorEl, query } = this.state;
-        const { classes } = this.props;
+        const { classes, isLoggedIn } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -146,7 +146,11 @@ class TopNav extends React.Component {
             >
                 <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
                 <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
-                <MenuItem onClick={this.logout}>Logout</MenuItem>
+                {
+                    isLoggedIn ?
+                        <MenuItem onClick={this.logout}>Logout</MenuItem> :
+                        <MenuItem onClick={() => this.goto('/signin')}>Login</MenuItem>
+                }
             </Menu>
         );
 
@@ -173,11 +177,19 @@ class TopNav extends React.Component {
                         <AccountCircle /> <span style={{ fontSize: '14px', paddingLeft: '10px' }}>Profile</span>
                     </IconButton>
                 </MenuItem>
-                <MenuItem onClick={this.logout}>
-                    <IconButton color="inherit">
-                        <Icon>input</Icon> <span style={{ fontSize: '14px', paddingLeft: '10px' }}>Logout</span>
-                    </IconButton>
-                </MenuItem>
+                {
+                    isLoggedIn ?
+                        <MenuItem onClick={this.logout}>
+                            <IconButton color="inherit">
+                                <Icon>input</Icon> <span style={{ fontSize: '14px', paddingLeft: '10px' }}>Logout</span>
+                            </IconButton>
+                        </MenuItem> :
+                        <MenuItem onClick={() => this.goto('/signin')}>
+                            <IconButton color="inherit">
+                                <Icon>input</Icon> <span style={{ fontSize: '14px', paddingLeft: '10px' }}>Login</span>
+                            </IconButton>
+                        </MenuItem>
+                }
             </Menu>
         );
 
@@ -242,9 +254,13 @@ TopNav.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const { ProductReducer: { searchedProducts, searchLoader, searchError } } = state;
+    const {
+        ProductReducer: { searchedProducts, searchLoader, searchError },
+        authReducer: { isLoggedIn }
+    } = state;
     return {
-        searchedProducts, searchLoader, searchError
+        searchedProducts, searchLoader, searchError,
+        isLoggedIn
     }
 }
 

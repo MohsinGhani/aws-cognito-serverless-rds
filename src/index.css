@@ -23,6 +23,11 @@ code {
   text-align: center;
 }
 
+.text-alert, .alert-text{
+  text-align: center;
+  color: red;
+}
+
 .c-p{ cursor: pointer; }
 
 .p5 {padding: 5px}
