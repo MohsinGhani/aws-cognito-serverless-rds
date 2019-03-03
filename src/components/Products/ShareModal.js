@@ -5,13 +5,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { InputField } from './../MaterialUI/index'
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 class ShareModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
             product_path: `${window.location.href}product/${props.product_id}`,
-            host_url: window.location.href
+            host_url: window.location.href,
+            copied: false
         }
     }
 
@@ -25,7 +27,7 @@ class ShareModal extends Component {
 
     render() {
         let { open, handleClose } = this.props
-        let { product_path } = this.state
+        let { product_path, copied } = this.state
         return (
             <div>
                 <Dialog
@@ -49,8 +51,14 @@ class ShareModal extends Component {
                         <Button onClick={handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.doComment} color="primary">
-                            Copy
+                        <Button color="primary">
+                            {
+                                copied ? 'Copied!' :
+                                    <CopyToClipboard text={product_path}
+                                        onCopy={() => this.setState({ copied: true })}>
+                                        <span>Copy to clipboard</span>
+                                    </CopyToClipboard>
+                            }
                         </Button>
                     </DialogActions>
                 </Dialog>
