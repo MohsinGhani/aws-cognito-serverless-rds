@@ -21,8 +21,7 @@ class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCommentModal: false,
-      host_url: window.location.href
+      showCommentModal: false
     }
   }
 

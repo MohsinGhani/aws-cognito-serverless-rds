@@ -16,6 +16,7 @@ import Slide from '@material-ui/core/Slide';
 import { connect } from 'react-redux';
 import { ProductAction } from './../../store/actions'
 import CommentModal from './CommentModal'
+import ShareModal from './ShareModal'
 
 const styles = {
     appBar: {
@@ -34,7 +35,8 @@ class ProductDetailModal extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            showCommentModal: false
+            showCommentModal: false,
+            showShareModal: false
         }
     }
 
@@ -65,12 +67,17 @@ class ProductDetailModal extends React.Component {
 
     render() {
         const { classes, open, handleDetailDialog, product } = this.props;
-        const { showCommentModal } = this.state;
+        const { showCommentModal, showShareModal } = this.state;
         return (
             <div>
                 <CommentModal
                     open={showCommentModal}
                     handleClose={() => this.setState({ showCommentModal: false })}
+                />
+                <ShareModal
+                    open={showShareModal}
+                    handleClose={() => this.setState({ showShareModal: false })}
+                    product_id={product ? product.product_id : ''}
                 />
                 <Dialog
                     fullScreen
@@ -138,6 +145,9 @@ class ProductDetailModal extends React.Component {
                                     <Divider />
                                     <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }}>
                                         <ListItemText secondary={'Add Comment'} />
+                                    </ListItem>
+                                    <ListItem button onClick={() => { this.setState({ showShareModal: true }) }}>
+                                        <ListItemText secondary={'Share'} />
                                     </ListItem>
                                 </List>
                                 : ''
