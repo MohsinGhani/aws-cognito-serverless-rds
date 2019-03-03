@@ -5,7 +5,11 @@ function search(event, context, callback) {
     let { query } = event.pathParameters  
     const searchProductQuery = `
         SELECT * FROM public."Product" WHERE
-            lower(title) LIKE '%${query.toLowerCase()}%'
+            lower(title) LIKE '%${query.toLowerCase()}%' OR
+            lower(description) LIKE '%${query.toLowerCase()}%' OR
+            lower(country) LIKE '%${query.toLowerCase()}%' OR
+            lower(state) LIKE '%${query.toLowerCase()}%' OR
+            lower(city) LIKE '%${query.toLowerCase()}%'
     `  
     return client.query(searchProductQuery)
         .then((data) => {
