@@ -7,6 +7,7 @@ import ConfirmSignUp from './components/Auth/ConfirmSignUp'
 import SelectCategory from './components/SelectCategory'
 import AddProduct from './components/AddProduct'
 import Products from './components/Products'
+import Product from './components/Product'
 import { Provider } from 'react-redux';
 import store from './store/store'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/forgot-password" component={ForgotPassword} />
             <Route exact path="/confirm-signup" component={ConfirmSignUp} />
+            <Route exact path="/product/:product_id" component={Product} />
             <Switch>
               {/* <PrivateRoute exact path="/" component={Products} /> */}
               <PrivateRoute exact path="/select-category" component={SelectCategory} />

@@ -51,16 +51,15 @@ class ProductDetailModal extends React.Component {
 
     handleLikeAndDislikeProduct = (action) => {
         const { user, product_id, likeProductAction } = this.props
-        let payload = {
-            user_id: user.user_id,
-            product_id,
-            action
-        }
-        if (user.user_id && product_id) {
-            likeProductAction(payload)
+        if (user && user.user_id && product_id) {
+            likeProductAction({
+                user_id: user.user_id,
+                product_id,
+                action
+            })
         }
         else {
-            alert('user id or product id is missing')
+            alert("you can't perform any action before authentication")
         }
     }
 
@@ -71,7 +70,7 @@ class ProductDetailModal extends React.Component {
             <div>
                 <CommentModal
                     open={showCommentModal}
-                    handleClose={() => this.setState({ showCommentModal: false  })}
+                    handleClose={() => this.setState({ showCommentModal: false })}
                 />
                 <Dialog
                     fullScreen
@@ -128,7 +127,7 @@ class ProductDetailModal extends React.Component {
                                             if (product && product._comments) {
                                                 return product._comments.map((comment, i) => {
                                                     return (
-                                                        <ListItem key={i} button onClick={() => { this.handleLikeAndDislikeProduct(false) }}>
+                                                        <ListItem key={i}>
                                                             <ListItemText secondary={comment.comment} />
                                                         </ListItem>
                                                     )

@@ -38,7 +38,7 @@ class Products extends React.Component {
   }
 
   render() {
-    let { products, getProductsLoader, getProductsError, searchedProducts, searchLoader, searchError } = this.props;
+    let { products, getProductsLoader, searchedProducts, searchLoader } = this.props;
     let { product, isOpenDetailDialog } = this.state;
     return (
       <div>
@@ -50,7 +50,7 @@ class Products extends React.Component {
         <TopNav />
         <div>
           <Map
-            style={"mapbox://styles/mapbox/streets-v9"}
+            style="mapbox://styles/mapbox/streets-v9"
             containerStyle={{
               height: "80vh",
               width: "95vw",
