@@ -31,6 +31,7 @@ class SignUp extends Component {
       firstname: '',
       lastname: '',
       email: '',
+      phone: '',
       password: '',
       confirmPassword: '',
       error: {
@@ -39,6 +40,7 @@ class SignUp extends Component {
         email: null,
         password: null,
         confirmPassword: null,
+        phone: null
       },
       isSignupButtonDisabled: true
     }
@@ -85,8 +87,8 @@ class SignUp extends Component {
   }
 
   handleSignUp = () => {
-    let { firstname, lastname, email, password } = this.state
-    this.props.signUpAction({ firstname, lastname, email, password })
+    let { firstname, lastname, email, phone, password } = this.state
+    this.props.signUpAction({ firstname, lastname, email, phone, password })
   }
 
   componentDidMount() {
@@ -149,6 +151,20 @@ class SignUp extends Component {
                   value={this.state.email}
                   onChange={this.handleInput}
                   helperText={"You can use letters, numbers & periods"}
+                />
+              </Grid>
+            </Grid>
+
+            <Grid container>
+              <Grid item md={12} sm={12} xs={12} className={classes.p05}>
+                <InputField
+                  label={"Phone Number"}
+                  variant={"outlined"}
+                  id={"phone"}
+                  fullWidth={true}
+                  value={this.state.phone}
+                  onChange={this.handleInput}
+                  helperText={"Phone number must be in E.164 format"}
                 />
               </Grid>
             </Grid>

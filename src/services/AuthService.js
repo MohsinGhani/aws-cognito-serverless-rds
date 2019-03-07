@@ -5,7 +5,12 @@ export const signup = (user) => {
     return new Promise((resolve, reject) => {
         Auth.signUp({
             username: email,
-            password
+            password,
+            attributes: {
+                email,          // optional
+                phone_number: phone,   // optional - E.164 number convention
+                // other custom attributes 
+            },
         })
             .then(u => resolve({ email: u.user.username, user_id: u.userSub, verified: u.userConfirmed, firstname, lastname, phone }))
             .catch(error => reject(error));
