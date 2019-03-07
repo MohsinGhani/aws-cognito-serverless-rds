@@ -51,11 +51,12 @@ const parser = (event) => new Promise((resolve, reject) => {
         resolve(event)
     });
 
-    // busboy.write(event.body, event.isBase64Encoded ? 'base64' : 'binary');
+    busboy.write(event.body, 'base64');
     busboy.end();
 });
 
 function uploadToS3(file, foldername) {
+    console.log('file to upload s3', file)
     let s3bucket = new AWS.S3({ params: { Bucket: `${serverConfig.BUCKET}/${foldername}` } });
     return new Promise((res, rej) => {
         s3bucket.createBucket(function () {
@@ -75,20 +76,27 @@ function uploadToS3(file, foldername) {
 }
 
 function uploadFile(event, context, callback) {
-    parser(event)
-    .then((data)=>{
-        sendSuccessRes(context, 200, data, `Successfull add image`)
-    })
-    .catch((err)=>{
-        sendErrorRes(context, 500, err)
-    })
-    // const { file } = multipart.parse(event, false)
-    // console.log('file', file)
-    // uploadToS3(file, "products").then((data) => {
-    //     sendSuccessRes(context, 200, file, `Successfull add image`)
-    // }).catch((err) => {
+    let encodedImage = JSON.parse(event.body).product_image;
+    console.log('encodedImage', encodedImage)
+    let decodedImage = Buffer.from(encodedImage, 'base64');
+    let file = {
+        content: decodedImage,
+        filename: 'testing.jpg'
+    }
+    // parser(event)
+    // .then((data)=>{
+    //     sendSuccessRes(context, 200, data, `Successfull add image`)
+    // })
+    // .catch((err)=>{
     //     sendErrorRes(context, 500, err)
     // })
+
+    // const { file } = multipart.parse(event, false)
+    uploadToS3(file, "products").then((data) => {
+        sendSuccessRes(context, 200, { file, data }, `Successfull add image`)
+    }).catch((err) => {
+        sendErrorRes(context, 500, err)
+    })
 }
 
 exports.uploadFile = uploadFile

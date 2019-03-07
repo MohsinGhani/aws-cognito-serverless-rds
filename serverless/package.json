@@ -13,5 +13,8 @@
     "aws-sdk": "^2.403.0",
     "busboy": "^0.3.0",
     "pg": "^7.4.3"
+  },
+  "devDependencies": {
+    "serverless-apigw-binary": "^0.4.4"
   }
 }
