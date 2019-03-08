@@ -13,11 +13,36 @@ import store from './store/store'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Amplify from 'aws-amplify';
 import awsConfig from './config/awsConfig'
+import credentials from './config/credentials'
 import PrivateRoute from './components/common/PrivateRoute';
 
 Amplify.configure(awsConfig)
 
 class App extends Component {
+
+  componentDidMount() {
+    this.loadFacebookSDK();
+  }
+
+  loadFacebookSDK() {
+    window.fbAsyncInit = function () {
+      window.FB.init({
+        appId: credentials.FB_APP_ID,
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: 'v3.1'
+      });
+    };
+
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }
+
   render() {
     return (
       <Provider store={store}>

@@ -43,7 +43,8 @@ class AddProduct extends React.Component {
       selectedCity: '',
       latitude: '',
       longitude: '',
-      isSaveButtonDisable: true
+      isSaveButtonDisable: true,
+      selectedImage: null
     }
   }
 
@@ -173,6 +174,28 @@ class AddProduct extends React.Component {
     this.props.history.push(path)
   }
 
+  handleImageChange = (event) => { // funciton for get file and save in state
+    let f = event.target.files[0]
+    const reader = new FileReader();
+    reader.readAsDataURL(f);
+    let file = {}
+    file['base64'] = reader.result
+    this.setState({
+      selectedImage: file
+    })
+    // reader.onloadend
+    debugger
+    // if (event.target.files && event.target.files[0]) {
+    //   console.log('url', URL.createObjectURL(event.target.files[0]))
+    //   console.log('url', URL.createObjectURL(event.target.files[0]))
+
+    //   this.setState({
+    //     selectedImage: URL.createObjectURL(event.target.files[0]),
+    //     visible: true
+    //   })
+    // }
+  }
+
   render() {
     let { classes } = this.props;
     let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude, isSaveButtonDisable } = this.state;
@@ -189,6 +212,15 @@ class AddProduct extends React.Component {
             {/* <Hidden smDown> */}
             <Grid item md={5} sm={12} xs={12}>
               Should be image here
+              <InputField
+                // label={"Choose Image"}
+                variant={"outlined"}
+                id={"selecteImage"}
+                type={'file'}
+                // value={selectedCategory ? selectedCategory.title : ''}
+                fullWidth={true}
+                onChange={(event) => { this.handleImageChange(event); event.target.value = null }}
+              />
             </Grid>
             {/* </Hidden> */}
             <Grid item md={7} sm={12} xs={12}>
