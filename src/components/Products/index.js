@@ -70,7 +70,7 @@ class Products extends React.Component {
               coordinates={[longitude, latitude]}
               anchor="bottom"
             >
-              <img src={require('./../../assets/img/current-location.png')} alt="marker" width='20px' height='25' />
+              <img className="c-p" title="your current location" src={require('./../../assets/img/current-location.png')} alt="marker" width='20px' height='25' />
             </Marker>
 
             {
@@ -82,7 +82,7 @@ class Products extends React.Component {
                     onClick={() => this.setState({ product, isOpenDetailDialog: true })}
                     key={i}
                   >
-                    <img src={require('./../../assets/img/marker.png')} alt="marker" width='20px' height='25' />
+                    <img className="c-p" title={product.title} src={require('./../../assets/img/marker.png')} alt="marker" width='12px' height='12px' />
                   </Marker>
                 )
               })
@@ -97,7 +97,7 @@ class Products extends React.Component {
                     onClick={() => this.setState({ product, isOpenDetailDialog: true })}
                     key={i}
                   >
-                    <img src={require('./../../assets/img/marker.png')} alt="marker" width='20px' height='25' />
+                    <img className="c-p" src={require('./../../assets/img/marker.png')} alt="marker" width='12px' height='12px' />
                   </Marker>
                 )
               })
