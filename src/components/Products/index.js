@@ -8,6 +8,7 @@ import ReactMapboxGl from "react-mapbox-gl";
 import { Marker } from "react-mapbox-gl";
 import credentials from '../../config/credentials'
 import ProductDetailModal from './ProductDetailModal'
+import Location from './../common/Location'
 
 const Map = ReactMapboxGl({
   accessToken: credentials.MAP_ACCESS_TOCKEN
@@ -28,7 +29,9 @@ class Products extends React.Component {
     this.state = {
       map: null,
       product: null,
-      isOpenDetailDialog: false
+      isOpenDetailDialog: false,
+      latitude: null,
+      longitude: null
     }
   }
 
@@ -39,9 +42,10 @@ class Products extends React.Component {
 
   render() {
     let { products, getProductsLoader, searchedProducts, searchLoader } = this.props;
-    let { product, isOpenDetailDialog } = this.state;
+    let { product, isOpenDetailDialog, latitude, longitude } = this.state;
     return (
       <div>
+        <Location handleLocation={(latitude, longitude) => { this.setState({ latitude, longitude }) }} />
         <ProductDetailModal
           product_id={product ? product.product_id : null}
           open={isOpenDetailDialog}
@@ -56,7 +60,19 @@ class Products extends React.Component {
               width: "95vw",
               margin: '0 auto'
             }}
+            movingMethod={'jumpTo'}
+            center={[longitude, latitude]}
+            zoom={[12]}
           >
+
+            {/* current location pointer */}
+            <Marker
+              coordinates={[longitude, latitude]}
+              anchor="bottom"
+            >
+              <img src={require('./../../assets/img/current-location.png')} alt="marker" width='20px' height='25' />
+            </Marker>
+
             {
               !getProductsLoader && !searchLoader && !searchedProducts && products && products.map((product, i) => {
                 return (
