@@ -39,26 +39,18 @@ class SignInWithGoogle extends React.Component {
             name: profile.getName()
         };
 
-        debugger
-        const credentials = Auth.federatedSignIn(
-            'google',
-            { token: id_token, expires_at },
-            user
-        ).then(cred => {
-            // If success, you will get the AWS credentials
-            debugger
-            console.log(cred);
-            return Auth.currentAuthenticatedUser();
-        }).then(user => {
-            debugger
-            // If success, the user object you passed in Auth.federatedSignIn
-            console.log(user);
-        }).catch(e => {
-            debugger
-            console.log(e)
-        });
-        debugger
-        console.log('credentials', credentials);
+        Auth.federatedSignIn('google', { token: id_token, expires_at }, user)
+            .then(cred => {
+                // If success, you will get the AWS credentials
+                console.log(cred);
+                return Auth.currentAuthenticatedUser();
+            }).then(user => {
+                // If success, the user object you passed in Auth.federatedSignIn
+                console.log(user);
+            }).catch(e => {
+                debugger
+                console.log(e)
+            });
     }
 
     createScript() {

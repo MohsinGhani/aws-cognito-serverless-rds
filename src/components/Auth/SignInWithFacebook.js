@@ -24,121 +24,23 @@ class SignInWithFacebook extends React.Component {
         this.state = {
             isLoading: false
         }
-        // this.signIn = this.signIn.bind(this);
         this.getAWSCredentials = this.getAWSCredentials.bind(this);
     }
 
     componentDidMount() {
         waitForInit();
-        // if (!window.FB) this.createScript();
     }
 
-    // statusChangeCallback = response => {
-    //     if (response.status === "connected") {
-    //         debugger
-    //         this.handleResponse(response.authResponse);
-    //     } else {
-    //         debugger
-    //         this.handleError(response);
-    //     }
-    // };
-
-    // checkLoginState = () => {
-    //     window.FB.getLoginStatus(this.statusChangeCallback);
-    // };
-
-    // handleClick = () => {
-    //     window.FB.login(this.checkLoginState, { scope: "public_profile,email" });
-    // };
-
-    // handleError(error) {
-    //     alert(error);
-    // }
-
-    // async handleResponse(data) {
-    //     const { email, accessToken: token, expiresIn } = data;
-    //     const expires_at = expiresIn * 1000 + new Date().getTime();
-    //     const user = { email };
-
-    //     this.setState({ isLoading: true });
-
-    //     try {
-    //         const response = await Auth.federatedSignIn(
-    //             "facebook",
-    //             { token, expires_at },
-    //             user
-    //         );
-    //         debugger
-    //         this.setState({ isLoading: false });
-    //         // this.props.onLogin(response);
-    //     } catch (e) {
-    //         debugger
-    //         this.setState({ isLoading: false });
-    //         this.handleError(e);
-    //     }
-    // }
-
-    signIn() {
+    signIn = () => {
         const fb = window.FB;
         fb.getLoginStatus(response => {
             if (response.status === 'connected') {
-                debugger
-                // this.getAWSCredentials(response.authResponse);
-                response = response.authResponse
-                const { accessToken, expiresIn } = response;
-                const date = new Date();
-                const expires_at = expiresIn * 1000 + date.getTime();
-                if (!accessToken) {
-                    return;
-                }
-
-                const fb = window.FB;
-                fb.api('/me', { fields: 'name,email' }, response => {
-                    debugger
-                    const user = {
-                        name: response.name,
-                        email: response.email
-                    };
-
-                    Auth.federatedSignIn('facebook', { token: accessToken, expires_at }, user)
-                        .then(credentials => {
-                            console.log(credentials);
-                        });
-                });
-                /////////////////////
+                this.getAWSCredentials(response.authResponse);
             } else {
                 fb.login(
                     response => {
-                        debugger
-                        if (!response || !response.authResponse) {
-                            return;
-                        }
-                        // this.getAWSCredentials(response.authResponse);
-                        response = response.authResponse
-                        const { accessToken, expiresIn } = response;
-                        const date = new Date();
-                        const expires_at = expiresIn * 1000 + date.getTime();
-                        if (!accessToken) {
-                            return;
-                        }
-
-                        const fb = window.FB;
-                        fb.api('/me', { fields: 'name,email' }, response => {
-                            const user = {
-                                name: response.name,
-                                email: response.email
-                            };
-
-                            Auth.federatedSignIn('facebook', { token: accessToken, expires_at }, user)
-                                .then(credentials => {
-                                    debugger
-                                    console.log(credentials);
-                                })
-                                .catch((err)=>{
-                                    debugger
-                                })
-                        });
-                        //////////////////
+                        if (!response || !response.authResponse) return;
+                        this.getAWSCredentials(response.authResponse);
                     },
                     {
                         // the authorized scopes
@@ -150,7 +52,6 @@ class SignInWithFacebook extends React.Component {
     }
 
     getAWSCredentials = (response) => {
-        debugger
         const { accessToken, expiresIn } = response;
         const date = new Date();
         const expires_at = expiresIn * 1000 + date.getTime();
@@ -166,8 +67,16 @@ class SignInWithFacebook extends React.Component {
             };
 
             Auth.federatedSignIn('facebook', { token: accessToken, expires_at }, user)
-                .then(credentials => {
-                    console.log(credentials);
+                .then(cred => {
+                    // If success, you will get the AWS credentials
+                    console.log(cred);
+                    return Auth.currentAuthenticatedUser();
+                }).then(user => {
+                    // If success, the user object you passed in Auth.federatedSignIn
+                    console.log(user);
+                }).catch(e => {
+                    debugger
+                    console.log(e)
                 });
         });
     }
