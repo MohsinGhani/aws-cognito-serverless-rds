@@ -22,7 +22,6 @@ class SignInWithGoogle extends React.Component {
         const ga = window.gapi.auth2.getAuthInstance();
         ga.signIn().then(
             googleUser => {
-                debugger
                 this.getAWSCredentials(googleUser);
             },
             error => {
@@ -40,11 +39,25 @@ class SignInWithGoogle extends React.Component {
             name: profile.getName()
         };
 
-        const credentials = await Auth.federatedSignIn(
+        debugger
+        const credentials = Auth.federatedSignIn(
             'google',
             { token: id_token, expires_at },
             user
-        );
+        ).then(cred => {
+            // If success, you will get the AWS credentials
+            debugger
+            console.log(cred);
+            return Auth.currentAuthenticatedUser();
+        }).then(user => {
+            debugger
+            // If success, the user object you passed in Auth.federatedSignIn
+            console.log(user);
+        }).catch(e => {
+            debugger
+            console.log(e)
+        });
+        debugger
         console.log('credentials', credentials);
     }
 

@@ -107,7 +107,7 @@ export const login = (email, password) => {
 export const logout = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            await Auth.signOut();
+            await Auth.signOut({ global: true });
             resolve(true);
         } catch (error) {
             reject(error)
