@@ -56,54 +56,56 @@ class Product extends React.Component {
         />
         <TopNav />
         <div className="product-detail-modal-body">
-          <div className="product-image-container">
-            <img src={require('./../../assets/img/c15.jpg')} alt="product" className="product-image" />
-          </div>
           {
             product ?
-              <List>
-                <ListItem button>
-                  <ListItemText primary={'Product Title'} secondary={product.title} />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary={'Product Description'} secondary={product.description} />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary={'Country'} secondary={product.country} />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                  <ListItemText primary={'City'} secondary={product.city} />
-                </ListItem>
-                <Divider />
-                <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(true) }}>
-                  <ListItemText primary={'Like'} secondary={product._like} />
-                </ListItem>
-                <Divider />
-                <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(false) }}>
-                  <ListItemText primary={'Dislike'} secondary={product._dislike} />
-                </ListItem>
-                <Divider />
-                {
-                  (() => {
-                    if (product && product._comments) {
-                      return product._comments.map((comment, i) => {
-                        return (
-                          <ListItem key={i}>
-                            <ListItemText secondary={comment.comment} />
-                          </ListItem>
-                        )
-                      })
-                    }
-                  })()
-                }
-                <Divider />
-                <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }}>
-                  <ListItemText secondary={'Add Comment'} />
-                </ListItem>
-              </List>
+              <div>
+                <div className="product-image-container">
+                  <img src={product.product_img} alt="product" className="product-image" />
+                </div>
+                <List>
+                  <ListItem button>
+                    <ListItemText primary={'Product Title'} secondary={product.title} />
+                  </ListItem>
+                  <Divider />
+                  <ListItem button>
+                    <ListItemText primary={'Product Description'} secondary={product.description} />
+                  </ListItem>
+                  <Divider />
+                  <ListItem button>
+                    <ListItemText primary={'Country'} secondary={product.country} />
+                  </ListItem>
+                  <Divider />
+                  <ListItem button>
+                    <ListItemText primary={'City'} secondary={product.city} />
+                  </ListItem>
+                  <Divider />
+                  <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(true) }}>
+                    <ListItemText primary={'Like'} secondary={product._like} />
+                  </ListItem>
+                  <Divider />
+                  <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(false) }}>
+                    <ListItemText primary={'Dislike'} secondary={product._dislike} />
+                  </ListItem>
+                  <Divider />
+                  {
+                    (() => {
+                      if (product && product._comments) {
+                        return product._comments.map((comment, i) => {
+                          return (
+                            <ListItem key={i}>
+                              <ListItemText secondary={comment.comment} />
+                            </ListItem>
+                          )
+                        })
+                      }
+                    })()
+                  }
+                  <Divider />
+                  <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }}>
+                    <ListItemText secondary={'Add Comment'} />
+                  </ListItem>
+                </List>
+              </div>
               : ''
           }
         </div>

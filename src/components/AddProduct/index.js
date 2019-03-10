@@ -152,7 +152,7 @@ class AddProduct extends React.Component {
       latitude,
       longitude,
       creator_id: user.user_id,
-      selectedImage: JSON.stringify(selectedImage)
+      product_img: JSON.stringify(selectedImage)
     })
   }
 

@@ -150,6 +150,7 @@ functions:
     events:
      - http:
          path: add-product
+         contentHandling: CONVERT_TO_BINARY
          method: POST
          cors: true
   
