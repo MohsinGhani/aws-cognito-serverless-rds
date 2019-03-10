@@ -44,7 +44,7 @@ class AddProduct extends React.Component {
       latitude: '',
       longitude: '',
       isSaveButtonDisable: true,
-      selectedImage: null
+      selectedImage: {}
     }
   }
 
@@ -139,7 +139,7 @@ class AddProduct extends React.Component {
   }
 
   onSaveProduct = () => {
-    const { selectedCategory, title, description, selectedCountry, selectedState, selectedCity, latitude, longitude } = this.state
+    const { selectedCategory, title, description, selectedCountry, selectedState, selectedCity, latitude, longitude, selectedImage } = this.state
     const { user, saveProductAction } = this.props
     saveProductAction({
       product_id: uuidv1(),
@@ -151,12 +151,13 @@ class AddProduct extends React.Component {
       city: selectedCity,
       latitude,
       longitude,
-      creator_id: user.user_id
+      creator_id: user.user_id,
+      selectedImage: JSON.stringify(selectedImage)
     })
   }
 
   validateSaveButton = () => {
-    const { selectedCategory, title, description, selectedCountry, selectedState, selectedCity, latitude, longitude } = this.state
+    const { selectedCategory, title, description, selectedCountry, selectedState, selectedCity, latitude, longitude, selectedImage } = this.state
     return (
       title.length >= 3 &&
       description.length >= 3 &&
@@ -166,7 +167,12 @@ class AddProduct extends React.Component {
       selectedState &&
       latitude &&
       longitude &&
-      this.props.user
+      selectedImage &&
+      selectedImage.base64 &&
+      selectedImage.name &&
+      selectedImage.type &&
+      this.props.user &&
+      this.props.user.user_id
     )
   }
 
@@ -175,30 +181,25 @@ class AddProduct extends React.Component {
   }
 
   handleImageChange = (event) => { // funciton for get file and save in state
-    let f = event.target.files[0]
-    const reader = new FileReader();
-    reader.readAsDataURL(f);
-    let file = {}
-    file['base64'] = reader.result
-    this.setState({
-      selectedImage: file
-    })
-    // reader.onloadend
-    debugger
-    // if (event.target.files && event.target.files[0]) {
-    //   console.log('url', URL.createObjectURL(event.target.files[0]))
-    //   console.log('url', URL.createObjectURL(event.target.files[0]))
+    if (event.target.files && event.target.files[0]) {
+      let file = {
+        name: event.target.files[0].name,
+        size: event.target.files[0].size,
+        type: event.target.files[0].type
+      }
+      this.setState({ selectedImage: file })
 
-    //   this.setState({
-    //     selectedImage: URL.createObjectURL(event.target.files[0]),
-    //     visible: true
-    //   })
-    // }
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        this.setState({ selectedImage: { ...this.state.selectedImage, base64: e.target.result } });
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 
   render() {
     let { classes } = this.props;
-    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude, isSaveButtonDisable } = this.state;
+    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude, isSaveButtonDisable, selectedImage } = this.state;
     return (
       <div>
         <SelectCategory
@@ -213,14 +214,15 @@ class AddProduct extends React.Component {
             <Grid item md={5} sm={12} xs={12}>
               Should be image here
               <InputField
-                // label={"Choose Image"}
                 variant={"outlined"}
                 id={"selecteImage"}
                 type={'file'}
-                // value={selectedCategory ? selectedCategory.title : ''}
                 fullWidth={true}
                 onChange={(event) => { this.handleImageChange(event); event.target.value = null }}
               />
+              {
+                selectedImage && selectedImage.base64 ? <img src={selectedImage.base64} alt="product" className="product-image" /> : ''
+              }
             </Grid>
             {/* </Hidden> */}
             <Grid item md={7} sm={12} xs={12}>
