@@ -66,13 +66,13 @@ class ConfirmSignUp extends React.Component {
   }
 
   render() {
-    let { classes } = this.props;
+    let { classes, confirmSignupLoader, confirmSignupError } = this.props;
     return (
       <Card className="signip-container">
         <Grid container spacing={16}>
           <Grid item md={12} sm={12} xs={12}>
             <h1 className={`title center ${classes.p05}`}>Confirm SignUp</h1>
-
+            {confirmSignupError ? JSON.stringify(confirmSignupError) : ''}
             <Grid container>
               <Grid item md={12} sm={12} xs={12} className={classes.p05}>
                 <InputField
@@ -100,6 +100,7 @@ class ConfirmSignUp extends React.Component {
                 color="primary"
                 className={classes.button}
                 onClick={this.confirmCodeHandler}
+                disabled={confirmSignupLoader}
               >
                 Confirm
               </Button>

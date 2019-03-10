@@ -14,6 +14,7 @@ import { authAction } from './../actions/index'
 import { HttpService } from '../../services/http';
 import path from './../../config/path'
 import { login, signup, confirm, isLoggedIn, logout } from "../../services/AuthService";
+import store from './../store'
 
 export default class authEpic {
     static signIn = (action$) =>
@@ -101,16 +102,19 @@ export default class authEpic {
             .switchMap(({ payload }) => {
                 let { user, code } = payload
                 return Observable.fromPromise(confirm(user, code))
-                    .catch((err) => {
-                        return Observable.of(authAction.confirmSignUpFailure(err.message))
+                    .catch((error) => {
+                        return Observable.of(authAction.confirmSignUpFailure(error))
                     })
                     .switchMap((res) => {
+                        let { email, password } = store.getState().authReducer["signupUser"]
                         if (res.type && res.type === 'CONFIRM_SIGNUP_FAILURE') {
-                            return Observable.of(authAction.confirmSignUpFailure(res.payload))
+                            return Observable.of(authAction.confirmSignUpFailure(res.error))
                         } else {
                             return Observable.of(
                                 authAction.confirmSignUpSuccess(res),
-                                authAction.postConfirm({ user_id: res.user_id })
+                                authAction.postConfirm({ user_id: res.user_id }),
+                                authAction.signIn({ email, password })
+
                             )
                         }
                     })
@@ -119,11 +123,12 @@ export default class authEpic {
     static postSignUp = (action$) =>
         action$.ofType(POST_SIGNUP)
             .switchMap(({ payload }) => {
-                return HttpService.post(path.POST_SIGNUP, payload)
+                let { email, user_id, verified, firstname, lastname, phone, password } = payload
+                return HttpService.post(path.POST_SIGNUP, { email, user_id, verified, firstname, lastname, phone })
                     .switchMap(({ response }) => {
                         if (response.status === 200) {
                             return Observable.of(
-                                authAction.postSignUpSuccess(response.data)
+                                authAction.postSignUpSuccess({ ...response.data, password })
                             )
                         }
                     }).catch((err) => {
@@ -138,7 +143,7 @@ export default class authEpic {
                     .switchMap(({ response }) => {
                         if (response.status === 200) {
                             return Observable.of(
-                                authAction.postConfirmSuccess(response.data)
+                                authAction.postConfirmSuccess(response.data),
                             )
                         }
                     }).catch((err) => {

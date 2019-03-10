@@ -6,13 +6,13 @@ export const signup = (user) => {
         Auth.signUp({
             username: email,
             password,
-            attributes: {
-                email,          // optional
-                phone_number: phone,   // optional - E.164 number convention
-                // other custom attributes 
-            },
+            // attributes: {
+            //     email,          // optional
+            //     phone_number: phone,   // optional - E.164 number convention
+            //     // other custom attributes 
+            // },
         })
-            .then(u => resolve({ email: u.user.username, user_id: u.userSub, verified: u.userConfirmed, firstname, lastname, phone }))
+            .then(u => resolve({ email: u.user.username, user_id: u.userSub, verified: u.userConfirmed, firstname, lastname, phone, password }))
             .catch(error => reject(error));
     });
 }
