@@ -10,6 +10,13 @@ import Hidden from "@material-ui/core/Hidden";
 import Button from "@material-ui/core/Button";
 import { authAction } from './../../store/actions'
 
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+
 const styles = theme => ({
   p05: {
     padding: "5px"
@@ -21,6 +28,13 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between",
     marginTop: "15px"
+  },
+  formControl: {
+    margin: theme.spacing.unit * 3,
+  },
+  group: {
+    margin: `${theme.spacing.unit}px 0`,
+    display: 'flex'
   }
 });
 
@@ -34,6 +48,7 @@ class SignUp extends Component {
       phone: '',
       password: '',
       confirmPassword: '',
+      isPhoneVerificationEnable: false,
       error: {
         firstname: null,
         lastname: null,
@@ -87,8 +102,8 @@ class SignUp extends Component {
   }
 
   handleSignUp = () => {
-    let { firstname, lastname, email, phone, password } = this.state
-    this.props.signUpAction({ firstname, lastname, email, phone, password })
+    let { firstname, lastname, email, phone, password, isPhoneVerificationEnable } = this.state
+    this.props.signUpAction({ firstname, lastname, email, phone, password, isPhoneVerificationEnable })
   }
 
   componentDidMount() {
@@ -102,6 +117,10 @@ class SignUp extends Component {
     if (this.props.isLoggedIn) {
       this.goto('/add-product')
     }
+  }
+
+  handleVerificationOption = (e) => {
+    debugger
   }
 
   render() {
@@ -201,7 +220,34 @@ class SignUp extends Component {
                 symbols
               </label>
             </Grid>
-
+            <hr />
+            <Grid container>
+              <Grid item md={12} sm={12} xs={12} className={classes.p05}>
+                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                  <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+                    <Radio
+                      checked={!this.state.isPhoneVerificationEnable}
+                      onChange={() => this.setState({ isPhoneVerificationEnable: false })}
+                      value="Email"
+                      name="radio-button-demo"
+                      aria-label="Email"
+                    />
+                    <FormLabel style={{ textAlign: 'center' }} component="legend">Verify by Email</FormLabel>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+                    <Radio
+                      checked={this.state.isPhoneVerificationEnable}
+                      onChange={() => this.setState({ isPhoneVerificationEnable: true })}
+                      value="Phone"
+                      name="radio-button-demo"
+                      aria-label="Phone"
+                    />
+                    <FormLabel style={{ textAlign: 'center' }} component="legend">Verify by Phone</FormLabel>
+                  </div>
+                </div>
+              </Grid>
+            </Grid>
+            <hr />
             <Grid container className={classes.btns_parent}>
               <Button
                 onClick={() => this.goto("/signin")}

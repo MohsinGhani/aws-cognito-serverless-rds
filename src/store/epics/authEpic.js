@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Rx';
 import { authAction } from './../actions/index'
 import { HttpService } from '../../services/http';
 import path from './../../config/path'
-import { login, signup, confirm, isLoggedIn, logout } from "../../services/AuthService";
+import { login, signup, confirm, isLoggedIn, logout, signupWithPhone } from "../../services/AuthService";
 import store from './../store'
 
 export default class authEpic {
@@ -44,7 +44,7 @@ export default class authEpic {
     static signUp = (action$) =>
         action$.ofType(SIGNUP)
             .switchMap(({ payload }) => {
-                return Observable.fromPromise(signup(payload))
+                return Observable.fromPromise(payload.isPhoneVerificationEnable ? signupWithPhone(payload) : signup(payload))
                     .catch((err) => {
                         return Observable.of(authAction.signUpFailure(err.message))
                     })
