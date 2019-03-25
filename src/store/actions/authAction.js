@@ -3,6 +3,7 @@ import {
     SIGNIN, SIGNIN_SUCCESS, SIGNIN_FAILURE,
     SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE,
     POST_SIGNUP, POST_SIGNUP_SUCCESS, POST_SIGNUP_FAILURE,
+    POST_SOCIAL_AUTH, POST_SOCIAL_AUTH_SUCCESS, POST_SOCIAL_AUTH_FAILURE,
     CONFIRM_SIGNUP, CONFIRM_SIGNUP_SUCCESS, CONFIRM_SIGNUP_FAILURE,
     POST_CONFIRM, POST_CONFIRM_SUCCESS, POST_CONFIRM_FAILURE,
     RESEND_SIGNUP, RESEND_SIGNUP_SUCCESS, RESEND_SIGNUP_FAILURE,
@@ -13,6 +14,28 @@ import {
 
 export class authAction {
 
+    static postSocialAuth(payload) {
+        return {
+            type: POST_SOCIAL_AUTH,
+            payload
+        }
+    }
+
+    static postSocialAuthSuccess(payload) {
+        return {
+            type: POST_SOCIAL_AUTH_SUCCESS,
+            payload
+        }
+    }
+
+    static postSocialAuthFailure(error) {
+        return {
+            type: POST_SOCIAL_AUTH_FAILURE,
+            error
+        }
+    }
+
+    ///////////////
     static signIn(payload) {
         return {
             type: SIGNIN,

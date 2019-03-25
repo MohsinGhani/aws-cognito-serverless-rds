@@ -7,6 +7,7 @@ import {
     POST_CONFIRM,
     IS_LOGGED_IN,
     GET_USER_BY_ID,
+    POST_SOCIAL_AUTH,
     LOGOUT
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
@@ -91,7 +92,7 @@ export default class authEpic {
                         } else {
                             return Observable.of(
                                 authAction.isLoggedInSuccess(res),
-                                authAction.getUserById({ user_id: res.username })
+                                authAction.getUserById({ user_id: res.username ? res.username : res.id })
                             )
                         }
                     })
@@ -133,6 +134,22 @@ export default class authEpic {
                         }
                     }).catch((err) => {
                         return Observable.of(authAction.postSignUpFailure(`${err}`))
+                    })
+            })
+
+    static postSocialAuth = (action$) =>
+        action$.ofType(POST_SOCIAL_AUTH)
+            .switchMap(({ payload }) => {
+                let { email, user_id, firstname, lastname } = payload
+                return HttpService.post(path.POST_SOCIAL_AUTH, { email, user_id, firstname, lastname })
+                    .switchMap(({ response }) => {
+                        if (response.status === 200) {
+                            return Observable.of(
+                                authAction.postSocialAuthSuccess({ ...response.data })
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(authAction.postSocialAuthFailure(`${err}`))
                     })
             })
 

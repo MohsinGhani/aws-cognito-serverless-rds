@@ -8,6 +8,7 @@ const rootEpic = combineEpics(
     authEpic.confirmSignUp,
     authEpic.resendSignUp,
     authEpic.postSignUp,
+    authEpic.postSocialAuth,
     authEpic.postConfirm,
     authEpic.isLoggedIn,
     authEpic.getUserById,

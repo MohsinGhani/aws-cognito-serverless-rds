@@ -3,6 +3,8 @@ import { Auth } from 'aws-amplify';
 import credentials from './../../config/credentials'
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import { connect } from 'react-redux';
+import { authAction } from './../../store/actions'
 
 // To federated sign in from Google
 class SignInWithGoogle extends React.Component {
@@ -16,6 +18,12 @@ class SignInWithGoogle extends React.Component {
             window.gapi.auth2.getAuthInstance() :
             null;
         if (!ga) this.createScript();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.isLoggedIn !== this.props.isLoggedIn && this.props.isLoggedIn) {
+            this.props.history.push('/')
+        }
     }
 
     signIn() {
@@ -42,11 +50,12 @@ class SignInWithGoogle extends React.Component {
         Auth.federatedSignIn('google', { token: id_token, expires_at }, user)
             .then(cred => {
                 // If success, you will get the AWS credentials
-                console.log(cred);
+                // console.log(cred);
                 return Auth.currentAuthenticatedUser();
             }).then(user => {
                 // If success, the user object you passed in Auth.federatedSignIn
-                console.log(user);
+                // console.log(user);
+                this.props.postSocialAuth({ email: user.email, user_id: user.id, firstname: user.name.split(" ")[0], lastname: user.name.split(" ")[1] })
             }).catch(e => {
                 debugger
                 console.log(e)
@@ -75,6 +84,7 @@ class SignInWithGoogle extends React.Component {
     }
 
     render() {
+        let { authLoader } = this.props
         return (
             <div>
                 <Button
@@ -82,6 +92,7 @@ class SignInWithGoogle extends React.Component {
                     // color="primary"
                     fullWidth
                     onClick={this.signIn}
+                    disabled={authLoader}
                 >
                     Sign in with Google
               </Button>
@@ -90,4 +101,19 @@ class SignInWithGoogle extends React.Component {
     }
 }
 
-export default withStyles({})(SignInWithGoogle);
+const mapStateToProps = (state) => {
+    const { authReducer: { authLoader, authError, isLoggedIn } } = state;
+    return {
+        authLoader, authError, isLoggedIn
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        postSocialAuth: (payload) => dispatch(authAction.postSocialAuth(payload))
+    };
+};
+
+export default connect(
+    mapStateToProps, mapDispatchToProps
+)(withStyles({})(SignInWithGoogle));
