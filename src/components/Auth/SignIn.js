@@ -153,7 +153,9 @@ class SignIn extends React.Component {
               history={this.props.history}
             />
             <br />
-            <SignInWithFacebook />
+            <SignInWithFacebook
+              history={this.props.history}
+            />
           </Grid>
         </Grid>
       </Card>
