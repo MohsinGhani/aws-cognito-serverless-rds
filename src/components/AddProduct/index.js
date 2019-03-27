@@ -9,7 +9,9 @@ import SelectCategory from './../SelectCategory'
 import Icon from '@material-ui/core/Icon';
 import { Address } from "./../../services/address"
 import uuidv1 from 'uuid/v1'
+import IconButton from '@material-ui/core/IconButton';
 import { connect } from 'react-redux';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { ProductAction } from './../../store/actions'
 import "./index.css";
 
@@ -17,11 +19,16 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
+  button: {
+    margin: theme.spacing.unit,
+  },
   margin: {
     margin: '10px 0 0 0',
-  }
+  },
+  input: {
+    display: 'none',
+  },
 });
-
 class AddProduct extends React.Component {
   constructor(props) {
     super(props);
@@ -213,6 +220,18 @@ class AddProduct extends React.Component {
             {/* <Hidden smDown> */}
             <Grid item md={5} sm={12} xs={12}>
               Should be image here
+              <input accept="image/*" className={classes.input} id="icon-button-file"
+                variant={"outlined"}
+                // id={"selecteImage"}
+                type={'file'}
+                fullwidth={'true'}
+                onChange={(event) => { this.handleImageChange(event); event.target.value = null }}
+              type="file" />
+              {/* <label htmlFor="icon-button-file">
+                <IconButton color="primary" className={classes.button} component="span">
+                  <PhotoCamera />
+                </IconButton>
+              </label> */}
               <InputField
                 variant={"outlined"}
                 id={"selecteImage"}
