@@ -18,7 +18,8 @@ const {
   updateComment,
   postConfirmation,
   uploadFile,
-  search
+  search,
+  postSocialAuth
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -56,6 +57,10 @@ module.exports.getUsers = (event, context, callback) => {
 
 module.exports.getUserById = (event, context, callback) => {
   getUserById(event, context, callback);
+};
+
+module.exports.postSocialAuth = (event, context, callback) => {
+  postSocialAuth(event, context, callback);
 };
 
 // Product API's section start

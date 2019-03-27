@@ -149,9 +149,13 @@ class SignIn extends React.Component {
               </Button>
             </Grid>
 
-            <SignInWithGoogle />
+            <SignInWithGoogle
+              history={this.props.history}
+            />
             <br />
-            <SignInWithFacebook />
+            <SignInWithFacebook
+              history={this.props.history}
+            />
           </Grid>
         </Grid>
       </Card>

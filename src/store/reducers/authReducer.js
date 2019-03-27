@@ -2,6 +2,7 @@ import {
     SIGNIN, SIGNIN_SUCCESS, SIGNIN_FAILURE,
     SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE,
     POST_SIGNUP, POST_SIGNUP_SUCCESS, POST_SIGNUP_FAILURE,
+    POST_SOCIAL_AUTH, POST_SOCIAL_AUTH_SUCCESS, POST_SOCIAL_AUTH_FAILURE,
     CONFIRM_SIGNUP, CONFIRM_SIGNUP_SUCCESS, CONFIRM_SIGNUP_FAILURE,
     POST_CONFIRM, POST_CONFIRM_SUCCESS, POST_CONFIRM_FAILURE,
     RESEND_SIGNUP, RESEND_SIGNUP_SUCCESS, RESEND_SIGNUP_FAILURE,
@@ -20,12 +21,17 @@ const initialState = {
     confirmSignupLoader: null,
     confirmSignupError: null,
 
-    isLoggedIn: false
+    isLoggedIn: false,
+
+    postSocialAuth: null,
+    postSocialAuthLoader: false,
+    postSocialAuthError: null,
 }
 
 export default function authReducer(state = initialState, action) {
     switch (action.type) {
         case SIGNIN:
+        case POST_SOCIAL_AUTH:
             return {
                 ...state,
                 user: null,
@@ -35,6 +41,7 @@ export default function authReducer(state = initialState, action) {
             }
 
         case SIGNIN_SUCCESS:
+        case POST_SOCIAL_AUTH_SUCCESS:
             return {
                 ...state,
                 user: action.payload,
@@ -44,6 +51,7 @@ export default function authReducer(state = initialState, action) {
             }
 
         case SIGNIN_FAILURE:
+        case POST_SOCIAL_AUTH_FAILURE:
             return {
                 ...state,
                 user: null,

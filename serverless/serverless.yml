@@ -107,6 +107,15 @@ functions:
          method: POST
          cors: true
   
+  postSocialAuth:
+    handler: handler.postSocialAuth
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:
+         path: post-social-auth
+         method: POST
+         cors: true
+  
   postConfirmation:
     handler: handler.postConfirmation
     memorySize: 512 # optional, in MB, default is 1024

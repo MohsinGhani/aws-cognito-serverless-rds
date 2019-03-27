@@ -3,6 +3,8 @@ import { Auth } from 'aws-amplify';
 import credentials from './../../config/credentials'
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import { connect } from 'react-redux';
+import { authAction } from './../../store/actions'
 
 function waitForInit() {
     return new Promise((res, rej) => {
@@ -69,11 +71,13 @@ class SignInWithFacebook extends React.Component {
             Auth.federatedSignIn('facebook', { token: accessToken, expires_at }, user)
                 .then(cred => {
                     // If success, you will get the AWS credentials
-                    console.log(cred);
+                    // console.log(cred);
                     return Auth.currentAuthenticatedUser();
                 }).then(user => {
                     // If success, the user object you passed in Auth.federatedSignIn
-                    console.log(user);
+                    // console.log(user);
+                    this.props.postSocialAuth({ email: user.email, user_id: user.id, firstname: user.name.split(" ")[0], lastname: user.name.split(" ")[1] })
+
                 }).catch(e => {
                     debugger
                     console.log(e)
@@ -81,33 +85,14 @@ class SignInWithFacebook extends React.Component {
         });
     }
 
-    // createScript() {
-    //     // load the sdk
-    //     window.fbAsyncInit = this.fbAsyncInit;
-    //     const script = document.createElement('script');
-    //     script.src = 'https://connect.facebook.net/en_US/sdk.js';
-    //     script.async = true;
-    //     script.onload = this.initFB;
-    //     document.body.appendChild(script);
-    // }
-
-    // initFB() {
-    //     const fb = window.FB;
-    //     console.log('FB SDK inited', fb);
-    // }
-
-    // fbAsyncInit() {
-    //     // init the fb sdk client
-    //     const fb = window.FB;
-    //     fb.init({
-    //         appId: credentials.FB_APP_ID,
-    //         cookie: true,
-    //         xfbml: true,
-    //         version: 'v2.11'
-    //     });
-    // }
+    componentDidUpdate(prevProps) {
+        if (prevProps.isLoggedIn !== this.props.isLoggedIn && this.props.isLoggedIn) {
+            this.props.history.push('/')
+        }
+    }
 
     render() {
+        let { authLoader } = this.props
         return (
             <div>
                 <Button
@@ -115,7 +100,7 @@ class SignInWithFacebook extends React.Component {
                     // color="primary"
                     fullWidth
                     onClick={this.signIn}
-                // onClick={this.handleClick}
+                    disabled={authLoader}
                 >
                     Sign in with Facebook
               </Button>
@@ -124,4 +109,19 @@ class SignInWithFacebook extends React.Component {
     }
 }
 
-export default withStyles({})(SignInWithFacebook);
+const mapStateToProps = (state) => {
+    const { authReducer: { authLoader, authError, isLoggedIn } } = state;
+    return {
+        authLoader, authError, isLoggedIn
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        postSocialAuth: (payload) => dispatch(authAction.postSocialAuth(payload))
+    };
+};
+
+export default connect(
+    mapStateToProps, mapDispatchToProps
+)(withStyles({})(SignInWithFacebook));
