@@ -17,12 +17,13 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import { authAction, ProductAction } from './../../store/actions'
 import Icon from '@material-ui/core/Icon';
+import SwipeableTemporaryDrawer from '../MaterialUI/Drawer'
 import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
     root: {
         width: '100%',
-        marginBottom: '15px'
+        backgroundColor : '#9e7339	',
     },
     grow: {
         flexGrow: 1,
@@ -88,6 +89,9 @@ const styles = theme => ({
             display: 'none',
         },
     },
+    appbar: {
+        backgroundColor : '#9e7339	',
+    }
 });
 
 class TopNav extends React.Component {
@@ -195,10 +199,11 @@ class TopNav extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="static" className={classes.appbar}>
                     <Toolbar>
                         <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-                            <MenuIcon />
+                            {/* <MenuIcon /> */}
+                            <SwipeableTemporaryDrawer/>
                         </IconButton>
                         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                             Productmania

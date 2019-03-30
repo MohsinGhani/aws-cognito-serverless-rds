@@ -31,6 +31,8 @@ const styles = {
 
     appBar: {
         position: 'relative',
+        backgroundColor : '#9e7339	',
+        padding: '0px',
     },
     flex: {
         flex: 1,
@@ -90,11 +92,19 @@ const styles = {
     },
     list: {
         width: 250,
+        color: 'white',
     },
     fullList: {
         width: 'auto',
+        backgroundColor: '#9e7339',
     },
-  
+    margin: {
+        backgroundColor: '#9e7339',
+        color: 'white',
+    },
+    dialog:{
+        padding: '0px',
+    }
 };
 const stylesTheme = theme => ({
     margin: {
@@ -166,6 +176,7 @@ class ProductDetailModal extends React.Component {
                     open={open}
                     onClose={() => handleDetailDialog(null)}
                     TransitionComponent={Transition}
+                    className={classes.dialog}
                 >
                     <AppBar className={classes.appBar}>
                         <Toolbar>
@@ -238,14 +249,15 @@ class ProductDetailModal extends React.Component {
                                         }
 
                                         <BottomNavigation onChange={this.handleChange} className={classes.root}>
-                                            <BottomNavigationAction icon={<FavoriteIcon id="favoriteIcon" />} />
-                                            <Fab color="primary" aria-label="Add" className={classes.margin} onClick={this.toggleDrawer('bottom', true)}>
+                                            <BottomNavigationAction className="favoriteIcon" icon={<FavoriteIcon id="favoriteIcon" />} />
+                                            <Fab aria-label="Add" className={classes.margin} onClick={this.toggleDrawer('bottom', true)}>
                                                 <AddIcon />
                                             </Fab>
                                             {/* <Button onClick={this.toggleDrawer('bottom', true)}>Open Bottom</Button> */}
                                             <SwipeableDrawer
                                                 anchor="bottom"
                                                 open={this.state.bottom}
+                                                className="swipeableDrawer"
                                                 onClose={this.toggleDrawer('bottom', false)}
                                                 onOpen={this.toggleDrawer('bottom', true)}
                                             >
@@ -281,7 +293,7 @@ class ProductDetailModal extends React.Component {
                                                 </div>
                                             </SwipeableDrawer>
                                             {/* <SwipeableTemporaryDrawer fullList={this.props.fullList} /> */}
-                                            <BottomNavigationAction icon={<i className="material-icons" id="checkBoxIcon">
+                                            <BottomNavigationAction className="check-box" icon={<i className="material-icons" id="checkBoxIcon">
                                                 indeterminate_check_box
                                             </i>} />
                                         </BottomNavigation>

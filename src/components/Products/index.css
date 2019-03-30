@@ -51,5 +51,13 @@
 .material-icons.send {
     text-align: right
 }
-
-  
+#favoriteIcon, #checkBoxIcon ,.swipeableDrawer{
+    /* s */
+        color: #9e7339;
+}
+list{
+    color : white
+}
+.mainBodyButtons{
+  margin-top: 10%
+}

@@ -1,0 +1,27 @@
+primary {
+    color: white
+}
+.material-icons.clear{
+    text-align: right;
+    font-size: 40px;
+}
+.searchButton{
+    padding: 0px 50px;
+    background-color: #00bfff;
+    display: flex;
+    margin-top: -10px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.material-icons.searchh{
+    font-size: 35px
+}
+.swiplist{
+    height: 100%;
+    background-color: 'red';
+    border: 6px solid 	#E8E8E8;
+    border-top: 20px solid 	#E8E8E8;
+}

@@ -2,79 +2,167 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Button from '@material-ui/core/Button';
+import MenuIcon from '@material-ui/icons/Menu';
 import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import Slide from '@material-ui/core/Slide';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-const styles = {
+import MailIcon from '@material-ui/icons/Mail';
+import Typography from '@material-ui/core/Typography';
+import InputBase from '@material-ui/core/InputBase';
+import Drawer from '@material-ui/core/Drawer';
+import SearchIcon from '@material-ui/icons/Search';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import "./index.css";
+const styles = theme => ({
+    appBar: {
+        position: 'relative',
+    },
+    flex: {
+        flex: 1,
+        textAlign: 'center',
+        fontSize: '10px',
+        marginLeft: '10px'
+    },
     list: {
-        width: 250,
+        color: 'white',
+        padding: '0px',
     },
-    fullList: {
-        width: 'auto',
+    listItem: {
+        padding: '3px',
+        paddingLeft: '40px',
     },
-};
-const stylesTheme = theme => ({
-    margin: {
-        margin: theme.spacing.unit,
+    swipeList: {
+        height: '100%',
+        backgroundColor: 'red',
+        border: '6px solid 	#E8E8E8',
+        borderTop: '20px solid 	#E8E8E8',
+
     },
-})
+    accountCircle: {
+        textAlign: 'center',
+    },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: 'white',
+        // marginRight: theme.spacing.unit * 0,
+        paddingRight: '25px',
+        marginLeft: 0,
+        width: '100%',
+        marginTop: '-15px',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing.unit * 3,
+            width: 'auto',
+        },
+    },
+    searchIcon: {
+        width: theme.spacing.unit * 9,
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    inputRoot: {
+        color: 'black',
+        width: '100%',
+    },
+    inputInput: {
+        paddingTop: theme.spacing.unit,
+        paddingRight: theme.spacing.unit * 10,
+        paddingBottom: theme.spacing.unit,
+        paddingLeft: theme.spacing.unit ,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: 200,
+        },
+    },
+});
+
 class SwipeableTemporaryDrawer extends React.Component {
     state = {
-        bottom: false,
-    }
-    
+        top: false,
+        left: false,
+    };
+
     toggleDrawer = (side, open) => () => {
         this.setState({
             [side]: open,
         });
     };
+
     render() {
-        const { classes, product, open, handleDetailDialog } = this.props;
-        // const { showCommentModal, showShareModal } = this.state;
-
-        const fullList = (
-            <div className={classes.fullList}>
-                <List>
-                    {['Comment', 'Share', 'Like', 'Dislike'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <FavoriteIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-
-                </List>
-
-            </div>
-        );
+        const { classes } = this.props;
 
         return (
-            <div>
-                <Fab color="primary" aria-label="Add" className={classes.margin} onClick={this.toggleDrawer('bottom', true)}>
-                    <AddIcon />
-                </Fab>
-                {/* <Button onClick={this.toggleDrawer('bottom', true)}>Open Bottom</Button> */}
-                <SwipeableDrawer
-                    anchor="bottom"
-                    open={this.state.bottom}
-                    onClose={this.toggleDrawer('bottom', false)}
-                    onOpen={this.toggleDrawer('bottom', true)}
-                >
+            <div >
+                <MenuIcon onClick={this.toggleDrawer('left', true)} />
+                <div>
+                <Drawer open={this.state.left}  className={classes.drawer}>
                     <div
                         tabIndex={0}
                         role="button"
-                        onClick={this.toggleDrawer('bottom', false)}
-                        onKeyDown={this.toggleDrawer('bottom', false)}
+                        className={classes.swipeList}
+                        onClick={this.toggleDrawer('left', false)}
+                        onKeyDown={this.toggleDrawer('left', false)}
                     >
-                        {fullList}
+                              <List className={classes.list}>
+                            <ListItem>
 
+                                <Typography variant="h6" color="inherit" className={classes.flex}>
+                                    <i className="material-icons account">
+                                        account_circle
+                                </i>
+                                </Typography>
+                                <Typography color="inherit" onClose={this.toggleDrawer('left', false)}>
+                                    <i className="material-icons clear">
+                                        clear
+                                </i>
+                                </Typography>
+                            </ListItem>
+                            <ListItem> <div className={classes.search}>
+                                <InputBase
+                                    placeholder="Search Keyword or Place"
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                />
+                            </div>
+                            </ListItem>
+                            <ListItem className="searchItem">
+                                <div className="searchButton">
+                                    <i className="material-icons searchh" type="btn">
+                                        search
+                                    </i>
+                                    {/* <SearchIcon /> */}
+                                </div>
+                            </ListItem>
+                            <ListItem className={classes.listItem}>Add Product</ListItem>
+                            <ListItem className={classes.listItem}>Map View</ListItem>
+                            <ListItem className={classes.listItem}>List View</ListItem>
+                            <ListItem className={classes.listItem}>Feedback</ListItem>
+                            <ListItem className={classes.listItem}>Privacy</ListItem>
+                            <ListItem className={classes.listItem}>Terms of Use</ListItem>
+                            <ListItem className={classes.listItem}>Cookie Policy</ListItem>
+                            <ListItem className={classes.listItem}>How To Use</ListItem>
+                            <ListItem className={classes.listItem}>Share App Link</ListItem>
+                            <ListItem className={classes.listItem}>Copy App Link</ListItem>
+                            <ListItem className={classes.listItem}>Bookmark</ListItem>
+                            <ListItem className={classes.listItem}>My Product</ListItem>
+                            <ListItem className={classes.listItem}>Logout/Login</ListItem>
+                        </List>
                     </div>
-                </SwipeableDrawer>
+                </Drawer>
+                </div>
             </div>
         );
     }
@@ -84,5 +172,4 @@ SwipeableTemporaryDrawer.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default 
-withStyles(styles, stylesTheme)(SwipeableTemporaryDrawer);
+export default withStyles(styles)(SwipeableTemporaryDrawer);

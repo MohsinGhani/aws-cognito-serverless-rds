@@ -14,21 +14,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import List from '@material-ui/core/List';
 const styles = theme => ({
-    // root: {
-    //     flexGrow: 1,
-    //     direction: "row",
-    //     justify: "center",
-    //     alignItems: "center"
-    // },
-    // paper: {
-    //     padding: theme.spacing.unit * 2,
-    //     textAlign: 'center',
-    //     top: "40%",
-    //     margin: '5px',
-    //     position: 'relative',
-    //     backgroundColor: theme.palette.background.paper,
-    //     color: theme.palette.text.secondary,
-    // },
+  
     root: {
         flexGrow: 1,
         overflow: 'hidden',
@@ -113,48 +99,8 @@ class CommentModal extends Component {
                                             </i>
                                     </Button>
                                 </Grid>
-                                {/* <Grid item xs zeroMinWidth>
-                                <InputField
-                            label={"Write Comment"}
-                            variant={"outlined"}
-                            id={"comment"}
-                            value={comment}
-                            fullWidth={true}
-                            multiline={true}
-                            rows={4}
-                            onChange={this.handleInput}
-                        />
-                        <Button onClick={handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this.doComment} color="primary">
-                            Post
-                        </Button>
-                                </Grid> */}
                             </Grid>
                         </Paper>
-                        {/* <Typography variant="h6" id="modal-title">
-                            Post a Comment
-                        </Typography>
-                        <Typography variant="subtitle1" id="simple-modal-description">
-                            Write your views about this product
-                        </Typography>
-                        <InputField
-                            label={"Write Comment"}
-                            variant={"outlined"}
-                            id={"comment"}
-                            value={comment}
-                            fullWidth={true}
-                            multiline={true}
-                            rows={4}
-                            onChange={this.handleInput}
-                        />
-                        <Button onClick={handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={this.doComment} color="primary">
-                            Post
-                        </Button> */}
                     </div>
                 </Modal>
             </div>

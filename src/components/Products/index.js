@@ -4,11 +4,13 @@ import TopNav from './../common/TopNav'
 import { connect } from 'react-redux';
 import { ProductAction, authAction } from './../../store/actions'
 import "./index.css";
+import Button from '@material-ui/core/Button';
 import ReactMapboxGl from "react-mapbox-gl";
 import { Marker } from "react-mapbox-gl";
 import credentials from '../../config/credentials'
 import ProductDetailModal from './ProductDetailModal'
 import Location from './../common/Location'
+// import green from '@material-ui/core/colors/green';
 
 const Map = ReactMapboxGl({
   accessToken: credentials.MAP_ACCESS_TOCKEN
@@ -20,9 +22,21 @@ const styles = theme => ({
   },
   margin: {
     margin: '10px 0 0 0',
+    backgroundColor: '#946638	',
+    color: 'white',
+    position: 'relative',
+    left: '50%',
+    transform: 'translateX(-50%)',
   }
 });
-
+// const theme = createMuiTheme({
+//   palette: {
+//     primary: '#9e7339',
+//   },
+//   typography: {
+//     useNextVariants: true,
+//   },
+// });
 class Products extends React.Component {
   constructor(props) {
     super(props);
@@ -43,6 +57,7 @@ class Products extends React.Component {
   render() {
     let { products, getProductsLoader, searchedProducts, searchLoader } = this.props;
     let { product, isOpenDetailDialog, latitude, longitude } = this.state;
+    const { classes } = this.props;
     return (
       <div>
         <Location handleLocation={(latitude, longitude) => { this.setState({ latitude, longitude }) }} />
@@ -56,15 +71,33 @@ class Products extends React.Component {
           <Map
             style="mapbox://styles/mapbox/streets-v9"
             containerStyle={{
-              height: "80vh",
-              width: "95vw",
-              margin: '0 auto'
+              height: "89vh",
+              width: "100%",
+
             }}
             movingMethod={'jumpTo'}
             center={[longitude, latitude]}
             zoom={[12]}
           >
-
+            <div className="mainBodyButtons">
+              <Button variant="contained" className={classes.margin}>
+                <i class="material-icons">
+                  local_phone
+              </i> Join With Phone
+              </Button>
+              <br />
+              <Button variant="contained" className={classes.margin}>
+                Continue with e-mail
+        </Button>
+              <br />
+              <Button variant="contained" className={classes.margin}>
+                Continue with Google
+        </Button>
+              <br />
+              <Button variant="contained" className={classes.margin}>
+                Continue with Facebook
+        </Button>
+            </div>
             {/* current location pointer */}
             <Marker
               coordinates={[longitude, latitude]}
