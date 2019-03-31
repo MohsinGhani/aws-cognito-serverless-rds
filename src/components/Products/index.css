@@ -58,6 +58,13 @@
 list{
     color : white
 }
+
 .mainBodyButtons{
-  margin-top: 10%
+    position: fixed;
+    z-index: 1000;
+    bottom: 15%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 225px;
 }

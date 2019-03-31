@@ -20,23 +20,12 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
-  margin: {
-    margin: '10px 0 0 0',
+  signinBtn: {
+    margin: '5px',
     backgroundColor: '#946638	',
-    color: 'white',
-    position: 'relative',
-    left: '50%',
-    transform: 'translateX(-50%)',
+    color: 'white'
   }
 });
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: '#9e7339',
-//   },
-//   typography: {
-//     useNextVariants: true,
-//   },
-// });
 class Products extends React.Component {
   constructor(props) {
     super(props);
@@ -50,9 +39,11 @@ class Products extends React.Component {
   }
 
   componentDidMount() {
-    this.props.isLoggedIn()
+    this.props.isLoggedInAction()
     this.props.getProductsAction()
   }
+
+  goto = path => this.props.history.push(path)
 
   render() {
     let { products, getProductsLoader, searchedProducts, searchLoader } = this.props;
@@ -79,25 +70,30 @@ class Products extends React.Component {
             center={[longitude, latitude]}
             zoom={[12]}
           >
-            <div className="mainBodyButtons">
-              <Button variant="contained" className={classes.margin}>
-                <i class="material-icons">
-                  local_phone
-              </i> Join With Phone
-              </Button>
-              <br />
-              <Button variant="contained" className={classes.margin}>
-                Continue with e-mail
-        </Button>
-              <br />
-              <Button variant="contained" className={classes.margin}>
-                Continue with Google
-        </Button>
-              <br />
-              <Button variant="contained" className={classes.margin}>
-                Continue with Facebook
-        </Button>
-            </div>
+
+            {
+              !this.props.isLoggedIn &&
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div className="mainBodyButtons">
+                  <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
+                    Join With Phone
+                  </Button>
+                  <br />
+                  <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
+                    Continue with e-mail
+                  </Button>
+                  <br />
+                  <Button variant="contained" className={classes.signinBtn}>
+                    Continue with Google
+                  </Button>
+                  <br />
+                  <Button variant="contained" className={classes.signinBtn}>
+                    Continue with Facebook
+                  </Button>
+                </div>
+              </div>
+            }
+
             {/* current location pointer */}
             <Marker
               coordinates={[longitude, latitude]}
@@ -151,21 +147,21 @@ const mapStateToProps = (state) => {
       products, getProductsLoader, getProductsError,
       searchedProducts, searchLoader, searchError
     },
-    authReducer: { user }
+    authReducer: { user, isLoggedIn }
   } = state;
   return {
     categories, getCategoriesLoader, getCategoriesError,
     savedProduct, saveProductLoader, saveProductError,
     products, getProductsLoader, getProductsError,
     searchedProducts, searchLoader, searchError,
-    user
+    user, isLoggedIn
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getProductsAction: () => dispatch(ProductAction.getProducts()),
-    isLoggedIn: () => dispatch(authAction.isLoggedIn()),
+    isLoggedInAction: () => dispatch(authAction.isLoggedIn()),
   };
 };
 
