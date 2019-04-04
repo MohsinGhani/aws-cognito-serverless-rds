@@ -60,36 +60,39 @@ list{
 }
 
 .mainBodyButtons{
-<<<<<<< HEAD
   margin-top: 3%
 }
-#phone-icon{
-    padding-right:40px;
-    font-size: 30px;
-    text-align: left;
+.signinBtn{
+    width: 30vh;
 }
-.fa{
+#phone-icon, .fa.fa-google, .fa.fa-edge,.fa.fa-facebook{
+    padding-right: 10px;
+}
+/* .fa{
     font-size: '20px';
-    padding-right: 13px;
+    width: 8vh;
     text-align: left;
-}
-.fa.fa-google{
-    padding: 0px 13px;
+} */
+/* .fa.fa-google{
+    width: 7vh;
     text-align: left;
 }
 .fa.fa-edge{
     padding: 0px 15px;
 }
 #phone-button{
-    padding-right: 25px
+    padding-right: 0px
 }
+.fa.fa-facebook{
+    width: 4vh;
+    padding-right: 30px;
+} */
 .globe{
     width: 100%;
     height: 12px
 }
 #list-button{
     color: white;
-=======
     position: fixed;
     z-index: 1000;
     bottom: 15%;
@@ -97,5 +100,18 @@ list{
     flex-wrap: wrap;
     justify-content: center;
     width: 225px;
->>>>>>> 00cc78b6d74cc802967942d2ae7b67028b760b0f
+}
+.material-icons.comment, .fa.fa-share, #like, #dislike{
+    font-size: 30px;
+}
+.comment-text{
+    font-size: 18px;
+    margin-left: 20px;
+}
+.material-icons.key{
+    text-align: right;
+    float: right;
+    flex-wrap: wrap-reverse;
+    flex: auto;
+    font-size: 40px
 }

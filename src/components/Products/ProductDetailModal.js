@@ -31,7 +31,7 @@ const styles = {
 
     appBar: {
         position: 'relative',
-        backgroundColor : '#9e7339	',
+        backgroundColor: '#9e7339	',
         padding: '0px',
     },
     flex: {
@@ -96,14 +96,14 @@ const styles = {
     },
     fullList: {
         width: 'auto',
-        backgroundColor: '#9e7339',
+        backgroundColor: '#a98652',
         color: 'white',
     },
     margin: {
         backgroundColor: '#9e7339',
         color: 'white',
     },
-    dialog:{
+    dialog: {
         padding: '0px',
     }
 };
@@ -269,26 +269,30 @@ class ProductDetailModal extends React.Component {
                                                     onKeyDown={this.toggleDrawer('bottom', false)}
                                                 >
                                                     <List className={classes.fullList}>
-                                                    <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }} >
-                                                            <ListItemIcon id="list-button"><i class="material-icons">
-                                                            mode_comment
-                                                            </i></ListItemIcon>
-                                                            <ListItemText  secondary={'Add Comment'} />
+                                                        <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }} >
+                                                            <i class="material-icons comment">
+                                                                mode_comment
+                                                            </i>
+                                                            <span className="comment-text">{'Comment'}</span>
+                                                            <i class="material-icons key" onClose={this.toggleDrawer('bottom', false)}>
+                                                                keyboard_arrow_down
+                                                            </i>
                                                         </ListItem>
 
                                                         <ListItem button onClick={() => { this.setState({ showShareModal: true }) }}>
-                                                            <ListItemIcon id="list-button"> <i class="fa fa-share fa-1x"></i></ListItemIcon>
-                                                            <ListItemText  secondary={'Share'} />
+                                                            <i class="fa fa-share"></i>
+                                                            <span className="comment-text">{'share'}</span>
+
+                                                            {/* <ListItemText  secondary={'Share'} color= {"white"}/> */}
                                                         </ListItem>
                                                         <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(true) }}>
-                                                            <ListItemIcon id="list-button"> <FavoriteIcon /></ListItemIcon>
-                                                            <ListItemText primary={'Like'} secondary={product._like} />
+                                                            <FavoriteIcon id="like" />
+                                                            <span className="comment-text">Like {product._like}</span>
                                                         </ListItem>
-                                                        <Divider />
                                                         <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(false) }} >
-                                                            <ListItemIcon id="list-button"> <FavoriteIcon /></ListItemIcon>
-                                                            <ListItemText  primary={'Dislike'} secondary={product._dislike} />
-                                                        </ListItem>                                                      
+                                                            <FavoriteIcon id="dislike" />
+                                                            <span className="comment-text">Dislike {product._dislike}</span>
+                                                        </ListItem>
                                                     </List>
 
                                                 </div>

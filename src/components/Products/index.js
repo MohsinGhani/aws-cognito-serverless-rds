@@ -20,7 +20,6 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
-<<<<<<< HEAD
   margin: {
     margin: '5px 0 0 0',
     backgroundColor: '#946638	',
@@ -28,13 +27,13 @@ const styles = theme => ({
     position: 'relative',
     left: '50%',
     transform: 'translateX(-50%)',
-    fontSize: '15px'
-=======
+    fontSize: '15px'},
   signinBtn: {
     margin: '5px',
     backgroundColor: '#946638	',
-    color: 'white'
->>>>>>> 00cc78b6d74cc802967942d2ae7b67028b760b0f
+    color: 'white',
+    width: '38vh',
+   justifyContent: 'inherit',
   }
 });
 class Products extends React.Component {
@@ -81,56 +80,35 @@ class Products extends React.Component {
             center={[longitude, latitude]}
             zoom={[12]}
           >
-<<<<<<< HEAD
-            <div className="mainBodyButtons">
-              <Button variant="contained" className={classes.margin} id="phone-button">
-                <i class="material-icons" id="phone-icon">
-                  local_phone
-              </i> Join With Phone
-              </Button>
-              <br />
-              <Button variant="contained" className={classes.margin}>
-              <i class="fa fa-edge" ></i>
-                Continue with e-mail
-        </Button>
-              <br />
-              <Button variant="contained" className={classes.margin}>
-              <i class="fa fa-google"></i>
-                Continue with Google
-        </Button>
-              <br />
-              <Button variant="contained" className={classes.margin}>
-              <i class="fa fa-facebook"></i>
-                Continue with Facebook
-        </Button>
-        <img src={require('./../../assets/img/globe.png')} alt="globe" className="globe"/>
-            </div>
-=======
-
             {
               !this.props.isLoggedIn &&
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <div className="mainBodyButtons">
                   <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
+                  <i class="material-icons" id="phone-icon">
+                  local_phone
+              </i> 
                     Join With Phone
                   </Button>
                   <br />
                   <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
-                    Continue with e-mail
+                  <i class="fa fa-edge" ></i>Continue with e-mail
                   </Button>
                   <br />
                   <Button variant="contained" className={classes.signinBtn}>
+                  <i class="fa fa-google"></i>
                     Continue with Google
                   </Button>
                   <br />
                   <Button variant="contained" className={classes.signinBtn}>
+                  <i class="fa fa-facebook"></i>
                     Continue with Facebook
                   </Button>
                 </div>
               </div>
+              
             }
 
->>>>>>> 00cc78b6d74cc802967942d2ae7b67028b760b0f
             {/* current location pointer */}
             <Marker
               coordinates={[longitude, latitude]}

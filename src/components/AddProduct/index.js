@@ -357,13 +357,9 @@ class AddProduct extends React.Component {
                     />
                   </Grid>
                   : ''}
-                  {/* <Grid container spacing={16}>
-              <Grid item  md={8} sm={8} xs={8}> */}
                 <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} variant="contained" color="primary" id="submit-button" >
                   Submit
                 </Button>
-              {/* </Grid>
-              </Grid> */}
               {getLocation ? <Location handleLocation={(latitude, longitude) => { this.setState({ latitude, longitude }) }} /> : ''}
             </Grid>
           </Grid>

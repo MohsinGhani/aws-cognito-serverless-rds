@@ -20,6 +20,7 @@ const styles = theme => ({
   },
   appBar: {
     position: 'relative',
+    backgroundColor: '#9e7339'
   },
   flex: {
     flex: 1,
