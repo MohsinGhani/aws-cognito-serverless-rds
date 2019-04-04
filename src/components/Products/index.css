@@ -58,7 +58,9 @@
 list{
     color : white
 }
+
 .mainBodyButtons{
+<<<<<<< HEAD
   margin-top: 3%
 }
 #phone-icon{
@@ -87,4 +89,13 @@ list{
 }
 #list-button{
     color: white;
+=======
+    position: fixed;
+    z-index: 1000;
+    bottom: 15%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 225px;
+>>>>>>> 00cc78b6d74cc802967942d2ae7b67028b760b0f
 }

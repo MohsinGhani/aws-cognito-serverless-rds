@@ -57,7 +57,7 @@ class SignInWithGoogle extends React.Component {
                 // console.log(user);
                 this.props.postSocialAuth({ email: user.email, user_id: user.id, firstname: user.name.split(" ")[0], lastname: user.name.split(" ")[1] })
             }).catch(e => {
-                debugger
+                // debugger
                 console.log(e)
             });
     }
