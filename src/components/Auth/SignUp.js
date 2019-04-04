@@ -7,16 +7,22 @@ import Grid from "@material-ui/core/Grid";
 import { InputField, InputFieldWithEndAdornment } from "./../MaterialUI";
 import "./index.css";
 import Hidden from "@material-ui/core/Hidden";
+import Modal from '@material-ui/core/Modal';
 import Button from "@material-ui/core/Button";
+import Typography from '@material-ui/core/Typography';
 import { authAction } from './../../store/actions'
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-
+import SimpleDialogDemo from '../MaterialUI/SimpleDialogDemo'
 const styles = theme => ({
   p05: {
     padding: "5px"
@@ -35,6 +41,40 @@ const styles = theme => ({
   group: {
     margin: `${theme.spacing.unit}px 0`,
     display: 'flex'
+  },
+  root: {
+    backgroundColor: "transparent",
+    width: '100%',
+    height: "90%",
+  },
+
+  paper: {
+    backgroundColor: "transparent",
+    boxShadow: "none",
+    overflow: "hidden",
+    backgroundColor: 'white',
+    boxShadow: theme.shadows[50],
+    width: theme.spacing.unit * 50,
+    margin: '20px',
+    padding: '10px 0px',
+    position: 'relative',
+    borderRadius: '20px',
+    marginTop: '-200px',
+    textAlign: 'center',
+  },
+  errorModel:  {
+    backgroundColor: 'red',
+    opacity: '0px',
+    fontSize: '40px',
+    border: '10px solid 	#E8E8E8',
+    borderTop: '20px solid 	#E8E8E8',
+  },
+  confirmModel: {
+    backgroundColor: 'green',
+    opacity: '0px',
+    fontSize: '40px',
+    border: '10px solid 	#E8E8E8',
+    borderTop: '20px solid 	#E8E8E8',
   }
 });
 
@@ -49,6 +89,7 @@ class SignUp extends Component {
       password: '',
       confirmPassword: '',
       isPhoneVerificationEnable: false,
+      open: false,
       error: {
         firstname: null,
         lastname: null,
@@ -70,7 +111,14 @@ class SignUp extends Component {
       [e.target.id]: e.target.value
     })
   }
-
+  handleClickOpen = () => {
+    this.setState({
+      open: true,
+    });
+  };
+  handleClose = () => {
+    this.setState({ open: false });
+  };
   componentDidUpdate(prevProps, prevState) {
     if (prevState.firstname !== this.state.firstname || prevState.lastname !== this.state.lastname || prevState.password !== this.state.password || prevState.confirmPassword !== this.state.confirmPassword) {
       this.validateSignupForm()
@@ -102,6 +150,7 @@ class SignUp extends Component {
   }
 
   handleSignUp = () => {
+    this.setState({ open: true });
     let { firstname, lastname, email, phone, password, isPhoneVerificationEnable } = this.state
     this.props.signUpAction({ firstname, lastname, email, phone, password, isPhoneVerificationEnable })
   }
@@ -115,7 +164,9 @@ class SignUp extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn) {
-      this.goto('/add-product')
+      setTimeout(()=> {
+        this.goto('/add-product')
+          }, 500)
     }
   }
 
@@ -136,8 +187,81 @@ class SignUp extends Component {
               Continue to Productmania
             </h3>
             {
-              authError ? <p>{authError}</p> : ''
+              authError ? (
+                <div>
+                  <p>sorry</p>
+                  <Dialog
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.open}
+                    style={{ backgroundColor: 'red' }}
+                    className={classes.errorModel}
+                    onClose={this.handleClose}
+                    BackdropProps={{
+                      classes: {
+                        root: classes.root
+                      }
+                    }
+                    }
+                    PaperProps={{
+                      classes: {
+                        root: classes.paper
+                      }
+                    }}
+                  >
+                  <div>
+                    <DialogTitle variant="h1" id="dialogTitle">Oops!</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="dialogText">
+                        {authError}
+                      </DialogContentText>
+                    </DialogContent>
+                    <Typography>
+                    <Button onClick={this.handleClose} id="closeButton">
+                      OK
+            </Button>
+            </Typography>
+                    </div>
+                  </Dialog>
+                </div>
+              ) : setTimeout(() => (
+              <div>
+                <p>sorry</p>
+                <Dialog
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                  open={this.state.open}
+                  className={classes.confirmModel}
+                  onClose={this.handleClose}
+                  BackdropProps={{
+                    classes: {
+                      root: classes.root
+                    }
+                  }
+                  }
+                  PaperProps={{
+                    classes: {
+                      root: classes.paper
+                    }
+                  }}
+                >
+                <div>
+                  <DialogTitle variant="h1" id="dialogTitle">Thank You!</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="dialogText">
+                      You have succesfully submitted the form
+                    </DialogContentText>
+                  </DialogContent>
+                  <Typography>
+                  <Button onClick={this.handleClose} id="closeButton">
+                    OK
+          </Button>
+          </Typography>
+                  </div>
+                </Dialog>
+              </div>),3000)
             }
+
             <Grid container>
               <Grid item md={6} sm={12} xs={12} className={classes.p05}>
                 <InputField

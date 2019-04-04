@@ -21,22 +21,15 @@ const styles = theme => ({
     flexGrow: 1,
   },
   margin: {
-    margin: '10px 0 0 0',
+    margin: '5px 0 0 0',
     backgroundColor: '#946638	',
     color: 'white',
     position: 'relative',
     left: '50%',
     transform: 'translateX(-50%)',
+    fontSize: '15px'
   }
 });
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: '#9e7339',
-//   },
-//   typography: {
-//     useNextVariants: true,
-//   },
-// });
 class Products extends React.Component {
   constructor(props) {
     super(props);
@@ -80,23 +73,27 @@ class Products extends React.Component {
             zoom={[12]}
           >
             <div className="mainBodyButtons">
-              <Button variant="contained" className={classes.margin}>
-                <i class="material-icons">
+              <Button variant="contained" className={classes.margin} id="phone-button">
+                <i class="material-icons" id="phone-icon">
                   local_phone
               </i> Join With Phone
               </Button>
               <br />
               <Button variant="contained" className={classes.margin}>
+              <i class="fa fa-edge" ></i>
                 Continue with e-mail
         </Button>
               <br />
               <Button variant="contained" className={classes.margin}>
+              <i class="fa fa-google"></i>
                 Continue with Google
         </Button>
               <br />
               <Button variant="contained" className={classes.margin}>
+              <i class="fa fa-facebook"></i>
                 Continue with Facebook
         </Button>
+        <img src={require('./../../assets/img/globe.png')} alt="globe" className="globe"/>
             </div>
             {/* current location pointer */}
             <Marker

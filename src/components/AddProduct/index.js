@@ -20,13 +20,24 @@ const styles = theme => ({
     flexGrow: 1,
   },
   button: {
-    margin: theme.spacing.unit,
-  },
-  margin: {
-    margin: '10px 0 0 0',
+    alignItems: "center",
+    justifyContent: "center",
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: ' 2',
+    position: 'absolute',
+    margin: 'auto',
   },
   input: {
     display: 'none',
+  },
+  cameraIcon: {
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    left: "50%",
+    transform: "translateX(-50%)",
+    marginTop: '6px',
   },
 });
 class AddProduct extends React.Component {
@@ -208,7 +219,8 @@ class AddProduct extends React.Component {
     let { classes } = this.props;
     let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude, isSaveButtonDisable, selectedImage } = this.state;
     return (
-      <div>
+      <div className="add-product">
+        <p className="add-product-title">Add Product</p>
         <SelectCategory
           open={isSelectCatModal}
           handleClose={() => this.setState({ isSelectCatModal: false })}
@@ -219,29 +231,17 @@ class AddProduct extends React.Component {
           <Grid container className={classes.root} spacing={16}>
             {/* <Hidden smDown> */}
             <Grid item md={5} sm={12} xs={12}>
-              Should be image here
-              <input accept="image/*" className={classes.input} id="icon-button-file"
-                variant={"outlined"}
-                // id={"selecteImage"}
-                type={'file'}
-                fullwidth={'true'}
-                onChange={(event) => { this.handleImageChange(event); event.target.value = null }}
-              type="file" />
-              {/* <label htmlFor="icon-button-file">
+              <input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={(event) => { this.handleImageChange(event); event.target.value = null }} />
+              <label htmlFor="icon-button-file" className={classes.cameraIcon}>
                 <IconButton color="primary" className={classes.button} component="span">
-                  <PhotoCamera />
+                  <PhotoCamera id="photocamera" />
                 </IconButton>
-              </label> */}
-              <InputField
-                variant={"outlined"}
-                id={"selecteImage"}
-                type={'file'}
-                fullWidth={true}
-                onChange={(event) => { this.handleImageChange(event); event.target.value = null }}
-              />
-              {
-                selectedImage && selectedImage.base64 ? <img src={selectedImage.base64} alt="product" className="product-image" /> : ''
-              }
+                <div className="productPicture">
+                  {
+                    selectedImage && selectedImage.base64 ? <img src={selectedImage.base64} alt="product" className="productImage" /> : ''
+                  }
+                </div>
+              </label>
             </Grid>
             {/* </Hidden> */}
             <Grid item md={7} sm={12} xs={12}>
@@ -249,6 +249,7 @@ class AddProduct extends React.Component {
                 <InputField
                   label={"Selected Category"}
                   variant={"outlined"}
+                  color={" #f9f2ec"}
                   id={"selectedCategory"}
                   value={selectedCategory ? selectedCategory.title : ''}
                   fullWidth={true}
@@ -269,6 +270,7 @@ class AddProduct extends React.Component {
               <Grid item md={12} sm={12} xs={12}>
                 <InputField
                   label={"Description"}
+
                   variant={"outlined"}
                   id={"description"}
                   fullWidth={true}
@@ -301,17 +303,33 @@ class AddProduct extends React.Component {
                   disabled={!selectedCountry}
                 />
               </Grid>
+              <Grid container spacing={8}>
+                <Grid item md={10} sm={10} xs={9}>
+                  <AutoSelectInputField
+                    label={"Search City"}
+                    variant={"outlined"}
+                    id={"selectedCity"}
+                    fullWidth={true}
+                    suggestions={cities}
+                    onSelect={this.handleInput}
+                    disabled={!selectedState}
+                  />
+                </Grid>
+                <Grid item md={2} sm={2} xs={2}>
+                  <Button
+                    onClick={() => this.setState({ getLocation: true })}
+                    fullWidth
+                    variant="contained"
+                    className={classes.margin}
+                    disabled={!selectedCity}
+                    id="location-button"
+                  >
+                    <i class="material-icons place">
+                      place
+                  </i>
+                  </Button>
+                </Grid>
 
-              <Grid item md={12} sm={12} xs={12}>
-                <AutoSelectInputField
-                  label={"Search City"}
-                  variant={"outlined"}
-                  id={"selectedCity"}
-                  fullWidth={true}
-                  suggestions={cities}
-                  onSelect={this.handleInput}
-                  disabled={!selectedState}
-                />
               </Grid>
 
               {
@@ -337,24 +355,15 @@ class AddProduct extends React.Component {
                       disabled={true}
                       value={longitude}
                     />
-                  </Grid> : ''
-              }
-              <Grid item md={12} sm={12} xs={12}>
-                <Button
-                  onClick={() => this.setState({ getLocation: true })}
-                  fullWidth
-                  variant="contained"
-                  className={classes.margin}
-                  disabled={!selectedCity}
-                >
-                  <Icon>location_on</Icon> Get Current Location
-                </Button>
-              </Grid>
-              <Grid item md={12} sm={12} xs={12}>
-                <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} variant="contained" color="primary" className={classes.margin}>
+                  </Grid>
+                  : ''}
+                  {/* <Grid container spacing={16}>
+              <Grid item  md={8} sm={8} xs={8}> */}
+                <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} variant="contained" color="primary" id="submit-button" >
                   Submit
                 </Button>
-              </Grid>
+              {/* </Grid>
+              </Grid> */}
               {getLocation ? <Location handleLocation={(latitude, longitude) => { this.setState({ latitude, longitude }) }} /> : ''}
             </Grid>
           </Grid>

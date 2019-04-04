@@ -40,8 +40,8 @@ const styles = theme => ({
     swipeList: {
         height: '100%',
         backgroundColor: 'red',
-        border: '6px solid 	#E8E8E8',
-        borderTop: '20px solid 	#E8E8E8',
+        border: '10px solid 	#E8E8E8',
+        borderTop: '5px solid 	#E8E8E8',
 
     },
     accountCircle: {
@@ -107,9 +107,11 @@ class SwipeableTemporaryDrawer extends React.Component {
                 <MenuIcon onClick={this.toggleDrawer('left', true)} />
                 <div>
                 <Drawer open={this.state.left}  className={classes.drawer}>
+                <p className="MenuLinks">Menu Links</p>
                     <div
                         tabIndex={0}
                         role="button"
+                        primary="Menu Links"
                         className={classes.swipeList}
                         onClick={this.toggleDrawer('left', false)}
                         onKeyDown={this.toggleDrawer('left', false)}

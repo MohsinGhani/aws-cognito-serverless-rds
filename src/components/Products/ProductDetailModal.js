@@ -97,6 +97,7 @@ const styles = {
     fullList: {
         width: 'auto',
         backgroundColor: '#9e7339',
+        color: 'white',
     },
     margin: {
         backgroundColor: '#9e7339',
@@ -268,26 +269,26 @@ class ProductDetailModal extends React.Component {
                                                     onKeyDown={this.toggleDrawer('bottom', false)}
                                                 >
                                                     <List className={classes.fullList}>
-
-                                                        <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(true) }}>
-                                                            <ListItemIcon> <FavoriteIcon /></ListItemIcon>
-                                                            <ListItemText primary={'Like'} secondary={product._like} />
-                                                        </ListItem>
-                                                        <Divider />
-                                                        <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(false) }}>
-                                                            <ListItemIcon> <FavoriteIcon /></ListItemIcon>
-                                                            <ListItemText primary={'Dislike'} secondary={product._dislike} />
-                                                        </ListItem>
-
-                                                        <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }}>
-                                                            <ListItemIcon> <FavoriteIcon /></ListItemIcon>
-                                                            <ListItemText secondary={'Add Comment'} />
+                                                    <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }} >
+                                                            <ListItemIcon id="list-button"><i class="material-icons">
+                                                            mode_comment
+                                                            </i></ListItemIcon>
+                                                            <ListItemText  secondary={'Add Comment'} />
                                                         </ListItem>
 
                                                         <ListItem button onClick={() => { this.setState({ showShareModal: true }) }}>
-                                                            <ListItemIcon> <FavoriteIcon /></ListItemIcon>
-                                                            <ListItemText secondary={'Share'} />
+                                                            <ListItemIcon id="list-button"> <i class="fa fa-share fa-1x"></i></ListItemIcon>
+                                                            <ListItemText  secondary={'Share'} />
                                                         </ListItem>
+                                                        <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(true) }}>
+                                                            <ListItemIcon id="list-button"> <FavoriteIcon /></ListItemIcon>
+                                                            <ListItemText primary={'Like'} secondary={product._like} />
+                                                        </ListItem>
+                                                        <Divider />
+                                                        <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(false) }} >
+                                                            <ListItemIcon id="list-button"> <FavoriteIcon /></ListItemIcon>
+                                                            <ListItemText  primary={'Dislike'} secondary={product._dislike} />
+                                                        </ListItem>                                                      
                                                     </List>
 
                                                 </div>

@@ -19,9 +19,11 @@ primary {
 .material-icons.searchh{
     font-size: 35px
 }
-.swiplist{
-    height: 100%;
-    background-color: 'red';
-    border: 6px solid 	#E8E8E8;
-    border-top: 20px solid 	#E8E8E8;
+.MenuLinks{
+    /* border: 6px solid 	#E8E8E8; */
+    background-color: #E8E8E8;
+    padding: 0px;
+    margin: 0px;
+    padding-left: 10px;
+    /* border-top: 20px solid 	#E8E8E8; */
 }
