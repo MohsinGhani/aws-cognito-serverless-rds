@@ -43,8 +43,8 @@ class Products extends React.Component {
       map: null,
       product: null,
       isOpenDetailDialog: false,
-      latitude: null,
-      longitude: null
+      latitude: 36.778259,
+      longitude: -119.417931
     }
   }
 

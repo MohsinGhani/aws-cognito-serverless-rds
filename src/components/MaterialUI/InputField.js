@@ -22,7 +22,8 @@ class InputField extends React.Component {
       multiline,
       rowsMax,
       rows,
-      onClick
+      onClick,
+      maxLength
     } = this.props;
     return (
       <TextField
@@ -43,6 +44,7 @@ class InputField extends React.Component {
         rowsMax={rowsMax}
         rows={rows}
         onClick={onClick}
+        inputProps={{ maxLength: maxLength ? maxLength : 100000000 }}
       />
     );
   }

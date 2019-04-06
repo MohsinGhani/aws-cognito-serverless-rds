@@ -40,6 +40,7 @@ const styles = theme => ({
     marginTop: '6px',
   },
 });
+
 class AddProduct extends React.Component {
   constructor(props) {
     super(props);
@@ -217,7 +218,7 @@ class AddProduct extends React.Component {
 
   render() {
     let { classes } = this.props;
-    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude, isSaveButtonDisable, selectedImage } = this.state;
+    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude, isSaveButtonDisable, selectedImage, title, description } = this.state;
     return (
       <div className="add-product">
         <p className="add-product-title">Add Product</p>
@@ -264,13 +265,14 @@ class AddProduct extends React.Component {
                   id={"title"}
                   fullWidth={true}
                   onChange={this.handleInput}
+                  value={title}
+                  maxLength={300}
                 />
               </Grid>
 
               <Grid item md={12} sm={12} xs={12}>
                 <InputField
                   label={"Description"}
-
                   variant={"outlined"}
                   id={"description"}
                   fullWidth={true}
@@ -278,6 +280,8 @@ class AddProduct extends React.Component {
                   multiline={true}
                   rowsMax={'4'}
                   rows={'4'}
+                  value={description}
+                  maxLength={1000}
                 />
               </Grid>
 
@@ -303,16 +307,27 @@ class AddProduct extends React.Component {
                   disabled={!selectedCountry}
                 />
               </Grid>
+
+              <Grid item md={12} sm={12} xs={12}>
+                <AutoSelectInputField
+                  label={"Search City"}
+                  variant={"outlined"}
+                  id={"selectedCity"}
+                  fullWidth={true}
+                  suggestions={cities}
+                  onSelect={this.handleInput}
+                  disabled={!selectedState}
+                />
+              </Grid>
+
               <Grid container spacing={8}>
                 <Grid item md={10} sm={10} xs={9}>
-                  <AutoSelectInputField
-                    label={"Search City"}
+                  <InputField
+                    label={"Street"}
                     variant={"outlined"}
-                    id={"selectedCity"}
+                    id={"street"}
                     fullWidth={true}
-                    suggestions={cities}
-                    onSelect={this.handleInput}
-                    disabled={!selectedState}
+                    onChange={this.handleInput}
                   />
                 </Grid>
                 <Grid item md={2} sm={2} xs={2}>
@@ -324,12 +339,9 @@ class AddProduct extends React.Component {
                     disabled={!selectedCity}
                     id="location-button"
                   >
-                    <i class="material-icons place">
-                      place
-                  </i>
+                    <i className="material-icons place">place</i>
                   </Button>
                 </Grid>
-
               </Grid>
 
               {
@@ -357,8 +369,8 @@ class AddProduct extends React.Component {
                     />
                   </Grid>
                   : ''}
-                <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} variant="contained" color="primary" id="submit-button" >
-                  Submit
+              <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} variant="contained" color="primary" id="submit-button" >
+                Submit
                 </Button>
               {getLocation ? <Location handleLocation={(latitude, longitude) => { this.setState({ latitude, longitude }) }} /> : ''}
             </Grid>

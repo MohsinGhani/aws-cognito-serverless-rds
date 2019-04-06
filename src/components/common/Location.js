@@ -11,7 +11,7 @@ class Location extends React.Component {
     return !this.props.isGeolocationAvailable
       ? <div>Your browser does not support Geolocation</div>
       : !this.props.isGeolocationEnabled
-        ? <div>Geolocation is not enabled</div>
+        ? <div style={{ textAlign: 'center', color: 'red' }}>Geolocation is not enabled</div>
         : this.props.coords
           ? <table>
             <tbody>
