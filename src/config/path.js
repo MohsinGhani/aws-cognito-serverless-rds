@@ -14,6 +14,7 @@ export default class path {
     static LIKE_OR_DISLIKE = `${credentials.BASE_URL}/like`;
     static DO_COMMENT_ON_PRODUCT = `${credentials.BASE_URL}/comment`;
     static SEARCH = `${credentials.BASE_URL}/search`;
+    static REVERSE_GEOCODING = `https://api.mapbox.com/geocoding/v5/mapbox.places`;
 
     // ADDRESS
     static countries = "https://geodata.solutions/api/api.php?type=getCountries";

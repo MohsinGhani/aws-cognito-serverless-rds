@@ -19,6 +19,7 @@ const rootEpic = combineEpics(
     ProductEpic.getProducts,
     ProductEpic.getProductById,
     ProductEpic.likeProduct,
+    ProductEpic.reverseGeoCoding,
     ProductEpic.doCommentOnProduct,
     ProductEpic.search,
 );

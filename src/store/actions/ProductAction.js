@@ -6,10 +6,33 @@ import {
     GET_PRODUCT_BY_ID, GET_PRODUCT_BY_ID_SUCCESS, GET_PRODUCT_BY_ID_FAILURE,
     LIKE_DISLIKE_PRODUCT, LIKE_DISLIKE_PRODUCT_SUCCESS, LIKE_DISLIKE_PRODUCT_FAILURE,
     DO_COMMENT_ON_PRODUCT, DO_COMMENT_ON_PRODUCT_SUCCESS, DO_COMMENT_ON_PRODUCT_FAILURE,
+    REVERSE_GEOCODING, REVERSE_GEOCODING_SUCCESS, REVERSE_GEOCODING_FAILURE,
     SEARCH, SEARCH_SUCCESS, SEARCH_FAILURE,
 } from './../constants'
 
 export class ProductAction {
+    /////////////////
+    static reverseGeoCoding(payload) {
+        return {
+            type: REVERSE_GEOCODING,
+            payload
+        }
+    }
+
+    static reverseGeoCodingSuccess(payload) {
+        return {
+            type: REVERSE_GEOCODING_SUCCESS,
+            payload
+        }
+    }
+
+    static reverseGeoCodingFailure(error) {
+        return {
+            type: REVERSE_GEOCODING_FAILURE,
+            error
+        }
+    }
+    
     /////////////////
     static search(payload) {
         return {

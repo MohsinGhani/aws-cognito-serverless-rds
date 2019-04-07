@@ -27,13 +27,14 @@ const styles = theme => ({
     position: 'relative',
     left: '50%',
     transform: 'translateX(-50%)',
-    fontSize: '15px'},
+    fontSize: '15px'
+  },
   signinBtn: {
     margin: '5px',
     backgroundColor: '#946638	',
     color: 'white',
     width: '38vh',
-   justifyContent: 'inherit',
+    justifyContent: 'inherit',
   }
 });
 class Products extends React.Component {
@@ -79,34 +80,35 @@ class Products extends React.Component {
             movingMethod={'jumpTo'}
             center={[longitude, latitude]}
             zoom={[12]}
+            onClick={(map, e) => { this.props.reverseGeoCodingAction(e.lngLat) }}
           >
             {
               !this.props.isLoggedIn &&
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <div className="mainBodyButtons">
                   <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
-                  <i class="material-icons" id="phone-icon">
-                  local_phone
-              </i> 
+                    <i class="material-icons" id="phone-icon">
+                      local_phone
+              </i>
                     Join With Phone
                   </Button>
                   <br />
                   <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
-                  <i class="fa fa-edge" ></i>Continue with e-mail
+                    <i class="fa fa-edge" ></i>Continue with e-mail
                   </Button>
                   <br />
                   <Button variant="contained" className={classes.signinBtn}>
-                  <i class="fa fa-google"></i>
+                    <i class="fa fa-google"></i>
                     Continue with Google
                   </Button>
                   <br />
                   <Button variant="contained" className={classes.signinBtn}>
-                  <i class="fa fa-facebook"></i>
+                    <i class="fa fa-facebook"></i>
                     Continue with Facebook
                   </Button>
                 </div>
               </div>
-              
+
             }
 
             {/* current location pointer */}
@@ -176,6 +178,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getProductsAction: () => dispatch(ProductAction.getProducts()),
+    reverseGeoCodingAction: (payload) => dispatch(ProductAction.reverseGeoCoding(payload)),
     isLoggedInAction: () => dispatch(authAction.isLoggedIn()),
   };
 };

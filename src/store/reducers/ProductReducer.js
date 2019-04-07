@@ -5,6 +5,7 @@ import {
     GET_PRODUCT_BY_ID, GET_PRODUCT_BY_ID_SUCCESS, GET_PRODUCT_BY_ID_FAILURE,
     LIKE_DISLIKE_PRODUCT, LIKE_DISLIKE_PRODUCT_SUCCESS, LIKE_DISLIKE_PRODUCT_FAILURE,
     DO_COMMENT_ON_PRODUCT, DO_COMMENT_ON_PRODUCT_SUCCESS, DO_COMMENT_ON_PRODUCT_FAILURE,
+    REVERSE_GEOCODING, REVERSE_GEOCODING_SUCCESS, REVERSE_GEOCODING_FAILURE,
     SEARCH, SEARCH_SUCCESS, SEARCH_FAILURE,
 } from './../constants'
 
@@ -36,10 +37,39 @@ const initialState = {
     searchedProducts: null,
     searchLoader: false,
     searchError: null,
+
+    reversedGeoCoding: null,
+    reverseGeoCodingLoader: false,
+    reverseGeoCodingError: null,
 }
 
 export default function ProductReducer(state = initialState, action) {
     switch (action.type) {
+        ///////////////////////
+        case REVERSE_GEOCODING:
+            return {
+                ...state,
+                reversedGeoCoding: null,
+                reverseGeoCodingLoader: true,
+                reverseGeoCodingError: null,
+            }
+
+        case REVERSE_GEOCODING_SUCCESS:
+            return {
+                ...state,
+                reversedGeoCoding: action.payload,
+                reverseGeoCodingLoader: false,
+                reverseGeoCodingError: null,
+            }
+
+        case REVERSE_GEOCODING_FAILURE:
+            return {
+                ...state,
+                reversedGeoCoding: null,
+                reverseGeoCodingLoader: false,
+                reverseGeoCodingError: action.error,
+            }
+
         ///////////////////////
         case SEARCH:
             return {

@@ -5,14 +5,32 @@ import {
     GET_PRODUCT_BY_ID,
     LIKE_DISLIKE_PRODUCT,
     DO_COMMENT_ON_PRODUCT,
+    REVERSE_GEOCODING,
     SEARCH
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { ProductAction } from './../actions/index'
 import { HttpService } from '../../services/http';
 import path from './../../config/path'
+import credentials from './../../config/credentials'
 
 export default class ProductEpic {
+
+    static reverseGeoCoding = (action$) =>
+        action$.ofType(REVERSE_GEOCODING)
+            .switchMap(({ payload }) => {
+                return HttpService.get(`${path.REVERSE_GEOCODING}/${payload.lng},${payload.lat}.json?access_token=${credentials.MAP_ACCESS_TOCKEN}`, payload)
+                    .switchMap((response) => {
+                        if (response.status === 200) {
+                            console.log(response['response'].features)
+                            return Observable.of(
+                                ProductAction.reverseGeoCodingSuccess(response['response'].features)
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(ProductAction.likeProductFailure({ error: err.message }))
+                    })
+            })
 
     static likeProduct = (action$) =>
         action$.ofType(LIKE_DISLIKE_PRODUCT)
