@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { connect } from 'react-redux';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { ProductAction } from './../../store/actions'
+import MapToSelectLocation from './MapToSelectLocation'
+
 import "./index.css";
 
 const styles = theme => ({
@@ -63,7 +65,9 @@ class AddProduct extends React.Component {
       latitude: '',
       longitude: '',
       isSaveButtonDisable: true,
-      selectedImage: {}
+      selectedImage: {},
+      isLocationModalOpen: false,
+      isGeolocationEnabled: false,
     }
   }
 
@@ -216,9 +220,13 @@ class AddProduct extends React.Component {
     }
   }
 
+  pickLocation = () => {
+    this.setState({ getLocation: true, isLocationModalOpen: true })
+  }
+
   render() {
     let { classes } = this.props;
-    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude, isSaveButtonDisable, selectedImage, title, description } = this.state;
+    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude, isSaveButtonDisable, selectedImage, title, description, isLocationModalOpen } = this.state;
     return (
       <div className="add-product">
         <p className="add-product-title">Add Product</p>
@@ -227,6 +235,13 @@ class AddProduct extends React.Component {
           handleClose={() => this.setState({ isSelectCatModal: false })}
           selectCategory={(cat) => this.setState({ selectedCategory: cat, isSelectCatModal: false })}
         />
+
+        <MapToSelectLocation
+          open={isLocationModalOpen}
+          handleClose={() => this.setState({ isLocationModalOpen: false })}
+          selectedLocation={(address) => this.setState({ address })}
+        />
+        <Location temp={(isGeolocationEnabled) => { this.setState({ isGeolocationEnabled }) }} handleLocation={(latitude, longitude) => { this.setState({ latitude, longitude }) }} />
         <TopNav />
         <div className="container">
           <Grid container className={classes.root} spacing={16}>
@@ -332,11 +347,11 @@ class AddProduct extends React.Component {
                 </Grid>
                 <Grid item md={2} sm={2} xs={2}>
                   <Button
-                    onClick={() => this.setState({ getLocation: true })}
+                    onClick={this.pickLocation}
                     fullWidth
                     variant="contained"
                     className={classes.margin}
-                    disabled={!selectedCity}
+                    // disabled={!selectedCity}
                     id="location-button"
                   >
                     <i className="material-icons place">place</i>
@@ -344,35 +359,9 @@ class AddProduct extends React.Component {
                 </Grid>
               </Grid>
 
-              {
-                latitude ?
-                  <Grid item md={12} sm={12} xs={12}>
-                    <InputField
-                      label={"Latitude"}
-                      variant={"outlined"}
-                      fullWidth={true}
-                      disabled={true}
-                      value={latitude}
-                    />
-                  </Grid> : ''
-              }
-
-              {
-                longitude ?
-                  <Grid item md={12} sm={12} xs={12}>
-                    <InputField
-                      label={"Longitude"}
-                      variant={"outlined"}
-                      fullWidth={true}
-                      disabled={true}
-                      value={longitude}
-                    />
-                  </Grid>
-                  : ''}
               <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} variant="contained" color="primary" id="submit-button" >
                 Submit
-                </Button>
-              {getLocation ? <Location handleLocation={(latitude, longitude) => { this.setState({ latitude, longitude }) }} /> : ''}
+              </Button>
             </Grid>
           </Grid>
         </div>
