@@ -81,7 +81,7 @@ class MapToSelectLocation extends React.Component {
     }
 
     render() {
-        let { handleClose, open, position } = this.props;
+        let { handleClose, open, position, location } = this.props;
         let { address, latitude, longitude } = this.state;
         const { classes } = this.props;
      
@@ -100,6 +100,9 @@ class MapToSelectLocation extends React.Component {
                         </IconButton>
                         <Typography variant="h6" color="inherit" className={classes.flex}>
                             Pick Location
+                        </Typography>
+                        <Typography variant="h6" color="inherit" className={classes.flex} style={{fontSize: "12px"}}>
+                            {location}
                         </Typography>
                         <Button color="inherit" onClick={handleClose}>
                             Close

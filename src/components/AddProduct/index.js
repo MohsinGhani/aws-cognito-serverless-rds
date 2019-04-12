@@ -67,6 +67,7 @@ class AddProduct extends React.Component {
       selectedCity: '',
       latitude: '',
       longitude: '',
+      location: "",
       isSaveButtonDisable: false,
       selectedImage: {},
       isLocationModalOpen: false,
@@ -168,6 +169,7 @@ class AddProduct extends React.Component {
       if(this.props.reversedGeoCoding.length >= 3) {
 
         let street = "";
+        let location = this.props.reversedGeoCoding[0].place_name;
         let city = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "place")[0].text;
         let province = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "region")[0].text;
         let country = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "country")[0].text;
@@ -180,6 +182,7 @@ class AddProduct extends React.Component {
           street,
           city,
           province,
+          location,
           country,
           longitude: this.props.reversedGeoCoding[0].center[0],
           latitude: this.props.reversedGeoCoding[0].center[1]
@@ -191,7 +194,8 @@ class AddProduct extends React.Component {
           province: "",
           country: "",
           longitude: "",
-          latitude: ""
+          latitude: "",
+          location: ""
         })
       }
     }
@@ -262,7 +266,7 @@ class AddProduct extends React.Component {
 
   render() {
     let { classes, reversedGeoCoding } = this.props;
-    let { getLocation, isSelectCatModal, selectedCategory, street, city, province, country, selectedState, latitude, longitude, isSaveButtonDisable, selectedImage, title, description, isLocationModalOpen } = this.state;
+    let { getLocation, isSelectCatModal, selectedCategory, street, city, province, country, location, selectedState, latitude, longitude, isSaveButtonDisable, selectedImage, title, description, isLocationModalOpen } = this.state;
 
     return (
       <div className="add-product">
@@ -279,6 +283,7 @@ class AddProduct extends React.Component {
           handleClose={() => this.setState({ isLocationModalOpen: false })}
           selectedLocation={(address) => this.setState({ address })}
           position={{lng: this.state.longitude, lat: this.state.latitude, zoom: 12}}
+          location={location}
         />
 
         <TopNav />
