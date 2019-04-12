@@ -22,7 +22,7 @@ export default class ProductEpic {
                 return HttpService.get(`${path.REVERSE_GEOCODING}/${payload.lng},${payload.lat}.json?access_token=${credentials.MAP_ACCESS_TOCKEN}`, payload)
                     .switchMap((response) => {
                         if (response.status === 200) {
-                            console.log(response['response'].features)
+                            // console.log(response['response'].features)
                             return Observable.of(
                                 ProductAction.reverseGeoCodingSuccess(response['response'].features)
                             )

@@ -51,20 +51,23 @@ class AddProduct extends React.Component {
       title: '',
       description: '',
       street: '',
+      city: "",
+      province: "",
+      country: "",
       getLocation: false,
       isSelectCatModal: true,
-      countries: [],
+      // countries: [],
       selectedCountry: '',
       countriesOrignalObj: null,
-      states: [],
+      // states: [],
       statesOrignalObj: null,
       selectedState: '',
-      cities: [],
+      // cities: [],
       citiesOrignalObj: null,
       selectedCity: '',
       latitude: '',
       longitude: '',
-      isSaveButtonDisable: true,
+      isSaveButtonDisable: false,
       selectedImage: {},
       isLocationModalOpen: false,
       isGeolocationEnabled: false,
@@ -159,6 +162,21 @@ class AddProduct extends React.Component {
     if (this.props.savedProduct && !this.props.saveProductLoader && prevProps.saveProductLoader) {
       this.goto('/')
     }
+    
+    if (this.props.reversedGeoCoding !== prevProps.reversedGeoCoding) {
+
+      let city = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "place")[0].text;
+      let province = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "region")[0].text;
+      let country = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "country")[0].text;
+     
+      this.setState({
+        city,
+        province,
+        country,
+        longitude: this.props.reversedGeoCoding[0].center[0],
+        latitude: this.props.reversedGeoCoding[0].center[1]
+      })
+    }
   }
 
   onSaveProduct = () => {
@@ -225,8 +243,11 @@ class AddProduct extends React.Component {
   }
 
   render() {
-    let { classes } = this.props;
-    let { getLocation, isSelectCatModal, selectedCategory, countries, states, selectedCountry, selectedState, cities, selectedCity, latitude, longitude, isSaveButtonDisable, selectedImage, title, description, isLocationModalOpen } = this.state;
+    let { classes, reversedGeoCoding } = this.props;
+    let { getLocation, isSelectCatModal, selectedCategory, states, city, province, country, selectedState, latitude, longitude, isSaveButtonDisable, selectedImage, title, description, isLocationModalOpen } = this.state;
+
+    console.log(reversedGeoCoding);
+
     return (
       <div className="add-product">
         <p className="add-product-title">Add Product</p>
@@ -301,18 +322,28 @@ class AddProduct extends React.Component {
               </Grid>
 
               <Grid item md={12} sm={12} xs={12}>
-                <AutoSelectInputField
+                {/* <AutoSelectInputField
                   label={"Search Country"}
                   variant={"outlined"}
                   id={"selectedCountry"}
                   fullWidth={true}
                   suggestions={countries}
                   onSelect={this.handleInput}
+                /> */}
+                <InputField
+                  label={"City"}
+                  variant={"outlined"}
+                  id={"selectedCity"}
+                  fullWidth={true}
+                  // onChange={this.handleInput}
+                  value={city}
+                  disabled
+                  // maxLength={300}
                 />
               </Grid>
 
               <Grid item md={12} sm={12} xs={12}>
-                <AutoSelectInputField
+                {/* <AutoSelectInputField
                   label={"State or Province"}
                   variant={"outlined"}
                   id={"selectedState"}
@@ -320,11 +351,21 @@ class AddProduct extends React.Component {
                   suggestions={states}
                   onSelect={this.handleInput}
                   disabled={!selectedCountry}
+                /> */}
+                <InputField
+                  label={"State or Province"}
+                  variant={"outlined"}
+                  id={"selectedState"}
+                  fullWidth={true}
+                  // onChange={this.handleInput}
+                  value={province}
+                  disabled
+                  // maxLength={300}
                 />
               </Grid>
 
               <Grid item md={12} sm={12} xs={12}>
-                <AutoSelectInputField
+                {/* <AutoSelectInputField
                   label={"Search City"}
                   variant={"outlined"}
                   id={"selectedCity"}
@@ -332,6 +373,16 @@ class AddProduct extends React.Component {
                   suggestions={cities}
                   onSelect={this.handleInput}
                   disabled={!selectedState}
+                /> */}
+                <InputField
+                  label={"Country"}
+                  variant={"outlined"}
+                  id={"selectedCountry"}
+                  fullWidth={true}
+                  // onChange={this.handleInput}
+                  value={country}
+                  disabled
+                  // maxLength={300}
                 />
               </Grid>
 
@@ -359,7 +410,7 @@ class AddProduct extends React.Component {
                 </Grid>
               </Grid>
 
-              <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} variant="contained" color="primary" id="submit-button" >
+              <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} style={{opacity: isSaveButtonDisable ? 0.6 : 1}} variant="contained" color="primary" id="submit-button" >
                 Submit
               </Button>
             </Grid>
@@ -374,14 +425,14 @@ const mapStateToProps = (state) => {
   const {
     ProductReducer: {
       categories, getCategoriesLoader, getCategoriesError,
-      savedProduct, saveProductLoader, saveProductError,
+      savedProduct, saveProductLoader, saveProductError, reversedGeoCoding
     },
     authReducer: { user }
   } = state;
   return {
     categories, getCategoriesLoader, getCategoriesError,
     savedProduct, saveProductLoader, saveProductError,
-    user
+    user, reversedGeoCoding
   }
 }
 
