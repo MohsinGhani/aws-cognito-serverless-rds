@@ -80,7 +80,7 @@ class Products extends React.Component {
             movingMethod={'jumpTo'}
             center={[longitude, latitude]}
             zoom={[12]}
-            onClick={(map, e) => { this.props.reverseGeoCodingAction(e.lngLat) }}
+            // onClick={(map, e) => { this.props.reverseGeoCodingAction(e.lngLat) }}
           >
             {
               !this.props.isLoggedIn &&

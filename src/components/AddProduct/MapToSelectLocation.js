@@ -61,8 +61,9 @@ class MapToSelectLocation extends React.Component {
         this.state = {
             map: null,
             address: null,
-            latitude: 36.778259,
-            longitude: -119.417931
+            latitude: null,
+            longitude: null,
+            zoom: null
         }
     }
 
@@ -74,11 +75,18 @@ class MapToSelectLocation extends React.Component {
 
     goto = path => this.props.history.push(path)
 
+    setLocation = (event) => {
+        this.setState({longitude: event.lngLat.lng, latitude: event.lngLat.lat, zoom: [event.point.x, event.point.y]})
+        this.props.reverseGeoCodingAction(event.lngLat)
+    }
+
     render() {
-        let { handleClose, open } = this.props;
+        let { handleClose, open, position } = this.props;
         let { address, latitude, longitude } = this.state;
         const { classes } = this.props;
+     
         return (
+            
             <Dialog
                 fullScreen
                 open={open}
@@ -106,9 +114,9 @@ class MapToSelectLocation extends React.Component {
                             width: "100%",
                         }}
                         movingMethod={'jumpTo'}
-                        center={[longitude, latitude]}
-                        zoom={[12]}
-                        onClick={(map, e) => { this.props.reverseGeoCodingAction(e.lngLat) }}
+                        center={[longitude ? longitude : position.lng, latitude ? latitude : position.lat]}
+                        zoom={this.state.zoom ? this.state.zoom : [position.zoom]}
+                        onClick={(map, e) => this.setLocation(e) }
                     >
 
                     </Map>
