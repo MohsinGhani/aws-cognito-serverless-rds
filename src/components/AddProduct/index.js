@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { ProductAction } from './../../store/actions'
 import MapToSelectLocation from './MapToSelectLocation'
+import ReactLoading from 'react-loading';
 
 import "./index.css";
 
@@ -48,12 +49,12 @@ class AddProduct extends React.Component {
     super(props);
     this.state = {
       selectedCategory: null,
-      title: '',
-      description: '',
-      street: '',
-      city: "",
-      province: "",
-      country: "",
+      title: null,
+      description: null,
+      street: null,
+      city: null,
+      province: null,
+      country: null,
       getLocation: false,
       isSelectCatModal: true,
       // countries: [],
@@ -65,10 +66,10 @@ class AddProduct extends React.Component {
       // cities: [],
       citiesOrignalObj: null,
       selectedCity: '',
-      latitude: '',
-      longitude: '',
-      location: "",
-      isSaveButtonDisable: false,
+      latitude: 36.778259,
+      longitude: -119.417931,
+      location: null,
+      isSaveButtonDisable: true,
       selectedImage: {},
       isLocationModalOpen: false,
       isGeolocationEnabled: false,
@@ -143,17 +144,9 @@ class AddProduct extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.selectedCountry !== this.state.selectedCountry && this.state.selectedCountry) {
-      // handle selectedCountry onChange
-      let key = this.getKeyByValue(this.state.countriesOrignalObj, this.state.selectedCountry)
-      if (key) this.onChangeCountry(key)
-    }
 
-    if (prevState.selectedState !== this.state.selectedState && this.state.selectedState) {
-      // handle selectedState onChange
-      let countryCode = this.getKeyByValue(this.state.countriesOrignalObj, this.state.selectedCountry)
-      let stateCode = this.getKeyByValue(this.state.statesOrignalObj, this.state.selectedState)
-      if (countryCode && stateCode) this.onChangeState(countryCode, stateCode)
+    if((prevState.street !== this.state.street && this.state.street === "") || (prevState.title !== this.state.title && this.state.title === "") || (prevState.description !== this.state.description && this.state.description === "")) {
+      this.setState({ isSaveButtonDisable: true })
     }
 
     if (this.state && this.state.isSaveButtonDisable) {
@@ -189,13 +182,11 @@ class AddProduct extends React.Component {
         })
       } else {
         this.setState({
-          street: "",
-          city: "",
-          province: "",
-          country: "",
-          longitude: "",
-          latitude: "",
-          location: ""
+          street: null,
+          city: null,
+          province: null,
+          country: null,
+          location: null
         })
       }
     }
@@ -220,14 +211,15 @@ class AddProduct extends React.Component {
   }
 
   validateSaveButton = () => {
-    const { selectedCategory, title, description, selectedCountry, selectedState, selectedCity, latitude, longitude, selectedImage } = this.state
+    const { selectedCategory, title, description, country, province, city, latitude, longitude, selectedImage, street } = this.state
     return (
-      title.length >= 3 &&
-      description.length >= 3 &&
+      (title && title.length >= 3) &&
+      (description && description.length >= 3) &&
       selectedCategory &&
-      selectedCountry &&
-      selectedCity &&
-      selectedState &&
+      country &&
+      city &&
+      (street && street.length > 0) &&
+      province &&
       latitude &&
       longitude &&
       selectedImage &&
@@ -265,8 +257,8 @@ class AddProduct extends React.Component {
   }
 
   render() {
-    let { classes, reversedGeoCoding } = this.props;
-    let { getLocation, isSelectCatModal, selectedCategory, street, city, province, country, location, selectedState, latitude, longitude, isSaveButtonDisable, selectedImage, title, description, isLocationModalOpen } = this.state;
+    let { classes, saveProductLoader } = this.props;
+    let { isSelectCatModal, selectedCategory, street, city, province, country, location, isSaveButtonDisable, selectedImage, title, description, isLocationModalOpen } = this.state;
 
     return (
       <div className="add-product">
@@ -324,7 +316,7 @@ class AddProduct extends React.Component {
                   id={"title"}
                   fullWidth={true}
                   onChange={this.handleInput}
-                  value={title}
+                  value={title ? title : ""}
                   maxLength={300}
                 />
               </Grid>
@@ -339,73 +331,41 @@ class AddProduct extends React.Component {
                   multiline={true}
                   rowsMax={'4'}
                   rows={'4'}
-                  value={description}
+                  value={description ? description : ""}
                   maxLength={1000}
                 />
               </Grid>
 
               <Grid item md={12} sm={12} xs={12}>
-                {/* <AutoSelectInputField
-                  label={"Search Country"}
-                  variant={"outlined"}
-                  id={"selectedCountry"}
-                  fullWidth={true}
-                  suggestions={countries}
-                  onSelect={this.handleInput}
-                /> */}
                 <InputField
                   label={"Country"}
                   variant={"outlined"}
                   id={"selectedCountry"}
                   fullWidth={true}
-                  // onChange={this.handleInput}
-                  value={country}
+                  value={country ? country : ""}
                   disabled
-                  // maxLength={300}
                 />
               </Grid>
 
               <Grid item md={12} sm={12} xs={12}>
-                {/* <AutoSelectInputField
-                  label={"State or Province"}
-                  variant={"outlined"}
-                  id={"selectedState"}
-                  fullWidth={true}
-                  suggestions={states}
-                  onSelect={this.handleInput}
-                  disabled={!selectedCountry}
-                /> */}
                 <InputField
                   label={"State or Province"}
                   variant={"outlined"}
                   id={"selectedState"}
                   fullWidth={true}
-                  // onChange={this.handleInput}
-                  value={province}
+                  value={province ? province : ""}
                   disabled
-                  // maxLength={300}
                 />
               </Grid>
 
               <Grid item md={12} sm={12} xs={12}>
-                {/* <AutoSelectInputField
-                  label={"Search City"}
-                  variant={"outlined"}
-                  id={"selectedCity"}
-                  fullWidth={true}
-                  suggestions={cities}
-                  onSelect={this.handleInput}
-                  disabled={!selectedState}
-                /> */}
                 <InputField
                   label={"City"}
                   variant={"outlined"}
                   id={"selectedCity"}
                   fullWidth={true}
-                  // onChange={this.handleInput}
-                  value={city}
+                  value={city ? city : ""}
                   disabled
-                  // maxLength={300}
                 />
               </Grid>
 
@@ -415,7 +375,7 @@ class AddProduct extends React.Component {
                     label={"Street"}
                     variant={"outlined"}
                     id={"street"}
-                    value={street}
+                    value={street ? street : ""}
                     fullWidth={true}
                     onChange={this.handleInput}
                   />
@@ -426,7 +386,6 @@ class AddProduct extends React.Component {
                     fullWidth
                     variant="contained"
                     className={classes.margin}
-                    // disabled={!selectedCity}
                     id="location-button"
                   >
                     <i className="material-icons place">place</i>
@@ -435,7 +394,7 @@ class AddProduct extends React.Component {
               </Grid>
 
               <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} style={{opacity: isSaveButtonDisable ? 0.6 : 1}} variant="contained" color="primary" id="submit-button" >
-                Submit
+                {saveProductLoader ? <ReactLoading type={'spin'} color={'#fff'} height={'25px'} width={'25px'} /> : "Submit"}
               </Button>
             </Grid>
           </Grid>
