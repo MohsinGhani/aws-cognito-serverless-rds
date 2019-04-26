@@ -4,8 +4,6 @@ export default class path {
     static POST_SIGNUP = `${credentials.BASE_URL}/post-signup`;
     static POST_CONFIRMATION = `${credentials.BASE_URL}/post-confirmation`;
     static GET_USER_BY_ID = `${credentials.BASE_URL}/get-user`;
-    static POST_SOCIAL_AUTH = `${credentials.BASE_URL}/post-social-auth`;
-
     // products
     static GET_CATEGORIES = `${credentials.BASE_URL}/getCategory`;
     static SAVE_PRODUCT = `${credentials.BASE_URL}/add-product`;
@@ -14,7 +12,6 @@ export default class path {
     static LIKE_OR_DISLIKE = `${credentials.BASE_URL}/like`;
     static DO_COMMENT_ON_PRODUCT = `${credentials.BASE_URL}/comment`;
     static SEARCH = `${credentials.BASE_URL}/search`;
-    static REVERSE_GEOCODING = `https://api.mapbox.com/geocoding/v5/mapbox.places`;
 
     // ADDRESS
     static countries = "https://geodata.solutions/api/api.php?type=getCountries";

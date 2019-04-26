@@ -1,11 +1,10 @@
 import React from "react";
 import { Auth } from 'aws-amplify';
-import credentials from './../../config/credentials'
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { connect } from 'react-redux';
 import { authAction } from './../../store/actions'
-
+import credentials from '../../config/credentials'
 // To federated sign in from Google
 class SignInWithGoogle extends React.Component {
     constructor(props) {

@@ -73,6 +73,7 @@ class AddProduct extends React.Component {
       selectedImage: {},
       isLocationModalOpen: false,
       isGeolocationEnabled: false,
+      hideTool: false,
     }
   }
 
@@ -283,11 +284,16 @@ class AddProduct extends React.Component {
           <Grid container className={classes.root} spacing={16}>
             {/* <Hidden smDown> */}
             <Grid item md={5} sm={12} xs={12}>
-              <input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={(event) => { this.handleImageChange(event); event.target.value = null }} />
-              <label htmlFor="icon-button-file" className={classes.cameraIcon}>
-                <IconButton color="primary" className={classes.button} component="span">
-                  <PhotoCamera id="photocamera" />
-                </IconButton>
+              <input accept="image/*" Style={{display: 'none'}} className={classes.input} id="icon-button-file" type="file" onChange={(event) => { this.handleImageChange(event); event.target.value = null; this.setState({
+                hideTool : true
+              })}} />
+              <label htmlFor="icon-button-file" className={classes.cameraIcon}> 
+              {selectedImage.base64 ? '' : 
+              <IconButton color="primary" className={classes.button} component="span">
+                   <PhotoCamera id="photocamera" />
+                 </IconButton>}
+              
+              
                 <div className="productPicture">
                   {
                     selectedImage && selectedImage.base64 ? <img src={selectedImage.base64} alt="product" className="productImage" /> : ''

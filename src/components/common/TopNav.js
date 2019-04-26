@@ -23,7 +23,7 @@ import { withRouter } from 'react-router-dom';
 const styles = theme => ({
     root: {
         width: '100%',
-        backgroundColor : '#9e7339	',
+        backgroundColor: '#9e7339	',
     },
     grow: {
         flexGrow: 1,
@@ -41,15 +41,14 @@ const styles = theme => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
+        // backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
-        marginRight: theme.spacing.unit * 2,
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing.unit * 3,
+            marginLeft: theme.spacing.unit,
             width: 'auto',
         },
     },
@@ -73,24 +72,15 @@ const styles = theme => ({
         paddingLeft: theme.spacing.unit * 10,
         transition: theme.transitions.create('width'),
         width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: 200,
-        },
-    },
-    sectionDesktop: {
-        display: 'none',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-        },
-    },
-    sectionMobile: {
-        display: 'flex',
-        [theme.breakpoints.up('md')]: {
-            display: 'none',
+        [theme.breakpoints.up('sm')]: {
+            width: 0,
+            '&:focus': {
+                width: 200,
+            },
         },
     },
     appbar: {
-        backgroundColor : '#9e7339	',
+        backgroundColor: '#9e7339	',
     }
 });
 
@@ -146,7 +136,7 @@ class TopNav extends React.Component {
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 open={isMenuOpen}
-                onClose={this.handleMenuClose}
+                // onClose={this.handleMenuClose}
             >
                 <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
                 <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
@@ -203,11 +193,25 @@ class TopNav extends React.Component {
                     <Toolbar>
                         <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
                             {/* <MenuIcon /> */}
-                            <SwipeableTemporaryDrawer/>
+                            <SwipeableTemporaryDrawer />
                         </IconButton>
                         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                             Productmania
                         </Typography>
+                        <div className={classes.grow} />
+                        {isLoggedIn ?
+                            <div className={classes.sectionDesktop}>
+                                <IconButton
+                                    // aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                                    aria-haspopup="true"
+                                    // onClick={this.handleProfileMenuOpen}
+                                    color="inherit"
+                                >
+                                    <AccountCircle />
+                                </IconButton>
+                            </div> : null
+                        }
+                        <div className={classes.grow} />
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
@@ -223,7 +227,8 @@ class TopNav extends React.Component {
                                 id='query'
                             />
                         </div>
-                        <div className={classes.grow} />
+
+                        {/* <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
                             <IconButton color="inherit" title="Add Product" onClick={() => this.goto('/')}>
                                 <Icon>format_list_bulleted</Icon>
@@ -244,7 +249,7 @@ class TopNav extends React.Component {
                             <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
                                 <MoreIcon />
                             </IconButton>
-                        </div>
+                        </div> */}
                     </Toolbar>
                 </AppBar>
                 {renderMenu}

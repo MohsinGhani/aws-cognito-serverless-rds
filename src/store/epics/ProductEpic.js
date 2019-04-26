@@ -12,7 +12,7 @@ import { Observable } from 'rxjs/Rx';
 import { ProductAction } from './../actions/index'
 import { HttpService } from '../../services/http';
 import path from './../../config/path'
-import credentials from './../../config/credentials'
+import credentials from '../../config/credentials'
 
 export default class ProductEpic {
 

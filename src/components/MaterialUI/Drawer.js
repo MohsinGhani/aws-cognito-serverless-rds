@@ -121,15 +121,13 @@ class SwipeableTemporaryDrawer extends React.Component {
             <div >
                 <MenuIcon onClick={this.toggleDrawer('left', true)} />
                 <div>
-                    <Drawer open={this.state.left} className={classes.drawer}>
+                    <Drawer open={this.state.left} className={classes.drawer} cursor="pointer">
                         <p className="MenuLinks">Menu Links</p>
                         <div
                             tabIndex={0}
                             role="button"
                             primary="Menu Links"
                             className={classes.swipeList}
-                            onClick={this.toggleDrawer('left', false)}
-                            onKeyDown={this.toggleDrawer('left', false)}
                         >
                             <List className={classes.list}>
                                 <ListItem>
@@ -139,7 +137,9 @@ class SwipeableTemporaryDrawer extends React.Component {
                                             account_circle
                                 </i>
                                     </Typography>
-                                    <Typography color="inherit" onClose={this.toggleDrawer('left', false)}>
+                                    <Typography color="inherit" 
+                                    onClick={this.toggleDrawer('left', false)}
+                                    onKeyDown={this.toggleDrawer('left', false)}>
                                         <i className="material-icons clear">
                                             clear
                                 </i>

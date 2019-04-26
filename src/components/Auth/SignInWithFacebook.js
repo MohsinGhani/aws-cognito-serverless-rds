@@ -1,6 +1,6 @@
 import React from "react";
 import { Auth } from 'aws-amplify';
-import credentials from './../../config/credentials'
+import credentials from '../../config/credentials'
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { connect } from 'react-redux';
