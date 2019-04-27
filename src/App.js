@@ -15,6 +15,15 @@ import Amplify from 'aws-amplify';
 import awsConfig from './config/awsConfig'
 import credentials from './config/credentials'
 import PrivateRoute from './components/common/PrivateRoute';
+import Bookmark from './components/Static/Bookmark';
+import CookiePolicy from './components/Static/CookiePolicy';
+import CopyLinkApp from './components/Static/CopyAppLink';
+import Feedback from './components/Static/Feedback';
+import HowToUse from './components/Static/HowToUse';
+import MyProduct from './components/Static/MyProduct';
+import Privacy from './components/Static/Privacy';
+import ShareAppLink from './components/Static/ShareAppLink';
+import TermOfUse from './components/Static/TermsOfUse';
 
 Amplify.configure(awsConfig)
 
@@ -54,6 +63,15 @@ class App extends Component {
             <Route exact path="/forgot-password" component={ForgotPassword} />
             <Route exact path="/confirm-signup" component={ConfirmSignUp} />
             <Route exact path="/product/:product_id" component={Product} />
+            <Route exact path="/bookmark" component={Bookmark}/>
+            <Route exact path="/cookie-policy" component={CookiePolicy}/>
+            <Route exact path="/copy-app-link" component={CopyLinkApp}/>
+            <Route exact path="/feedback" component={Feedback}/>
+            <Route exact path="/how-to-use" component={HowToUse}/>
+            <Route exact path="/myproduct" component={MyProduct}/>
+            <Route exact path="/privacy" component={Privacy}/>
+            <Route exact path="/share-app-link" component={ShareAppLink}/>
+            <Route exact path="/terms-of-use" component={TermOfUse}/>
             <Switch>
               {/* <PrivateRoute exact path="/" component={Products} /> */}
               <PrivateRoute exact path="/select-category" component={SelectCategory} />

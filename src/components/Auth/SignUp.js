@@ -7,22 +7,15 @@ import Grid from "@material-ui/core/Grid";
 import { InputField, InputFieldWithEndAdornment } from "./../MaterialUI";
 import "./index.css";
 import Hidden from "@material-ui/core/Hidden";
-import Modal from '@material-ui/core/Modal';
 import Button from "@material-ui/core/Button";
 import Typography from '@material-ui/core/Typography';
 import { authAction } from './../../store/actions'
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import SimpleDialogDemo from '../MaterialUI/SimpleDialogDemo'
 const styles = theme => ({
   p05: {
     padding: "5px"
@@ -52,8 +45,8 @@ const styles = theme => ({
     backgroundColor: "transparent",
     boxShadow: "none",
     overflow: "hidden",
-    backgroundColor: 'white',
-    boxShadow: theme.shadows[50],
+    // backgroundColor: 'white',
+    // boxShadow: theme.shadows[50],
     width: theme.spacing.unit * 50,
     margin: '20px',
     padding: '10px 0px',

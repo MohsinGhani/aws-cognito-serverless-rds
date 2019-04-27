@@ -1,15 +1,11 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import TopNav from './../common/TopNav'
 import { connect } from 'react-redux';
-import { ProductAction, authAction } from './../../store/actions'
+import { ProductAction} from './../../store/actions'
 import "./index.css";
 import Button from '@material-ui/core/Button';
 import ReactMapboxGl from "react-mapbox-gl";
-import { Marker } from "react-mapbox-gl";
 import credentials from '../../config/credentials'
-import Location from './../common/Location'
-// import green from '@material-ui/core/colors/green';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -144,3 +140,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
     mapStateToProps, mapDispatchToProps
 )(withStyles(styles)(MapToSelectLocation));
+console.clear();

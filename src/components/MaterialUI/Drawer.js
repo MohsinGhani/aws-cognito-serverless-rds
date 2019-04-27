@@ -1,33 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import { Link } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Drawer from '@material-ui/core/Drawer';
 import { withRouter } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import { authAction, ProductAction } from './../../store/actions'
-import Icon from '@material-ui/core/Icon';
 import "./index.css";
 const styles = theme => ({
     appBar: {
@@ -46,13 +29,15 @@ const styles = theme => ({
     listItem: {
         padding: '3px',
         paddingLeft: '40px',
+        cursor: 'pointer',
+        color: 'white',
+        textDecoration : 'none',
     },
     swipeList: {
         height: '100%',
         backgroundColor: 'red',
         border: '10px solid 	#E8E8E8',
         borderTop: '5px solid 	#E8E8E8',
-
     },
     accountCircle: {
         textAlign: 'center',
@@ -119,9 +104,9 @@ class SwipeableTemporaryDrawer extends React.Component {
         const { classes, isLoggedIn } = this.props;
         return (
             <div >
-                <MenuIcon onClick={this.toggleDrawer('left', true)} />
+                <MenuIcon onClick={this.toggleDrawer('left', true)} id="svgIcon" />
                 <div>
-                    <Drawer open={this.state.left} className={classes.drawer} cursor="pointer">
+                    <Drawer open={this.state.left} className={classes.drawer}>
                         <p className="MenuLinks">Menu Links</p>
                         <div
                             tabIndex={0}
@@ -163,18 +148,42 @@ class SwipeableTemporaryDrawer extends React.Component {
                                         {/* <SearchIcon /> */}
                                     </div>
                                 </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/add-product')}>Add Product</ListItem>
-                                <ListItem className={classes.listItem}>Map View</ListItem>
-                                <ListItem className={classes.listItem}>List View</ListItem>
-                                <ListItem className={classes.listItem}>Feedback</ListItem>
-                                <ListItem className={classes.listItem}>Privacy</ListItem>
-                                <ListItem className={classes.listItem}>Terms of Use</ListItem>
-                                <ListItem className={classes.listItem}>Cookie Policy</ListItem>
-                                <ListItem className={classes.listItem}>How To Use</ListItem>
-                                <ListItem className={classes.listItem}>Share App Link</ListItem>
-                                <ListItem className={classes.listItem}>Copy App Link</ListItem>
-                                <ListItem className={classes.listItem}>Bookmark</ListItem>
-                                <ListItem className={classes.listItem}>My Product</ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/add-product')}>
+                                    Add Product
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/')}>
+                                    Map View
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/listview')}>
+                                    List View
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/feedback')}>
+                                    Feedback
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/privacy')}>
+                                    Privacy
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/terms-of-use')}>
+                                    Terms of Use
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/cookie-policy')}>
+                                    Cookie Policy
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/how-to-use')}>
+                                    How To Use
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/share-app-link')}>
+                                    Share App Link
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/copy-app-link')}>
+                                    Copy App Link
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/bookmark')}>
+                                    Bookmark
+                                </ListItem>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/my-product')}>
+                                    My Product
+                                </ListItem>
                                 {
                                     isLoggedIn ?
                                     <ListItem className={classes.listItem} onClick={this.logout}>Logout</ListItem> :

@@ -4,15 +4,11 @@ import Button from '@material-ui/core/Button';
 import { ProductAction } from './../../store/actions'
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid/v1'
-import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import { InputField } from './../MaterialUI/index'
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import List from '@material-ui/core/List';
 const styles = theme => ({
   
     root: {
@@ -62,7 +58,7 @@ class CommentModal extends Component {
     }
 
     render() {
-        let { open, handleClose, fullScreen, classes } = this.props
+        let { open, handleClose, classes } = this.props
         let { comment } = this.state
         return (
             <div className={classes.root}>

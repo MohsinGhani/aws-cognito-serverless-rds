@@ -4,6 +4,7 @@ primary {
 .material-icons.clear{
     text-align: right;
     font-size: 40px;
+    cursor: pointer;
 }
 .searchButton{
     padding: 0px 50px;
@@ -17,7 +18,8 @@ primary {
     transform: translateX(-50%);
 }
 .material-icons.searchh{
-    font-size: 35px
+    font-size: 35px;
+    cursor: pointer;
 }
 .MenuLinks{
     /* border: 6px solid 	#E8E8E8; */
@@ -26,4 +28,7 @@ primary {
     margin: 0px;
     padding-left: 10px;
     /* border-top: 20px solid 	#E8E8E8; */
+}
+#svgIcon{
+    font-size : 34px;
 }

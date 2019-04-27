@@ -10,7 +10,7 @@ import { Marker } from "react-mapbox-gl";
 import credentials from '../../config/credentials'
 import ProductDetailModal from './ProductDetailModal'
 import Location from './../common/Location'
-// import green from '@material-ui/core/colors/green';
+
 
 const Map = ReactMapboxGl({
   accessToken: credentials.MAP_ACCESS_TOCKEN

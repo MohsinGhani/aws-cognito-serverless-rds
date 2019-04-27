@@ -1,12 +1,11 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { InputField, AutoSelectInputField } from "./../MaterialUI";
+import { InputField } from "./../MaterialUI";
 import Button from "@material-ui/core/Button";
 import TopNav from './../common/TopNav'
 import Location from './../common/Location'
 import SelectCategory from './../SelectCategory'
-import Icon from '@material-ui/core/Icon';
 import { Address } from "./../../services/address"
 import uuidv1 from 'uuid/v1'
 import IconButton from '@material-ui/core/IconButton';
@@ -434,3 +433,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps, mapDispatchToProps
 )(withStyles(styles)(AddProduct));
+console.clear();
