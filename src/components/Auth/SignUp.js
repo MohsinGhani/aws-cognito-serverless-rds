@@ -55,7 +55,7 @@ const styles = theme => ({
     marginTop: '-200px',
     textAlign: 'center',
   },
-  errorModel:  {
+  errorModel: {
     backgroundColor: 'red',
     opacity: '0px',
     fontSize: '40px',
@@ -157,9 +157,9 @@ class SignUp extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn) {
-      setTimeout(()=> {
+      setTimeout(() => {
         this.goto('/add-product')
-          }, 500)
+      }, 500)
     }
   }
 
@@ -202,57 +202,57 @@ class SignUp extends Component {
                       }
                     }}
                   >
-                  <div>
-                    <DialogTitle variant="h1" id="dialogTitle">Oops!</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id="dialogText">
-                        {authError}
-                      </DialogContentText>
-                    </DialogContent>
-                    <Typography>
-                    <Button onClick={this.handleClose} id="closeButton">
-                      OK
-            </Button>
-            </Typography>
+                    <div>
+                      <DialogTitle variant="h1" id="dialogTitle">Oops!</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="dialogText">
+                          {authError}
+                        </DialogContentText>
+                      </DialogContent>
+                      <Typography>
+                        <Button onClick={this.handleClose} id="closeButton">
+                          OK
+                    </Button>
+                      </Typography>
                     </div>
                   </Dialog>
                 </div>
               ) : setTimeout(() => (
-              <div>
-                <p>sorry</p>
-                <Dialog
-                  aria-labelledby="simple-modal-title"
-                  aria-describedby="simple-modal-description"
-                  open={this.state.open}
-                  className={classes.confirmModel}
-                  onClose={this.handleClose}
-                  BackdropProps={{
-                    classes: {
-                      root: classes.root
-                    }
-                  }
-                  }
-                  PaperProps={{
-                    classes: {
-                      root: classes.paper
-                    }
-                  }}
-                >
                 <div>
-                  <DialogTitle variant="h1" id="dialogTitle">Thank You!</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="dialogText">
-                      You have succesfully submitted the form
+                  <p>sorry</p>
+                  <Dialog
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.open}
+                    className={classes.confirmModel}
+                    onClose={this.handleClose}
+                    BackdropProps={{
+                      classes: {
+                        root: classes.root
+                      }
+                    }
+                    }
+                    PaperProps={{
+                      classes: {
+                        root: classes.paper
+                      }
+                    }}
+                  >
+                    <div>
+                      <DialogTitle variant="h1" id="dialogTitle">Thank You!</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="dialogText">
+                          You have succesfully submitted the form
                     </DialogContentText>
-                  </DialogContent>
-                  <Typography>
-                  <Button onClick={this.handleClose} id="closeButton">
-                    OK
-          </Button>
-          </Typography>
-                  </div>
-                </Dialog>
-              </div>),3000)
+                      </DialogContent>
+                      <Typography>
+                        <Button onClick={this.handleClose} id="closeButton">
+                          OK
+                        </Button>
+                      </Typography>
+                    </div>
+                  </Dialog>
+                </div>), 3000)
             }
 
             <Grid container>
@@ -337,7 +337,7 @@ class SignUp extends Component {
                 symbols
               </label>
             </Grid>
-            <hr />
+            {/* <hr />
             <Grid container>
               <Grid item md={12} sm={12} xs={12} className={classes.p05}>
                 <div style={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -363,7 +363,7 @@ class SignUp extends Component {
                   </div>
                 </div>
               </Grid>
-            </Grid>
+            </Grid> */}
             <hr />
             <Grid container className={classes.btns_parent}>
               <Button

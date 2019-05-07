@@ -87,13 +87,13 @@ class Products extends React.Component {
               !this.props.isLoggedIn &&
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <div className="mainBodyButtons">
-                  <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
+                  {/* <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
                     <i class="material-icons" id="phone-icon">
                       local_phone
-              </i>
+                    </i>
                     Join With Phone
                   </Button>
-                  <br />
+                  <br /> */}
                   <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
                     <i class="fa fa-edge" ></i>Continue with e-mail
                   </Button>
