@@ -1,9 +1,10 @@
-import React from "react";
+import React, {Fragment} from "react";
 import { Auth } from 'aws-amplify';
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { connect } from 'react-redux';
 import { authAction } from './../../store/actions'
+import {withRouter} from "react-router-dom";
 
 function waitForInit() {
     return new Promise((res, rej) => {
@@ -91,19 +92,33 @@ class SignInWithFacebook extends React.Component {
     }
 
     render() {
-        let { authLoader } = this.props
+        let { authLoader, btnStyle } = this.props
+        let { pathname } = this.props.location;
+
         return (
-            <div>
-                <Button
-                    variant="contained"
-                    // color="primary"
-                    fullWidth
-                    onClick={this.signIn}
-                    disabled={authLoader}
-                >
-                    Sign in with Facebook
-              </Button>
-            </div>
+            <Fragment>
+                {
+                    pathname === "/" ? (
+                        <Button variant="contained" disabled={authLoader} className={btnStyle} onClick={this.signIn}>
+                            <i class="fa fa-google"></i>
+                            Continue with Facebook
+                        </Button>
+                    ) : (
+
+                            <div>
+                                <Button
+                                    variant="contained"
+                                    // color="primary"
+                                    fullWidth
+                                    onClick={this.signIn}
+                                    disabled={authLoader}
+                                >
+                                    Sign in with Facebook
+                                </Button>
+                            </div>
+                        )
+                }
+            </Fragment>
         );
     }
 }
@@ -121,6 +136,6 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps, mapDispatchToProps
-)(withStyles({})(SignInWithFacebook));
+)((SignInWithFacebook)));

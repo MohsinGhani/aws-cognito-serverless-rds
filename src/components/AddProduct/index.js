@@ -348,7 +348,7 @@ class AddProduct extends React.Component {
                   id={"selectedCountry"}
                   fullWidth={true}
                   value={country ? country : ""}
-                  disabled
+                  
                 />
               </Grid>
 
@@ -359,7 +359,7 @@ class AddProduct extends React.Component {
                   id={"selectedState"}
                   fullWidth={true}
                   value={province ? province : ""}
-                  disabled
+                  
                 />
               </Grid>
 
@@ -370,7 +370,7 @@ class AddProduct extends React.Component {
                   id={"selectedCity"}
                   fullWidth={true}
                   value={city ? city : ""}
-                  disabled
+                  
                 />
               </Grid>
 

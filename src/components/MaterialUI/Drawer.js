@@ -154,7 +154,7 @@ class SwipeableTemporaryDrawer extends React.Component {
                                 <ListItem className={classes.listItem} onClick={() => this.goto('/')}>
                                     Map View
                                 </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/listview')}>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/')}>
                                     List View
                                 </ListItem>
                                 <ListItem className={classes.listItem} onClick={() => this.goto('/feedback')}>
@@ -181,7 +181,7 @@ class SwipeableTemporaryDrawer extends React.Component {
                                 <ListItem className={classes.listItem} onClick={() => this.goto('/bookmark')}>
                                     Bookmark
                                 </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/my-product')}>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/')}>
                                     My Product
                                 </ListItem>
                                 {

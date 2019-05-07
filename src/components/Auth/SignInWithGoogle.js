@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Fragment } from "react";
+import { withRouter } from "react-router-dom";
 import { Auth } from 'aws-amplify';
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -83,19 +84,33 @@ class SignInWithGoogle extends React.Component {
     }
 
     render() {
-        let { authLoader } = this.props
+        let { authLoader, btnStyle } = this.props
+        let { pathname } = this.props.location;
+
         return (
-            <div>
-                <Button
-                    variant="contained"
-                    // color="primary"
-                    fullWidth
-                    onClick={this.signIn}
-                    disabled={authLoader}
-                >
-                    Sign in with Google
-              </Button>
-            </div>
+            <Fragment>
+                {
+                    pathname === "/" ? (
+                        <Button variant="contained" disabled={authLoader} className={btnStyle} onClick={this.signIn}>
+                            <i class="fa fa-google"></i>
+                            Continue with Google
+                        </Button>
+                    ) : (
+
+                            <div>
+                                <Button
+                                    variant="contained"
+                                    // color="primary"
+                                    fullWidth
+                                    onClick={this.signIn}
+                                    disabled={authLoader}
+                                >
+                                    Sign in with Google
+                                </Button>
+                            </div>
+                        )
+                }
+            </Fragment>
         );
     }
 }
@@ -113,6 +128,6 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps, mapDispatchToProps
-)(withStyles({})(SignInWithGoogle));
+)((SignInWithGoogle)));

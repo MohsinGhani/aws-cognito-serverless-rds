@@ -10,7 +10,8 @@ import { Marker } from "react-mapbox-gl";
 import credentials from '../../config/credentials'
 import ProductDetailModal from './ProductDetailModal'
 import Location from './../common/Location'
-
+import SignInWithGoogle from "./../Auth/SignInWithGoogle";
+import SignInWithFacebook from "./../Auth/SignInWithFacebook";
 
 const Map = ReactMapboxGl({
   accessToken: credentials.MAP_ACCESS_TOCKEN
@@ -33,7 +34,7 @@ const styles = theme => ({
     margin: '5px',
     backgroundColor: '#946638	',
     color: 'white',
-    width: '38vh',
+    width: '50vh',
     justifyContent: 'inherit',
   }
 });
@@ -97,15 +98,9 @@ class Products extends React.Component {
                     <i class="fa fa-edge" ></i>Continue with e-mail
                   </Button>
                   <br />
-                  <Button variant="contained" className={classes.signinBtn}>
-                    <i class="fa fa-google"></i>
-                    Continue with Google
-                  </Button>
+                  <SignInWithGoogle btnStyle={classes.signinBtn} />
                   <br />
-                  <Button variant="contained" className={classes.signinBtn}>
-                    <i class="fa fa-facebook"></i>
-                    Continue with Facebook
-                  </Button>
+                  <SignInWithFacebook btnStyle={classes.signinBtn} />
                 </div>
               </div>
 
