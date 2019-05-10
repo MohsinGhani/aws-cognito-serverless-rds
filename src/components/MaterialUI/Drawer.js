@@ -154,7 +154,7 @@ class SwipeableTemporaryDrawer extends React.Component {
                                 <ListItem className={classes.listItem} onClick={() => this.goto('/')}>
                                     Map View
                                 </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/')}>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/products-list')}>
                                     List View
                                 </ListItem>
                                 <ListItem className={classes.listItem} onClick={() => this.goto('/feedback')}>

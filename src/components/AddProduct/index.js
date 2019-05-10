@@ -170,6 +170,8 @@ class AddProduct extends React.Component {
         if(this.props.reversedGeoCoding.filter(item => item.place_type[0] === "address").length !== 0) {
           street = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "address")[0].text;
         }
+
+        console.log(this.props.reversedGeoCoding[0]);
   
         this.setState({
           street,

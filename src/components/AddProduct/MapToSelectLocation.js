@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from 'react-redux';
-import { ProductAction} from './../../store/actions'
+import { ProductAction } from './../../store/actions'
 import "./index.css";
 import Button from '@material-ui/core/Button';
 import ReactMapboxGl from "react-mapbox-gl";
@@ -66,16 +66,16 @@ class MapToSelectLocation extends React.Component {
     goto = path => this.props.history.push(path)
 
     setLocation = (event) => {
-        this.setState({zoom: [event.point.x, event.point.y]})
+        this.setState({ zoom: [event.point.x, event.point.y] })
         this.props.reverseGeoCodingAction(event.lngLat)
     }
 
     render() {
         let { handleClose, open, position, location } = this.props;
         const { classes } = this.props;
-     
+
         return (
-            
+
             <Dialog
                 fullScreen
                 open={open}
@@ -90,7 +90,7 @@ class MapToSelectLocation extends React.Component {
                         <Typography variant="h6" color="inherit" className={classes.flex}>
                             Pick Location
                         </Typography>
-                        <Typography variant="h6" color="inherit" className={classes.flex} style={{fontSize: "12px"}}>
+                        <Typography variant="h6" color="inherit" className={classes.flex} style={{ fontSize: "12px" }}>
                             {location}
                         </Typography>
                         <Button color="inherit" onClick={handleClose}>
@@ -102,13 +102,14 @@ class MapToSelectLocation extends React.Component {
                     <Map
                         style="mapbox://styles/mapbox/streets-v9"
                         containerStyle={{
-                            height: "100vh",
+                            height: "89vh",
                             width: "100%",
+
                         }}
                         movingMethod={'jumpTo'}
                         center={[position.lng, position.lat]}
-                        zoom={this.state.zoom ? this.state.zoom : [position.zoom]}
-                        onClick={(map, e) => this.setLocation(e) }
+                        zoom={[12]}
+                        onClick={(map, e) => this.setLocation(e)}
                     >
 
                     </Map>

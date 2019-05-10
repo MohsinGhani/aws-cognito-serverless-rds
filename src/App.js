@@ -8,6 +8,7 @@ import SelectCategory from './components/SelectCategory'
 import AddProduct from './components/AddProduct'
 import Products from './components/Products'
 import Product from './components/Product'
+import ProductsList from './components/Products/ProductsList'
 import { Provider } from 'react-redux';
 import store from './store/store'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -63,6 +64,7 @@ class App extends Component {
             <Route exact path="/forgot-password" component={ForgotPassword} />
             <Route exact path="/confirm-signup" component={ConfirmSignUp} />
             <Route exact path="/product/:product_id" component={Product} />
+            <Route exact path="/products-list" component={ProductsList} />
             <Route exact path="/bookmark" component={Bookmark}/>
             <Route exact path="/cookie-policy" component={CookiePolicy}/>
             <Route exact path="/copy-app-link" component={CopyLinkApp}/>
