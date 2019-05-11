@@ -6,6 +6,7 @@ import "./index.css";
 import TopNav from './../common/TopNav'
 import ProductDetailModal from './ProductDetailModal'
 import ProductCard from './productCard'
+import ReactLoading from 'react-loading';
 
 class ProductsList extends Component {
 
@@ -38,7 +39,7 @@ class ProductsList extends Component {
 
   render() {
 
-    let { products, getProductsLoader } = this.props;
+    let { products, getProductsLoader, searchedProducts, searchLoader } = this.props;
     let { product, isOpenDetailDialog } = this.state;
 
     return (
@@ -51,11 +52,21 @@ class ProductsList extends Component {
         />
 
         {
-          !getProductsLoader ? (
-            products && products.map((product, i) => {
-              return <ProductCard key={i} product={product} handleClick={(product) => this.setState({ product, isOpenDetailDialog: true })} />
-            })
-          ) : null
+          !getProductsLoader && !searchLoader && !searchedProducts && products && products.map((product, i) => {
+            return <ProductCard key={i} product={product} handleClick={(product) => this.setState({ product, isOpenDetailDialog: true })} />
+          })
+        }
+
+        {
+          !getProductsLoader && !searchLoader && searchedProducts && searchedProducts.map((product, i) => {
+            return <ProductCard key={i} product={product} handleClick={(product) => this.setState({ product, isOpenDetailDialog: true })} />
+          })
+        }
+
+        {
+          (getProductsLoader || searchLoader) && <div style={{ width: '50px', margin: '50px auto' }}>
+            <ReactLoading type={'spin'} color={'#9e7339'} height={'50px'} width={'50px'} />
+          </div>
         }
 
       </div>
@@ -66,12 +77,14 @@ class ProductsList extends Component {
 const mapStateToProps = (state) => {
   const {
     ProductReducer: {
-      products, getProductsLoader, getProductsError
+      products, getProductsLoader, getProductsError,
+      searchedProducts, searchLoader, searchError
     },
     authReducer: { user, isLoggedIn }
   } = state;
   return {
     products, getProductsLoader, getProductsError,
+    searchedProducts, searchLoader, searchError,
     user, isLoggedIn
   }
 }

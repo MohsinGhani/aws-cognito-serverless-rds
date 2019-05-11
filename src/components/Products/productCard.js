@@ -45,9 +45,9 @@ const styles = theme => ({
 
 function ProductCard(props) {
     const { classes, product, handleClick } = props;
-console.log(product)
+    console.log(product)
     return (
-        <Card className={classes.card} onClick={()=>handleClick(product)}>
+        <Card className={classes.card} onClick={() => handleClick(product)}>
             <CardMedia
                 className={classes.cover}
                 image={product.product_img}
@@ -55,11 +55,12 @@ console.log(product)
             />
             <div className={classes.details}>
                 <CardContent className={classes.content}>
-                    <Typography component="h6" variant="h6">
-                        {product.description}
+                    <Typography component="h6" variant="h6" title={product.description}>
+                        {product.description && product.description.length >= 30 ? product.description.split('').splice(0,30).join('') + "..." : product.description}
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary">
-                        <RemoveRedEye /> {product._action}
+                        {/* <RemoveRedEye />  */}
+                        Actions: {product._action}
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary">
                         <TimeAgo datetime={product.created_date} />
