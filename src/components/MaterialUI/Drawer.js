@@ -120,14 +120,14 @@ class SwipeableTemporaryDrawer extends React.Component {
                                     <Typography variant="h6" color="inherit" className={classes.flex}>
                                         <i className="material-icons account">
                                             account_circle
-                                </i>
+                                        </i>
                                     </Typography>
                                     <Typography color="inherit" 
                                     onClick={this.toggleDrawer('left', false)}
                                     onKeyDown={this.toggleDrawer('left', false)}>
                                         <i className="material-icons clear">
                                             clear
-                                </i>
+                                        </i>
                                     </Typography>
                                 </ListItem>
                                 <ListItem> <div className={classes.search}>
@@ -181,7 +181,7 @@ class SwipeableTemporaryDrawer extends React.Component {
                                 <ListItem className={classes.listItem} onClick={() => this.goto('/bookmark')}>
                                     Bookmark
                                 </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/')}>
+                                <ListItem className={classes.listItem} onClick={() => this.goto('/my-product')}>
                                     My Product
                                 </ListItem>
                                 {
