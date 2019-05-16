@@ -8,13 +8,15 @@ import {
     IS_LOGGED_IN,
     GET_USER_BY_ID,
     POST_SOCIAL_AUTH,
-    LOGOUT
+    LOGOUT,
+    FORGOT_PASSWORD,
+    CONFIRM_NEW_PASSWORD
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { authAction } from './../actions/index'
 import { HttpService } from '../../services/http';
 import path from './../../config/path'
-import { login, signup, confirm, isLoggedIn, logout, signupWithPhone } from "../../services/AuthService";
+import { login, signup, confirm, isLoggedIn, logout, signupWithPhone, forgotPassword, confirmNewPassword } from "../../services/AuthService";
 import store from './../store'
 
 export default class authEpic {
@@ -136,6 +138,40 @@ export default class authEpic {
                         return Observable.of(authAction.postSignUpFailure(`${err}`))
                     })
             })
+
+    static forgotPassword = (action$) =>
+        action$.ofType(FORGOT_PASSWORD)
+            .switchMap(({ payload }) => {
+                return Observable.fromPromise(forgotPassword(payload))
+                    .catch((err) => {
+                        return Observable.of(authAction.forgotPasswordFailure(err.message))
+                    })
+            })
+            .switchMap((res) => {
+                if (res.type && res.type === 'FORGOT_PASSWORD_FAILURE') {
+                    return Observable.of(authAction.forgotPasswordFailure(res.error))
+                } else {
+                    return Observable.of(
+                        authAction.forgotPasswordSuccess(res)
+                    )
+                }
+            });
+
+    static confirmNewPassword = (action$) =>
+        action$.ofType(CONFIRM_NEW_PASSWORD)
+            .switchMap(({ payload }) => {
+
+                let {userEmail, code, userPass} = payload;
+                return Observable.fromPromise(confirmNewPassword(userEmail, code, userPass))
+                    .catch((err) => {
+                        return Observable.of(authAction.confirmNewPasswordFailure(err.message))
+                    })
+            })
+            .switchMap(() => {
+                return Observable.of(
+                    authAction.confirmNewPasswordSuccess({message: "Password Successfully Changed!"})
+                )
+            });
 
     static postSocialAuth = (action$) =>
         action$.ofType(POST_SOCIAL_AUTH)

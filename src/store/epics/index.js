@@ -13,6 +13,8 @@ const rootEpic = combineEpics(
     authEpic.isLoggedIn,
     authEpic.getUserById,
     authEpic.logout,
+    authEpic.forgotPassword,
+    authEpic.confirmNewPassword,
 
     ProductEpic.getCategories,
     ProductEpic.saveProduct,

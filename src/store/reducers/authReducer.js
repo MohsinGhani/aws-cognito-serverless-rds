@@ -9,6 +9,8 @@ import {
     IS_LOGGED_IN, IS_LOGGED_IN_SUCCESS, IS_LOGGED_IN_FAILURE,
     GET_USER_BY_ID, GET_USER_BY_ID_SUCCESS, GET_USER_BY_ID_FAILURE,
     LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE,
+    FORGOT_PASSWORD, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE,
+    CONFIRM_NEW_PASSWORD, CONFIRM_NEW_PASSWORD_SUCCESS, CONFIRM_NEW_PASSWORD_FAILURE,
 } from './../constants'
 
 const initialState = {
@@ -20,6 +22,14 @@ const initialState = {
     confirmSignup: null,
     confirmSignupLoader: null,
     confirmSignupError: null,
+
+    forgotPassword: null,
+    forgotPasswordLoader: null,
+    forgotPasswordError: null,
+
+    confirmNewPassword: null,
+    confirmNewPasswordLoader: null,
+    confirmNewPasswordError: null,
 
     isLoggedIn: false,
 
@@ -84,6 +94,69 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 user: null,
                 authLoader: false,
+                authError: null,
+                isLoggedIn: false
+            }
+
+        /////////////
+        case FORGOT_PASSWORD:
+            return {
+                ...state,
+                forgotPassword: null,
+                authLoader: true,
+                authError: null,
+                isLoggedIn: false
+            }
+
+        case FORGOT_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                forgotPassword: action.payload,
+                authLoader: false,
+                authError: null,
+                isLoggedIn: false
+            }
+
+        case FORGOT_PASSWORD_FAILURE:
+            
+            return {
+                ...state,
+                user: null,
+                authLoader: false,
+                forgotPasswordError: action.error,
+                authError: null,
+                isLoggedIn: false
+            }
+
+        /////////////
+        case CONFIRM_NEW_PASSWORD:
+            return {
+                ...state,
+                confirmNewPassword: null,
+                authLoader: true,
+                confirmNewPasswordLoader: true,
+                authError: null,
+                isLoggedIn: false
+            }
+
+        case CONFIRM_NEW_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                confirmNewPassword: action.payload,
+                authLoader: false,
+                confirmNewPasswordLoader: false,
+                authError: null,
+                isLoggedIn: false
+            }
+
+        case CONFIRM_NEW_PASSWORD_FAILURE:
+            return {
+                ...state,
+                user: null,
+                confirmNewPassword: null,
+                authLoader: false,
+                confirmNewPasswordLoader: false,
+                confirmNewPasswordError: action.error,
                 authError: null,
                 isLoggedIn: false
             }

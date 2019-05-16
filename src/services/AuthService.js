@@ -133,8 +133,8 @@ export const forgotPassword = (username) => {
     return Auth.forgotPassword(username)
 };
 
-export const confirmNewPassword = (user, oldPassword, newPassword) => {
-    return Auth.forgotPasswordSubmit(user, oldPassword, newPassword)
+export const confirmNewPassword = (user, code, newPassword) => {
+    return Auth.forgotPasswordSubmit(user, code, newPassword)
 };
 
 export const isLoggedIn = (user, confirmationCode) => {
