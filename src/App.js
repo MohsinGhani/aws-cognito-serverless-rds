@@ -21,7 +21,7 @@ import CookiePolicy from './components/Static/CookiePolicy';
 import CopyLinkApp from './components/Static/CopyAppLink';
 import Feedback from './components/Static/Feedback';
 import HowToUse from './components/Static/HowToUse';
-import MyProduct from './components/Static/MyProduct';
+import MyProducts from './components/MyProducts';
 import Privacy from './components/Static/Privacy';
 import ShareAppLink from './components/Static/ShareAppLink';
 import TermOfUse from './components/Static/TermsOfUse';
@@ -70,7 +70,7 @@ class App extends Component {
             <Route exact path="/copy-app-link" component={CopyLinkApp}/>
             <Route exact path="/feedback" component={Feedback}/>
             <Route exact path="/how-to-use" component={HowToUse}/>
-            <Route exact path="/myproduct" component={MyProduct}/>
+            <Route exact path="/my-product" component={MyProducts}/>
             <Route exact path="/privacy" component={Privacy}/>
             <Route exact path="/share-app-link" component={ShareAppLink}/>
             <Route exact path="/terms-of-use" component={TermOfUse}/>

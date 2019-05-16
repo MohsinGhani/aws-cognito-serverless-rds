@@ -8,7 +8,7 @@ import ProductDetailModal from './ProductDetailModal'
 import ProductCard from './productCard'
 import ReactLoading from 'react-loading';
 
-class ProductsList extends Component {
+class MyProducts extends Component {
 
   constructor(props) {
     super(props);
@@ -39,7 +39,7 @@ class ProductsList extends Component {
 
   render() {
 
-    let { products, getProductsLoader, searchedProducts, searchLoader } = this.props;
+    let { products, getProductsLoader, searchedProducts, searchLoader, user } = this.props;
     let { product, isOpenDetailDialog } = this.state;
 
     return (
@@ -53,12 +53,14 @@ class ProductsList extends Component {
 
         {
           !getProductsLoader && !searchLoader && !searchedProducts && products && products.map((product, i) => {
+            if (user && user.user_id !== product.creator_id) return
             return <ProductCard key={i} product={product} handleClick={(product) => this.setState({ product, isOpenDetailDialog: true })} />
           })
         }
 
         {
           !getProductsLoader && !searchLoader && searchedProducts && searchedProducts.map((product, i) => {
+            if (user && user.user_id !== product.creator_id) return
             return <ProductCard key={i} product={product} handleClick={(product) => this.setState({ product, isOpenDetailDialog: true })} />
           })
         }
@@ -98,4 +100,4 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(
   mapStateToProps, mapDispatchToProps
-)(withStyles({})(ProductsList));
+)(withStyles({})(MyProducts));
