@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import { InputField } from "./../MaterialUI";
+import { InputField, AutoSelectInputField } from "./../MaterialUI";
 import Button from "@material-ui/core/Button";
 import TopNav from './../common/TopNav'
 import Location from './../common/Location'
@@ -56,13 +56,13 @@ class AddProduct extends React.Component {
       country: null,
       getLocation: false,
       isSelectCatModal: true,
-      // countries: [],
+      countries: [],
       selectedCountry: '',
       countriesOrignalObj: null,
-      // states: [],
+      states: [],
       statesOrignalObj: null,
       selectedState: '',
-      // cities: [],
+      cities: [],
       citiesOrignalObj: null,
       selectedCity: '',
       latitude: 36.778259,
@@ -144,8 +144,28 @@ class AddProduct extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedCountry !== this.state.selectedCountry && this.state.selectedCountry) {
+      // handle selectedCountry onChange
+      let key = this.getKeyByValue(this.state.countriesOrignalObj, this.state.selectedCountry)
+      if (key) this.onChangeCountry(key)
+    }
 
-    if((prevState.street !== this.state.street && this.state.street === "") || (prevState.title !== this.state.title && this.state.title === "") || (prevState.description !== this.state.description && this.state.description === "")) {
+    if (prevState.selectedState !== this.state.selectedState && this.state.selectedState) {
+      // handle selectedState onChange
+      let countryCode = this.getKeyByValue(this.state.countriesOrignalObj, this.state.selectedCountry)
+      let stateCode = this.getKeyByValue(this.state.statesOrignalObj, this.state.selectedState)
+      if (countryCode && stateCode) this.onChangeState(countryCode, stateCode)
+    }
+
+    if (this.state && this.state.isSaveButtonDisable) {
+      if (this.validateSaveButton()) this.setState({ isSaveButtonDisable: false })
+    }
+    // savedProduct, saveProductLoader, saveProductError,
+    if (this.props.savedProduct && !this.props.saveProductLoader && prevProps.saveProductLoader) {
+      this.goto('/')
+    }
+
+    if ((prevState.street !== this.state.street && this.state.street === "") || (prevState.title !== this.state.title && this.state.title === "") || (prevState.description !== this.state.description && this.state.description === "")) {
       this.setState({ isSaveButtonDisable: true })
     }
 
@@ -156,23 +176,22 @@ class AddProduct extends React.Component {
     if (this.props.savedProduct && !this.props.saveProductLoader && prevProps.saveProductLoader) {
       this.goto('/')
     }
-    
+
     if (this.props.reversedGeoCoding !== prevProps.reversedGeoCoding && this.props.reversedGeoCoding) {
-      
-      if(this.props.reversedGeoCoding.length >= 3) {
+
+      if (this.props.reversedGeoCoding.length >= 3) {
 
         let street = "";
         let location = this.props.reversedGeoCoding[0].place_name;
         let city = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "place")[0].text;
         let province = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "region")[0].text;
         let country = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "country")[0].text;
-        
-        if(this.props.reversedGeoCoding.filter(item => item.place_type[0] === "address").length !== 0) {
+
+        if (this.props.reversedGeoCoding.filter(item => item.place_type[0] === "address").length !== 0) {
           street = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "address")[0].text;
         }
 
         console.log(this.props.reversedGeoCoding[0]);
-  
         this.setState({
           street,
           city,
@@ -213,15 +232,15 @@ class AddProduct extends React.Component {
   }
 
   validateSaveButton = () => {
-    const { selectedCategory, title, description, country, province, city, latitude, longitude, selectedImage, street } = this.state
+    const { selectedCategory, title, description, country, selectedCountry, province, selectedState, city, selectedCity, latitude, longitude, selectedImage, street } = this.state
     return (
       (title && title.length >= 3) &&
       (description && description.length >= 3) &&
       selectedCategory &&
-      country &&
-      city &&
+      (country || selectedCountry) &&
+      (province || selectedState) &&
+      (city || selectedCity) &&
       (street && street.length > 0) &&
-      province &&
       latitude &&
       longitude &&
       selectedImage &&
@@ -260,7 +279,7 @@ class AddProduct extends React.Component {
 
   render() {
     let { classes, saveProductLoader } = this.props;
-    let { isSelectCatModal, selectedCategory, street, city, province, country, location, isSaveButtonDisable, selectedImage, title, description, isLocationModalOpen } = this.state;
+    let { isSelectCatModal, selectedCategory, street, city, province, country, location, isSaveButtonDisable, selectedImage, title, description, isLocationModalOpen, countries, states, selectedCountry, selectedState, cities } = this.state;
 
     return (
       <div className="add-product">
@@ -276,7 +295,7 @@ class AddProduct extends React.Component {
           open={isLocationModalOpen}
           handleClose={() => this.setState({ isLocationModalOpen: false })}
           selectedLocation={(address) => this.setState({ address })}
-          position={{lng: this.state.longitude, lat: this.state.latitude, zoom: 12}}
+          position={{ lng: this.state.longitude, lat: this.state.latitude, zoom: 12 }}
           location={location}
         />
 
@@ -285,16 +304,17 @@ class AddProduct extends React.Component {
           <Grid container className={classes.root} spacing={16}>
             {/* <Hidden smDown> */}
             <Grid item md={5} sm={12} xs={12}>
-              <input accept="image/*" Style={{display: 'none'}} className={classes.input} id="icon-button-file" type="file" onChange={(event) => { this.handleImageChange(event); event.target.value = null; this.setState({
-                hideTool : true
-              })}} />
-              <label htmlFor="icon-button-file" className={classes.cameraIcon}> 
-              {selectedImage.base64 ? '' : 
-              <IconButton color="primary" className={classes.button} component="span">
-                   <PhotoCamera id="photocamera" />
-                 </IconButton>}
-              
-              
+              <input accept="image/*" Style={{ display: 'none' }} className={classes.input} id="icon-button-file" type="file" onChange={(event) => {
+                this.handleImageChange(event); event.target.value = null; this.setState({
+                  hideTool: true
+                })
+              }} />
+              <label htmlFor="icon-button-file" className={classes.cameraIcon}>
+                {selectedImage.base64 ? '' :
+                  <IconButton color="primary" className={classes.button} component="span">
+                    <PhotoCamera id="photocamera" />
+                  </IconButton>}
+
                 <div className="productPicture">
                   {
                     selectedImage && selectedImage.base64 ? <img src={selectedImage.base64} alt="product" className="productImage" /> : ''
@@ -343,38 +363,85 @@ class AddProduct extends React.Component {
                 />
               </Grid>
 
-              <Grid item md={12} sm={12} xs={12}>
-                <InputField
-                  label={"Country"}
-                  variant={"outlined"}
-                  id={"selectedCountry"}
-                  fullWidth={true}
-                  value={country ? country : ""}
-                  
-                />
-              </Grid>
+              {
+                country ?
+                  <Grid item md={12} sm={12} xs={12}>
+                    <InputField
+                      label={"Country"}
+                      variant={"outlined"}
+                      id={"selectedCountry"}
+                      fullWidth={true}
+                      value={country ? country : ""}
+                      isAddon={true}
+                      onClickAdornment={() => this.setState({ country: '' })}
+                    />
+                  </Grid>
+                  :
+                  <Grid item md={12} sm={12} xs={12}>
+                    <AutoSelectInputField
+                      label={"Search Country"}
+                      variant={"outlined"}
+                      id={"selectedCountry"}
+                      fullWidth={true}
+                      suggestions={countries}
+                      onSelect={this.handleInput}
+                    />
+                  </Grid>
+              }
 
-              <Grid item md={12} sm={12} xs={12}>
-                <InputField
-                  label={"State or Province"}
-                  variant={"outlined"}
-                  id={"selectedState"}
-                  fullWidth={true}
-                  value={province ? province : ""}
-                  
-                />
-              </Grid>
+              {
+                province ?
+                  <Grid item md={12} sm={12} xs={12}>
+                    <InputField
+                      label={"State or Province"}
+                      variant={"outlined"}
+                      id={"selectedState"}
+                      fullWidth={true}
+                      value={province ? province : ""}
+                      isAddon={true}
+                      onClickAdornment={() => this.setState({ province: '' })}
+                    />
+                  </Grid>
+                  :
+                  <Grid item md={12} sm={12} xs={12}>
+                    <AutoSelectInputField
+                      label={"State or Province"}
+                      variant={"outlined"}
+                      id={"selectedState"}
+                      fullWidth={true}
+                      suggestions={states}
+                      onSelect={this.handleInput}
+                      disabled={!selectedCountry}
+                    />
+                  </Grid>
+              }
 
-              <Grid item md={12} sm={12} xs={12}>
-                <InputField
-                  label={"City"}
-                  variant={"outlined"}
-                  id={"selectedCity"}
-                  fullWidth={true}
-                  value={city ? city : ""}
-                  
-                />
-              </Grid>
+              {
+                city ?
+                  <Grid item md={12} sm={12} xs={12}>
+                    <InputField
+                      label={"City"}
+                      variant={"outlined"}
+                      id={"selectedCity"}
+                      fullWidth={true}
+                      value={city ? city : ""}
+                      isAddon={true}
+                      onClickAdornment={() => this.setState({ city: '' })}
+                    />
+                  </Grid>
+                  :
+                  <Grid item md={12} sm={12} xs={12}>
+                    <AutoSelectInputField
+                      label={"Search City"}
+                      variant={"outlined"}
+                      id={"selectedCity"}
+                      fullWidth={true}
+                      suggestions={cities}
+                      onSelect={this.handleInput}
+                      disabled={!selectedState}
+                    />
+                  </Grid>
+              }
 
               <Grid container spacing={8}>
                 <Grid item md={10} sm={10} xs={9}>
@@ -400,7 +467,7 @@ class AddProduct extends React.Component {
                 </Grid>
               </Grid>
 
-              <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} style={{opacity: isSaveButtonDisable ? 0.6 : 1}} variant="contained" color="primary" id="submit-button" >
+              <Button fullWidth onClick={this.onSaveProduct} disabled={isSaveButtonDisable} style={{ opacity: isSaveButtonDisable ? 0.6 : 1 }} variant="contained" color="primary" id="submit-button" >
                 {saveProductLoader ? <ReactLoading type={'spin'} color={'#fff'} height={'25px'} width={'25px'} /> : "Submit"}
               </Button>
             </Grid>

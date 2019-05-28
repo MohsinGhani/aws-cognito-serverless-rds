@@ -1,7 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 const styles = theme => ({});
 
 class InputField extends React.Component {
@@ -23,7 +24,9 @@ class InputField extends React.Component {
       rowsMax,
       rows,
       onClick,
-      maxLength
+      maxLength,
+      isAddon,
+      onClickAdornment
     } = this.props;
     return (
       <TextField
@@ -45,6 +48,13 @@ class InputField extends React.Component {
         rows={rows}
         onClick={onClick}
         inputProps={{ maxLength: maxLength ? maxLength : 100000000 }}
+        InputProps={isAddon && {
+          endAdornment: (
+            <InputAdornment position="end" onClick={onClickAdornment}>
+              <i class="material-icons">clear</i>
+            </InputAdornment>
+          ),
+        }}
       />
     );
   }
