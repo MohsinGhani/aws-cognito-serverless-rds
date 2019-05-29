@@ -91,7 +91,8 @@ class TopNav extends React.Component {
     state = {
         anchorEl: null,
         mobileMoreAnchorEl: null,
-        query: ''
+        query: '',
+        selectedImage: {}
     };
 
     handleProfileMenuOpen = event => {
@@ -127,8 +128,25 @@ class TopNav extends React.Component {
         })
     }
 
+    handleImageChange = (event) => { // funciton for get file and save in state
+        if (event.target.files && event.target.files[0]) {
+            let file = {
+                name: event.target.files[0].name,
+                size: event.target.files[0].size,
+                type: event.target.files[0].type
+            }
+            this.setState({ selectedImage: file })
+
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                this.setState({ selectedImage: { ...this.state.selectedImage, base64: e.target.result } });
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+
     render() {
-        const {query } = this.state;
+        const { query, selectedImage } = this.state;
         const { classes, isLoggedIn } = this.props;
 
 
@@ -146,18 +164,42 @@ class TopNav extends React.Component {
                         <div className={classes.grow} />
                         {isLoggedIn ?
                             <div className={classes.sectionDesktop}>
-                                <IconButton
-                                    aria-haspopup="true"
-                                    color="inherit"
-                                >
-                                    <AccountCircle id="svgIcon"/>
-                                </IconButton>
+                                <input
+                                    type="file" id="theFile"
+                                    onChange={(event) => {
+                                        this.handleImageChange(event); event.target.value = null; this.setState({
+                                            hideTool: true
+                                        })
+                                    }}
+                                />
+                                {
+                                    selectedImage.base64 ? '' :
+                                        <IconButton
+                                            aria-haspopup="true"
+                                            color="inherit"
+                                            onClick={() => {
+                                                var elem = document.getElementById('theFile');
+                                                if (elem && document.createEvent) {
+                                                    var evt = document.createEvent("MouseEvents");
+                                                    evt.initEvent("click", true, false);
+                                                    elem.dispatchEvent(evt);
+                                                }
+                                            }}
+                                        >
+                                            <AccountCircle id="svgIcon" />
+                                        </IconButton>
+                                }
+
+                                {
+                                    selectedImage && selectedImage.base64 && <img src={selectedImage.base64} alt="product" style={{ height: '50px', width: '50px', borderRadius: '50%' }} />
+                                }
+
                             </div> : null
                         }
                         <div className={classes.grow} />
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
-                                <SearchIcon id="svgIcon"/>
+                                <SearchIcon id="svgIcon" />
                             </div>
                             <InputBase
                                 placeholder="Search…"
