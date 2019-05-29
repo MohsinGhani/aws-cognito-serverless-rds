@@ -181,7 +181,7 @@ class AddProduct extends React.Component {
 
       if (this.props.reversedGeoCoding.length >= 3) {
 
-        let street = "";
+        let street = this.props.reversedGeoCoding[0].text;;
         let location = this.props.reversedGeoCoding[0].place_name;
         let city = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "place")[0].text;
         let province = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "region")[0].text;
@@ -191,7 +191,6 @@ class AddProduct extends React.Component {
           street = this.props.reversedGeoCoding.filter(item => item.place_type[0] === "address")[0].text;
         }
 
-        console.log(this.props.reversedGeoCoding[0]);
         this.setState({
           street,
           city,
@@ -274,12 +273,39 @@ class AddProduct extends React.Component {
   }
 
   pickLocation = () => {
-    this.setState({ getLocation: true, isLocationModalOpen: true })
+    const { isGeolocationEnabled, latitude, longitude } = this.state
+    // if isGeolocationEnabled is true then don't need to open map directly get current location
+    if (isGeolocationEnabled) {
+      this.props.reverseGeoCodingAction({ lng: longitude, lat: latitude })
+    }
+    else {
+      this.setState({ getLocation: true, isLocationModalOpen: true })
+    }
   }
 
   render() {
     let { classes, saveProductLoader } = this.props;
-    let { isSelectCatModal, selectedCategory, street, city, province, country, location, isSaveButtonDisable, selectedImage, title, description, isLocationModalOpen, countries, states, selectedCountry, selectedState, cities } = this.state;
+    let {
+      isSelectCatModal,
+      selectedCategory,
+      street,
+      city,
+      province,
+      country,
+      location,
+      isSaveButtonDisable,
+      selectedImage,
+      title,
+      description,
+      isLocationModalOpen,
+      countries,
+      states,
+      selectedCountry,
+      selectedState,
+      cities,
+      longitude,
+      latitude
+    } = this.state;
 
     return (
       <div className="add-product">
@@ -291,11 +317,12 @@ class AddProduct extends React.Component {
         />
 
         <Location temp={(isGeolocationEnabled) => { this.setState({ isGeolocationEnabled }) }} handleLocation={(latitude, longitude) => { this.setState({ latitude, longitude }) }} />
+
         <MapToSelectLocation
           open={isLocationModalOpen}
           handleClose={() => this.setState({ isLocationModalOpen: false })}
           selectedLocation={(address) => this.setState({ address })}
-          position={{ lng: this.state.longitude, lat: this.state.latitude, zoom: 12 }}
+          position={{ lng: longitude, lat: latitude, zoom: 12 }}
           location={location}
         />
 
@@ -495,6 +522,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    reverseGeoCodingAction: (payload) => dispatch(ProductAction.reverseGeoCoding(payload)),
     saveProductAction: (payload) => dispatch(ProductAction.saveProduct(payload))
   };
 };
