@@ -12,6 +12,7 @@ import ProductDetailModal from './ProductDetailModal'
 import Location from './../common/Location'
 import SignInWithGoogle from "./../Auth/SignInWithGoogle";
 import SignInWithFacebook from "./../Auth/SignInWithFacebook";
+import ReactLoading from 'react-loading';
 
 const Map = ReactMapboxGl({
   accessToken: credentials.MAP_ACCESS_TOCKEN
@@ -71,73 +72,78 @@ class Products extends React.Component {
         />
         <TopNav />
         <div>
-          <Map
-            style="mapbox://styles/mapbox/streets-v9"
-            containerStyle={{
-              height: "89vh",
-              width: "100%",
+          {
+            searchLoader ?
+              <div style={{ width: '100px', margin: '70px auto' }}><ReactLoading type={'spin'} color={'#9e7339'} height={'100px'} width={'100px'} /></div>
+              :
+              <Map
+                style="mapbox://styles/mapbox/streets-v9"
+                containerStyle={{
+                  height: "89vh",
+                  width: "100%",
 
-            }}
-            movingMethod={'jumpTo'}
-            center={[longitude, latitude]}
-            zoom={[12]}
-            // onClick={(map, e) => { this.props.reverseGeoCodingAction(e.lngLat) }}
-          >
-            {
-              !this.props.isLoggedIn &&
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <div className="mainBodyButtons">
-                  <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
-                    <i class="fa fa-edge" ></i>Continue with e-mail
+                }}
+                movingMethod={'jumpTo'}
+                center={[longitude, latitude]}
+                zoom={[12]}
+              // onClick={(map, e) => { this.props.reverseGeoCodingAction(e.lngLat) }}
+              >
+                {
+                  !this.props.isLoggedIn &&
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <div className="mainBodyButtons">
+                      <Button onClick={() => this.goto('/signin')} variant="contained" className={classes.signinBtn}>
+                        <i class="fa fa-edge" ></i>Continue with e-mail
                   </Button>
-                  <br />
-                  <SignInWithGoogle btnStyle={classes.signinBtn} />
-                  <br />
-                  <SignInWithFacebook btnStyle={classes.signinBtn} />
-                </div>
-              </div>
+                      <br />
+                      <SignInWithGoogle btnStyle={classes.signinBtn} />
+                      <br />
+                      <SignInWithFacebook btnStyle={classes.signinBtn} />
+                    </div>
+                  </div>
 
-            }
+                }
 
-            {/* current location pointer */}
-            <Marker
-              coordinates={[longitude, latitude]}
-              anchor="bottom"
-            >
-              <img className="c-p" title="your current location" src={require('./../../assets/img/current-location.png')} alt="marker" width='20px' height='25' />
-            </Marker>
+                {/* current location pointer */}
+                <Marker
+                  coordinates={[longitude, latitude]}
+                  anchor="bottom"
+                >
+                  <img className="c-p" title="your current location" src={require('./../../assets/img/current-location.png')} alt="marker" width='20px' height='25' />
+                </Marker>
 
-            {
-              !getProductsLoader && !searchLoader && !searchedProducts && products && products.map((product, i) => {
-                return (
-                  <Marker
-                    coordinates={[product.longitude, product.latitude]}
-                    anchor="bottom"
-                    onClick={() => this.setState({ product, isOpenDetailDialog: true })}
-                    key={i}
-                  >
-                    <img className="c-p" title={product.title} src={require('./../../assets/img/marker.png')} alt="marker" width='12px' height='12px' />
-                  </Marker>
-                )
-              })
-            }
+                {
+                  !getProductsLoader && !searchLoader && !searchedProducts && products && products.map((product, i) => {
+                    return (
+                      <Marker
+                        coordinates={[product.longitude, product.latitude]}
+                        anchor="bottom"
+                        onClick={() => this.setState({ product, isOpenDetailDialog: true })}
+                        key={i}
+                      >
+                        <img className="c-p" title={product.title} src={require('./../../assets/img/marker.png')} alt="marker" width='12px' height='12px' />
+                      </Marker>
+                    )
+                  })
+                }
 
-            {
-              !getProductsLoader && !searchLoader && searchedProducts && searchedProducts.map((product, i) => {
-                return (
-                  <Marker
-                    coordinates={[product.longitude, product.latitude]}
-                    anchor="bottom"
-                    onClick={() => this.setState({ product, isOpenDetailDialog: true })}
-                    key={i}
-                  >
-                    <img className="c-p" src={require('./../../assets/img/marker.png')} alt="marker" width='12px' height='12px' />
-                  </Marker>
-                )
-              })
-            }
+                {
+                  !getProductsLoader && !searchLoader && searchedProducts && searchedProducts.map((product, i) => {
+                    return (
+                      <Marker
+                        coordinates={[product.longitude, product.latitude]}
+                        anchor="bottom"
+                        onClick={() => this.setState({ product, isOpenDetailDialog: true })}
+                        key={i}
+                      >
+                        <img className="c-p" src={require('./../../assets/img/marker.png')} alt="marker" width='12px' height='12px' />
+                      </Marker>
+                    )
+                  })
+                }
 
-          </Map>
+              </Map>
+          }
         </div>
       </div>
     );

@@ -146,7 +146,7 @@ class TopNav extends React.Component {
     }
 
     render() {
-        const { query, selectedImage } = this.state;
+        const { query, selectedImage } = this.state;    
         const { classes, isLoggedIn } = this.props;
 
 

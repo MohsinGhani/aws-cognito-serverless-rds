@@ -31,7 +31,7 @@ const styles = theme => ({
         paddingLeft: '40px',
         cursor: 'pointer',
         color: 'white',
-        textDecoration : 'none',
+        textDecoration: 'none',
     },
     swipeList: {
         height: '100%',
@@ -87,6 +87,7 @@ class SwipeableTemporaryDrawer extends React.Component {
     state = {
         top: false,
         left: false,
+        query: '',
     };
 
     toggleDrawer = (side, open) => () => {
@@ -94,13 +95,23 @@ class SwipeableTemporaryDrawer extends React.Component {
             [side]: open,
         });
     };
+
     goto = (path) => {
         this.props.history.push(path)
     }
     logout = () => {
         this.props.logoutAction()
     }
+
+    handleSearch = (e) => {
+        this.setState({
+            [e.target.id]: e.target.value
+        }, () => {
+            this.props.searchAction({ query: this.state.query })
+        })
+    }
     render() {
+        const { query } = this.state;
         const { classes, isLoggedIn } = this.props;
         return (
             <div >
@@ -122,9 +133,9 @@ class SwipeableTemporaryDrawer extends React.Component {
                                             account_circle
                                         </i>
                                     </Typography>
-                                    <Typography color="inherit" 
-                                    onClick={this.toggleDrawer('left', false)}
-                                    onKeyDown={this.toggleDrawer('left', false)}>
+                                    <Typography color="inherit"
+                                        onClick={this.toggleDrawer('left', false)}
+                                        onKeyDown={this.toggleDrawer('left', false)}>
                                         <i className="material-icons clear">
                                             clear
                                         </i>
@@ -137,6 +148,9 @@ class SwipeableTemporaryDrawer extends React.Component {
                                             root: classes.inputRoot,
                                             input: classes.inputInput,
                                         }}
+                                        value={query}
+                                        onChange={this.handleSearch}
+                                        id='query'
                                     />
                                 </div>
                                 </ListItem>
@@ -186,8 +200,8 @@ class SwipeableTemporaryDrawer extends React.Component {
                                 </ListItem>
                                 {
                                     isLoggedIn ?
-                                    <ListItem className={classes.listItem} onClick={this.logout}>Logout</ListItem> :
-                                    <ListItem className={classes.listItem} onClick={() => this.goto('/signin')}>Login</ListItem>
+                                        <ListItem className={classes.listItem} onClick={this.logout}>Logout</ListItem> :
+                                        <ListItem className={classes.listItem} onClick={() => this.goto('/signin')}>Login</ListItem>
                                 }
                             </List>
                         </div>
