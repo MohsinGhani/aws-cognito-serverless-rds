@@ -19,7 +19,8 @@ const {
   postConfirmation,
   uploadFile,
   search,
-  postSocialAuth
+  postSocialAuth,
+  updateProfileImage
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -49,6 +50,10 @@ module.exports.postConfirmation = (event, context, callback) => {
 
 module.exports.updateUser = (event, context, callback) => {
   updateUser(event, context, callback);
+};
+
+module.exports.updateProfileImage = (event, context, callback) => {
+  updateProfileImage(event, context, callback);
 };
 
 module.exports.getUsers = (event, context, callback) => {

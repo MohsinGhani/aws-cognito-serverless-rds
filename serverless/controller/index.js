@@ -17,6 +17,7 @@ const { postConfirmation } = require('./postConfirmation')
 const { uploadFile } = require('./uploadFile')
 const { search } = require('./search')
 const { postSocialAuth } = require('./postSocialAuth')
+const { updateProfileImage } = require('./updateProfileImage')
 
 module.exports = {
     getCategory,
@@ -37,5 +38,6 @@ module.exports = {
     postConfirmation,
     uploadFile,
     search,
-    postSocialAuth
+    postSocialAuth,
+    updateProfileImage
 }

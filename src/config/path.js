@@ -4,6 +4,7 @@ export default class path {
     static POST_SIGNUP = `${credentials.BASE_URL}/post-signup`;
     static POST_CONFIRMATION = `${credentials.BASE_URL}/post-confirmation`;
     static GET_USER_BY_ID = `${credentials.BASE_URL}/get-user`;
+    static UPDATE_PROFILE_IMAGE = `${credentials.BASE_URL}/update-profile-image`;
     static POST_SOCIAL_AUTH = `${credentials.BASE_URL}/post-social-auth`;
 
     // products
