@@ -12,6 +12,7 @@ import {
     LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE, 
     FORGOT_PASSWORD, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE,
     CONFIRM_NEW_PASSWORD, CONFIRM_NEW_PASSWORD_SUCCESS, CONFIRM_NEW_PASSWORD_FAILURE,
+    UPLOAD_PROFILE_IMAGE, UPLOAD_PROFILE_IMAGE_SUCCESS, UPLOAD_PROFILE_IMAGE_FAILURE,
 } from './../constants'
 
 export class authAction {
@@ -37,6 +38,28 @@ export class authAction {
         }
     }
 
+    ///////////////
+    static uploadProfileImage(payload) {
+        return {
+            type: UPLOAD_PROFILE_IMAGE,
+            payload
+        }
+    }
+
+    static uploadProfileImageSuccess(payload) {
+        return {
+            type: UPLOAD_PROFILE_IMAGE_SUCCESS,
+            payload
+        }
+    }
+
+    static uploadProfileImageFailure(error) {
+        return {
+            type: UPLOAD_PROFILE_IMAGE_FAILURE,
+            error
+        }
+    }
+    
     ///////////////
     static signIn(payload) {
         return {

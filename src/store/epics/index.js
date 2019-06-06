@@ -15,6 +15,7 @@ const rootEpic = combineEpics(
     authEpic.logout,
     authEpic.forgotPassword,
     authEpic.confirmNewPassword,
+    authEpic.uploadProfileImage,
 
     ProductEpic.getCategories,
     ProductEpic.saveProduct,

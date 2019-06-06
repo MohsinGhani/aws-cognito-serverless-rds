@@ -10,7 +10,8 @@ import {
     POST_SOCIAL_AUTH,
     LOGOUT,
     FORGOT_PASSWORD,
-    CONFIRM_NEW_PASSWORD
+    CONFIRM_NEW_PASSWORD,
+    UPLOAD_PROFILE_IMAGE
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { authAction } from './../actions/index'
@@ -80,6 +81,22 @@ export default class authEpic {
                     )
                 }
             });
+
+    static uploadProfileImage = (action$) =>
+        action$.ofType(UPLOAD_PROFILE_IMAGE)
+            .switchMap(({ payload }) => {
+                // payload should be = { user_img, user_id }
+                return HttpService.post(path.UPLOAD_PROFILE_IMAGE, payload)
+                    .switchMap(({ response }) => {
+                        if (response.status === 200) {
+                            return Observable.of(
+                                authAction.uploadProfileImageSuccess(response.data)
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(authAction.uploadProfileImageFailure({ error: err.message }))
+                    })
+            })
 
     static isLoggedIn = (action$) =>
         action$.ofType(IS_LOGGED_IN)
@@ -161,7 +178,7 @@ export default class authEpic {
         action$.ofType(CONFIRM_NEW_PASSWORD)
             .switchMap(({ payload }) => {
 
-                let {userEmail, code, userPass} = payload;
+                let { userEmail, code, userPass } = payload;
                 return Observable.fromPromise(confirmNewPassword(userEmail, code, userPass))
                     .catch((err) => {
                         return Observable.of(authAction.confirmNewPasswordFailure(err.message))
@@ -169,7 +186,7 @@ export default class authEpic {
             })
             .switchMap(() => {
                 return Observable.of(
-                    authAction.confirmNewPasswordSuccess({message: "Password Successfully Changed!"})
+                    authAction.confirmNewPasswordSuccess({ message: "Password Successfully Changed!" })
                 )
             });
 

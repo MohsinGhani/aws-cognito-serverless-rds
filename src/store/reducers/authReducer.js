@@ -11,6 +11,7 @@ import {
     LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAILURE,
     FORGOT_PASSWORD, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILURE,
     CONFIRM_NEW_PASSWORD, CONFIRM_NEW_PASSWORD_SUCCESS, CONFIRM_NEW_PASSWORD_FAILURE,
+    UPLOAD_PROFILE_IMAGE, UPLOAD_PROFILE_IMAGE_SUCCESS, UPLOAD_PROFILE_IMAGE_FAILURE,
 } from './../constants'
 
 const initialState = {
@@ -36,6 +37,9 @@ const initialState = {
     postSocialAuth: null,
     postSocialAuthLoader: false,
     postSocialAuthError: null,
+
+    uploadProfileImageLoader: false,
+    uploadProfileImageError: null,
 }
 
 export default function authReducer(state = initialState, action) {
@@ -118,7 +122,7 @@ export default function authReducer(state = initialState, action) {
             }
 
         case FORGOT_PASSWORD_FAILURE:
-            
+
             return {
                 ...state,
                 user: null,
@@ -159,6 +163,31 @@ export default function authReducer(state = initialState, action) {
                 confirmNewPasswordError: action.error,
                 authError: null,
                 isLoggedIn: false
+            }
+
+        //////////////////
+        case UPLOAD_PROFILE_IMAGE:
+            return {
+                ...state,
+                user: null,
+                uploadProfileImageLoader: true,
+                uploadProfileImageError: null
+            }
+
+        case UPLOAD_PROFILE_IMAGE_SUCCESS:
+            return {
+                ...state,
+                user: action.payload,
+                uploadProfileImageLoader: false,
+                uploadProfileImageError: null
+            }
+
+        case UPLOAD_PROFILE_IMAGE_FAILURE:
+            return {
+                ...state,
+                user: null,
+                uploadProfileImageLoader: false,
+                uploadProfileImageError: action.error
             }
 
         //////////////////
