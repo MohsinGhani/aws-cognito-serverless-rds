@@ -140,14 +140,18 @@ class TopNav extends React.Component {
             let reader = new FileReader();
             reader.onload = (e) => {
                 this.setState({ selectedImage: { ...this.state.selectedImage, base64: e.target.result } });
+                const { user, uploadProfileImageAction } = this.props
+                uploadProfileImageAction({
+                    user_id: user.user_id,
+                    user_img: JSON.stringify({ ...this.state.selectedImage, base64: e.target.result })
+                })
             };
             reader.readAsDataURL(event.target.files[0]);
         }
     }
-
     render() {
-        const { query, selectedImage } = this.state;    
-        const { classes, isLoggedIn } = this.props;
+        const { query, selectedImage } = this.state;
+        const { classes, isLoggedIn, user } = this.props;
 
 
         return (
@@ -173,21 +177,43 @@ class TopNav extends React.Component {
                                     }}
                                 />
                                 {
-                                    selectedImage.base64 ? '' :
-                                        <IconButton
-                                            aria-haspopup="true"
-                                            color="inherit"
-                                            onClick={() => {
-                                                var elem = document.getElementById('theFile');
-                                                if (elem && document.createEvent) {
-                                                    var evt = document.createEvent("MouseEvents");
-                                                    evt.initEvent("click", true, false);
-                                                    elem.dispatchEvent(evt);
-                                                }
-                                            }}
-                                        >
-                                            <AccountCircle id="svgIcon" />
-                                        </IconButton>
+                                    (() => {
+                                        if (!selectedImage.base64 && user && !user.picture) {
+                                            return (
+                                                <IconButton
+                                                    aria-haspopup="true"
+                                                    color="inherit"
+                                                    onClick={() => {
+                                                        var elem = document.getElementById('theFile');
+                                                        if (elem && document.createEvent) {
+                                                            var evt = document.createEvent("MouseEvents");
+                                                            evt.initEvent("click", true, false);
+                                                            elem.dispatchEvent(evt);
+                                                        }
+                                                    }}
+                                                >
+                                                    <AccountCircle id="svgIcon" />
+                                                </IconButton>
+                                            )
+                                        }
+                                        else if (!selectedImage.base64 && user && user.picture) {
+                                            return (
+                                                <img
+                                                    src={user.picture}
+                                                    alt="profile image"
+                                                    style={{ height: '50px', width: '50px', borderRadius: '50%', cursor: 'pointer' }}
+                                                    onClick={() => {
+                                                        var elem = document.getElementById('theFile');
+                                                        if (elem && document.createEvent) {
+                                                            var evt = document.createEvent("MouseEvents");
+                                                            evt.initEvent("click", true, false);
+                                                            elem.dispatchEvent(evt);
+                                                        }
+                                                    }}
+                                                />
+                                            )
+                                        }
+                                    })()
                                 }
 
                                 {
@@ -226,11 +252,11 @@ TopNav.propTypes = {
 const mapStateToProps = (state) => {
     const {
         ProductReducer: { searchedProducts, searchLoader, searchError },
-        authReducer: { isLoggedIn }
+        authReducer: { isLoggedIn, user }
     } = state;
     return {
         searchedProducts, searchLoader, searchError,
-        isLoggedIn
+        isLoggedIn, user
     }
 }
 
@@ -238,6 +264,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         logoutAction: () => dispatch(authAction.logout()),
         searchAction: (payload) => dispatch(ProductAction.search(payload)),
+        uploadProfileImageAction: (payload) => dispatch(authAction.uploadProfileImage(payload)),
     };
 };
 
