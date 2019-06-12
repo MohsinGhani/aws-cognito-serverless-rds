@@ -88,6 +88,20 @@ class SwipeableTemporaryDrawer extends React.Component {
         top: false,
         left: false,
         query: '',
+        navItems: [
+            { label: 'Add Product', path: '/add-product' },
+            { label: 'Map View', path: '/' },
+            { label: 'List View', path: '/products-list' },
+            { label: 'Feedback', path: '/feedback' },
+            { label: 'Privacy', path: '/privacy' },
+            { label: 'Terms of Use', path: '/terms-of-use' },
+            { label: 'Cookie Policy', path: '/cookie-policy' },
+            { label: 'How To Use', path: '/how-to-use' },
+            { label: 'Share App Link', path: '/share-app-link' },
+            { label: 'Copy App Link', path: '/copy-app-link' },
+            { label: 'Bookmark', path: '/bookmark' },
+            { label: 'My Product', path: '/my-product' }
+        ]
     };
 
     toggleDrawer = (side, open) => () => {
@@ -104,14 +118,35 @@ class SwipeableTemporaryDrawer extends React.Component {
     }
 
     handleSearch = (e) => {
-        this.setState({
-            [e.target.id]: e.target.value
-        }, () => {
-            this.props.searchAction({ query: this.state.query })
-        })
+        if (e.target.value === "") {
+            this.setState({
+                [e.target.id]: e.target.value,
+                navItems: [
+                    { label: 'Add Product', path: '/add-product' },
+                    { label: 'Map View', path: '/' },
+                    { label: 'List View', path: '/products-list' },
+                    { label: 'Feedback', path: '/feedback' },
+                    { label: 'Privacy', path: '/privacy' },
+                    { label: 'Terms of Use', path: '/terms-of-use' },
+                    { label: 'Cookie Policy', path: '/cookie-policy' },
+                    { label: 'How To Use', path: '/how-to-use' },
+                    { label: 'Share App Link', path: '/share-app-link' },
+                    { label: 'Copy App Link', path: '/copy-app-link' },
+                    { label: 'Bookmark', path: '/bookmark' },
+                    { label: 'My Product', path: '/my-product' }
+                ]
+            })
+        }
+        else {
+            this.setState({
+                [e.target.id]: e.target.value,
+                navItems: this.state.navItems.filter((item) => item.label.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1)
+            })
+        }
     }
+
     render() {
-        const { query } = this.state;
+        const { query, navItems } = this.state;
         const { classes, isLoggedIn } = this.props;
         return (
             <div >
@@ -158,11 +193,19 @@ class SwipeableTemporaryDrawer extends React.Component {
                                     <div className="searchButton">
                                         <i className="material-icons searchh" type="btn">
                                             search
-                                    </i>
-                                        {/* <SearchIcon /> */}
+                                        </i>
                                     </div>
                                 </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/add-product')}>
+                                {
+                                    navItems.map((item) => {
+                                        return (
+                                            <ListItem className={classes.listItem} onClick={() => this.goto(item.path)}>
+                                                {item.label}
+                                            </ListItem>
+                                        )
+                                    })
+                                }
+                                {/* <ListItem className={classes.listItem} onClick={() => this.goto('/add-product')}>
                                     Add Product
                                 </ListItem>
                                 <ListItem className={classes.listItem} onClick={() => this.goto('/')}>
@@ -197,7 +240,7 @@ class SwipeableTemporaryDrawer extends React.Component {
                                 </ListItem>
                                 <ListItem className={classes.listItem} onClick={() => this.goto('/my-product')}>
                                     My Product
-                                </ListItem>
+                                </ListItem> */}
                                 {
                                     isLoggedIn ?
                                         <ListItem className={classes.listItem} onClick={this.logout}>Logout</ListItem> :
