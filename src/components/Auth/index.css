@@ -12,10 +12,12 @@
   height: auto;
   overflow-y: auto !important;
   overflow-x: hidden;
-  padding: 48px 40px 36px;
-  margin: 30px auto;
+  padding: 20px 30px;
   width: 100%;
   max-width: 450px;
+  position: relative;
+  margin: 0px auto;
+  opacity: 0.9;
 }
 
 .title {
