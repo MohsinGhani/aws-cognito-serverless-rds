@@ -100,7 +100,7 @@ class SignInWithFacebook extends React.Component {
                 {
                     pathname === "/" ? (
                         <Button variant="contained" disabled={authLoader} className={btnStyle} onClick={this.signIn}>
-                            <i class="fa fa-google"></i>
+                            <i class="fa fa-facebook"></i>
                             Continue with Facebook
                         </Button>
                     ) : (

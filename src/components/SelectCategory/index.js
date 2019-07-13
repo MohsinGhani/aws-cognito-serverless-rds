@@ -2,29 +2,29 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import "./index.css";
-import Category from './Category'
-import { connect } from 'react-redux';
-import { ProductAction } from './../../store/actions'
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
-import Slide from '@material-ui/core/Slide';
+import Category from "./Category";
+import { connect } from "react-redux";
+import { ProductAction } from "./../../store/actions";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import CloseIcon from "@material-ui/icons/Close";
+import Slide from "@material-ui/core/Slide";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   appBar: {
-    position: 'relative',
-    backgroundColor: '#9e7339'
+    position: "relative",
+    backgroundColor: "#9e7339"
   },
   flex: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });
 
 function Transition(props) {
@@ -34,15 +34,26 @@ function Transition(props) {
 class SelectCategory extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
 
   componentDidMount() {
-    this.props.getCategoriesAction()
+    this.props.getCategoriesAction();
   }
 
   render() {
-    let { classes, open, handleClose, categories, getCategoriesLoader, getCategoriesError, selectCategory } = this.props;
+    let {
+      classes,
+      open,
+      handleClose,
+      categories,
+      getCategoriesLoader,
+      getCategoriesError,
+      selectCategory
+    } = this.props;
+    if (categories) {
+      categories.sort((a, b) => Number(a.category_id) - Number(b.category_id));
+    }
     return (
       <div>
         <Dialog
@@ -53,7 +64,11 @@ class SelectCategory extends React.Component {
         >
           <AppBar className={classes.appBar}>
             <Toolbar>
-              <IconButton color="inherit" onClick={handleClose} aria-label="Close">
+              <IconButton
+                color="inherit"
+                onClick={handleClose}
+                aria-label="Close"
+              >
                 <CloseIcon />
               </IconButton>
               <Typography variant="h6" color="inherit" className={classes.flex}>
@@ -67,42 +82,58 @@ class SelectCategory extends React.Component {
           <div className="container">
             <br />
             <Grid container className={classes.root} spacing={16}>
-              {
-                !getCategoriesLoader && categories && categories.map((category, index) => {
+              {!getCategoriesLoader &&
+                categories &&
+                categories.map((category, index) => {
                   return (
-                    <Grid key={index} className={'p5'} item xs={6} md={2} sm={4}>
-                      <Category category={category} selectCategory={selectCategory}/>
+                    <Grid
+                      key={index}
+                      className={"p5"}
+                      item
+                      xs={6}
+                      md={2}
+                      sm={4}
+                    >
+                      <Category
+                        category={category}
+                        selectCategory={selectCategory}
+                      />
                     </Grid>
-                  )
-                })
-              }
-              {
-                getCategoriesLoader ? '...loading' : ''
-              }
-              {
-                !getCategoriesLoader && getCategoriesError ? <p>{getCategoriesError}</p> : ''
-              }
+                  );
+                })}
+              {getCategoriesLoader ? "...loading" : ""}
+              {!getCategoriesLoader && getCategoriesError ? (
+                <p>{getCategoriesError}</p>
+              ) : (
+                ""
+              )}
             </Grid>
           </div>
         </Dialog>
-      </div >
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  const { ProductReducer: { categories, getCategoriesLoader, getCategoriesError } } = state;
+const mapStateToProps = state => {
+  const {
+    ProductReducer: { categories, getCategoriesLoader, getCategoriesError }
+  } = state;
   return {
-    categories, getCategoriesLoader, getCategoriesError
-  }
-}
+    categories,
+    getCategoriesLoader,
+    getCategoriesError
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    getCategoriesAction: (payload) => dispatch(ProductAction.getCategories(payload))
+    getCategoriesAction: payload =>
+      dispatch(ProductAction.getCategories(payload))
   };
 };
 
 export default connect(
-  mapStateToProps, mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(withStyles(styles)(SelectCategory));

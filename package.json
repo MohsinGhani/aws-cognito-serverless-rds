@@ -7,6 +7,8 @@
     "@material-ui/icons": "^3.0.2",
     "autosuggest-highlight": "^3.1.1",
     "aws-amplify": "^1.1.19",
+    "browserslist": "^4.6.4",
+    "caniuse-lite": "^1.0.30000984",
     "mapbox-gl": "^0.53.0",
     "material-ui-responsive-drawer": "^1.19.4",
     "moment": "^2.24.0",
@@ -27,6 +29,7 @@
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.3.3",
     "timeago-react": "^2.0.1",
+    "upgrade": "^1.1.0",
     "uuid": "^3.3.2"
   },
   "scripts": {
