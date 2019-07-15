@@ -77,9 +77,11 @@ class AddProduct extends React.Component {
   }
 
   handleInput = e => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
+    if (!Number(e.target.value)) {
+      this.setState({
+        [e.target.id]: e.target.value
+      });
+    }
   };
 
   componentDidMount() {
@@ -100,6 +102,7 @@ class AddProduct extends React.Component {
   }
 
   onChangeCountry = countryCode => {
+    console.log("onChangeCountry");
     Address.GetState(countryCode)
       .then(res => {
         return res.json();
@@ -117,6 +120,7 @@ class AddProduct extends React.Component {
   };
 
   onChangeState = (countryCode, StateCode) => {
+    console.log("onChangeState");
     Address.GetCities(countryCode, StateCode)
       .then(res => {
         return res.json();
@@ -146,18 +150,22 @@ class AddProduct extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.selectedCountry !== this.state.selectedCountry &&
-      this.state.selectedCountry
-    ) {
-      // handle selectedCountry onChange
-      let key = this.getKeyByValue(
-        this.state.countriesOrignalObj,
+    console.log(prevProps.selectedCountry, this.props.selectedCountry);
+    if (!Number(prevProps.selectedCountry)) {
+      if (
+        prevState.selectedCountry !== this.state.selectedCountry &&
         this.state.selectedCountry
-      );
-      if (key) this.onChangeCountry(key);
-    }
+      ) {
+        // handle selectedCountry onChange
+        console.log(" handle selectedCountry onChange");
 
+        let key = this.getKeyByValue(
+          this.state.countriesOrignalObj,
+          this.state.selectedCountry
+        );
+        if (key) this.onChangeCountry(key);
+      }
+    }
     if (
       prevState.selectedState !== this.state.selectedState &&
       this.state.selectedState
@@ -347,7 +355,10 @@ class AddProduct extends React.Component {
       reader.readAsDataURL(event.target.files[0]);
     }
   };
-
+  handleCountryChange = e => {
+    console.log(e);
+    this.setState({ country: "" });
+  };
   pickLocation = () => {
     const { isGeolocationEnabled, latitude, longitude } = this.state;
     // if isGeolocationEnabled is true then don't need to open map directly get current location
@@ -508,10 +519,11 @@ class AddProduct extends React.Component {
                     label={"Country"}
                     variant={"outlined"}
                     id={"selectedCountry"}
+                    onChange={this.handleInput}
                     fullWidth={true}
                     value={country ? country : ""}
                     isAddon={true}
-                    onClickAdornment={() => this.setState({ country: "" })}
+                    onClickAdornment={this.handleCountryChange}
                   />
                 </Grid>
               ) : (
@@ -520,6 +532,7 @@ class AddProduct extends React.Component {
                     type="string"
                     label={"Search Country"}
                     variant={"outlined"}
+                    onChange={this.handleInput}
                     id={"selectedCountry"}
                     fullWidth={true}
                     suggestions={countries}

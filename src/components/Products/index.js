@@ -105,17 +105,24 @@ class Products extends React.Component {
               // onClick={(map, e) => { this.props.reverseGeoCodingAction(e.lngLat) }}
             >
               {!this.props.isLoggedIn && (
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    position: "relative"
+                  }}
+                >
                   <div className="mainBodyButtons">
                     <Button
                       onClick={() => this.goto("/signin")}
                       variant="contained"
                       className={classes.signinBtn}
+                     
                     >
                       <i
                         class="fa fa-envelope"
                         aria-hidden="true"
-                        style={{ marginRight: 10 }}
+                        style={{ marginRight: 10, position: "relative" }}
                       />
                       Continue with e-mail
                     </Button>
@@ -128,12 +135,17 @@ class Products extends React.Component {
               )}
 
               {/* current location pointer */}
-              <Marker coordinates={[longitude, latitude]} anchor="bottom">
+              <Marker
+                coordinates={[longitude, latitude]}
+                anchor="bottom"
+                style={{ position: "absolute" }}
+              >
                 <img
                   className="c-p"
                   title="your current location"
                   src={require("./../../assets/img/current-location.png")}
                   alt="marker"
+                  style={{ position: "absolute", zIndex: -1 }}
                   width="20px"
                   height="25"
                 />
@@ -148,6 +160,7 @@ class Products extends React.Component {
                     <Marker
                       coordinates={[product.longitude, product.latitude]}
                       anchor="bottom"
+                      style={{ position: "absolute", zIndex: -5 }}
                       onClick={() =>
                         this.setState({ product, isOpenDetailDialog: true })
                       }
