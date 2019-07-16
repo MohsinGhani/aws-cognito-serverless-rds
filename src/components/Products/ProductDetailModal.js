@@ -154,7 +154,7 @@ class ProductDetailModal extends React.Component {
         });
     };
     render() {
-        const { classes, open, handleDetailDialog, product } = this.props;
+        const { classes, open, handleDetailDialog, product,user } = this.props;
         const { showCommentModal, showShareModal } = this.state;
 
 
@@ -177,24 +177,46 @@ class ProductDetailModal extends React.Component {
                     className={classes.dialog}
                 >
                     <AppBar className={classes.appBar}>
-                        <Toolbar>
-                            <IconButton color="inherit" onClick={() => handleDetailDialog(null)} aria-label="Close" >
-                                <i className="material-icons navigate">
-                                    navigate_before
-                            </i>
-                            </IconButton>
-                            <Typography variant="h6" color="inherit" className={classes.flex}>
-                                <i className="material-icons account">
-                                    account_circle
-                                </i>
-                            </Typography>
-                            <Button color="inherit" onClick={() => handleDetailDialog(null)}>
-                                <i className="material-icons search" >
-                                    search
-                            </i>
-                            </Button>
-                        </Toolbar>
-                    </AppBar>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                onClick={() => handleDetailDialog(null)}
+                aria-label="Close"
+              >
+                <i className="material-icons navigate">navigate_before</i>
+              </IconButton>
+              {user ? (
+                <Typography
+                  variant="h6"
+                  color="inherit"
+                  className={classes.flex}
+                >
+                  <img
+                    src={user.picture}
+                    alt="profile image"
+                    style={{
+                      height: "50px",
+                      width: "50px",
+                      borderRadius: "50%",
+                      cursor: "pointer"
+                    }}
+                  />
+                </Typography>
+              ) : (
+                <Typography
+                  variant="h6"
+                  color="inherit"
+                  className={classes.flex}
+                >
+                  <i className="material-icons account">account_circle</i>
+                </Typography>
+              )}
+
+              <Button color="inherit" onClick={() => handleDetailDialog(null)}>
+                <i className="material-icons search">search</i>
+              </Button>
+            </Toolbar>
+          </AppBar>
                     <div>
                         {
                             product ?

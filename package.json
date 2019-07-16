@@ -28,6 +28,7 @@
     "redux-observable": "^1.0.0",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.3.3",
+    "sweetalert": "^2.1.2",
     "timeago-react": "^2.0.1",
     "upgrade": "^1.1.0",
     "uuid": "^3.3.2"

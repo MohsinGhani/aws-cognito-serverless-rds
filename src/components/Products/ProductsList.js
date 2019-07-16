@@ -39,12 +39,12 @@ class ProductsList extends Component {
 
   render() {
 
-    let { products, getProductsLoader, searchedProducts, searchLoader } = this.props;
+    let { products, getProductsLoader, searchedProducts, searchLoader,user } = this.props;
     let { product, isOpenDetailDialog } = this.state;
 
     return (
       <div>
-        <TopNav />
+        {/* <TopNav /> */}
         <ProductDetailModal
           product_id={product ? product.product_id : null}
           open={isOpenDetailDialog}

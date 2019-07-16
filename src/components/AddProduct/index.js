@@ -14,6 +14,7 @@ import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { ProductAction } from "./../../store/actions";
 import MapToSelectLocation from "./MapToSelectLocation";
 import ReactLoading from "react-loading";
+import swal from "sweetalert";
 
 import "./index.css";
 
@@ -266,6 +267,8 @@ class AddProduct extends React.Component {
   }
 
   onSaveProduct = () => {
+    swal("", "Successfully Post New Add!", "success");
+
     const {
       selectedCategory,
       title,
@@ -371,6 +374,7 @@ class AddProduct extends React.Component {
 
   render() {
     let { classes, saveProductLoader } = this.props;
+    // console.log(signupUser);
     let {
       isSelectCatModal,
       selectedCategory,
@@ -667,6 +671,7 @@ const mapStateToProps = state => {
     saveProductLoader,
     saveProductError,
     user,
+
     reversedGeoCoding
   };
 };

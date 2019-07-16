@@ -1,6 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Slide from "@material-ui/core/Slide";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -10,6 +17,7 @@ import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { connect } from "react-redux";
+import Avatar from "@material-ui/core/Avatar";
 import { authAction, ProductAction } from "./../../store/actions";
 import SwipeableTemporaryDrawer from "../MaterialUI/Drawer";
 import { withRouter } from "react-router-dom";
@@ -39,6 +47,7 @@ const styles = theme => ({
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25)
     },
+
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
@@ -78,15 +87,33 @@ const styles = theme => ({
   },
   svgIcon: {
     fontSize: "34px"
+  },
+  bigAvatar: {
+    margin: 10,
+    width: 120,
+    height: 120
   }
 });
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
 
 class TopNav extends React.Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null,
     query: "",
-    selectedImage: {}
+    selectedImage: {},
+
+    open: false
+  };
+  handleClickOpenPopup = () => {
+    this.setState({ open: true });
+  };
+
+  handleClosePopup = () => {
+    this.setState({ open: false });
   };
 
   handleProfileMenuOpen = event => {
@@ -127,6 +154,7 @@ class TopNav extends React.Component {
   };
 
   handleImageChange = event => {
+    console.log(event, "event");
     // funciton for get file and save in state
     if (event.target.files && event.target.files[0]) {
       let file = {
@@ -134,7 +162,9 @@ class TopNav extends React.Component {
         size: event.target.files[0].size,
         type: event.target.files[0].type
       };
-      this.setState({ selectedImage: file });
+      this.setState({ selectedImage: file },()=>{
+        console.log(this.state.selectedImage.base64)
+      });
 
       let reader = new FileReader();
       reader.onload = e => {
@@ -155,11 +185,19 @@ class TopNav extends React.Component {
       };
       reader.readAsDataURL(event.target.files[0]);
     }
+    this.setState({ open: false });
+  };
+
+  handleChangeImagePopup = () => {
+    this.setState({ open: true });
+  };
+  handleRemoveImagePopup = () => {
+    
+    this.setState({ open: false });
   };
   render() {
-    const { query, selectedImage } = this.state;
+    const { query, selectedImage, isImageClickPopup } = this.state;
     const { classes, isLoggedIn, user } = this.props;
-    console.log(isLoggedIn);
 
     return (
       <div className={classes.root}>
@@ -184,31 +222,18 @@ class TopNav extends React.Component {
             <div className={classes.grow} />
             {isLoggedIn ? (
               <div className={classes.sectionDesktop}>
-                <input
-                  type="file"
-                  id="theFile"
-                  onChange={event => {
-                    this.handleImageChange(event);
-                    event.target.value = null;
-                    this.setState({
-                      hideTool: true
-                    });
-                  }}
-                />
                 {(() => {
                   if (!selectedImage.base64 && user && !user.picture) {
                     return (
                       <IconButton
                         aria-haspopup="true"
                         color="inherit"
-                        onClick={() => {
-                          var elem = document.getElementById("theFile");
-                          if (elem && document.createEvent) {
-                            var evt = document.createEvent("MouseEvents");
-                            evt.initEvent("click", true, false);
-                            elem.dispatchEvent(evt);
-                          }
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
                         }}
+                        onClick={this.handleClickOpenPopup}
                       >
                         <AccountCircle id="svgIcon" />
                       </IconButton>
@@ -222,21 +247,16 @@ class TopNav extends React.Component {
                           height: "50px",
                           width: "50px",
                           borderRadius: "50%",
-                          cursor: "pointer"
+                          cursor: "pointer",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center"
                         }}
-                        onClick={() => {
-                          var elem = document.getElementById("theFile");
-                          if (elem && document.createEvent) {
-                            var evt = document.createEvent("MouseEvents");
-                            evt.initEvent("click", true, false);
-                            elem.dispatchEvent(evt);
-                          }
-                        }}
+                        onClick={this.handleClickOpenPopup}
                       />
                     );
                   }
                 })()}
-
                 {selectedImage && selectedImage.base64 && (
                   <img
                     src={selectedImage.base64}
@@ -246,6 +266,7 @@ class TopNav extends React.Component {
                       width: "50px",
                       borderRadius: "50%"
                     }}
+                    onClick={this.handleClickOpenPopup}
                   />
                 )}
               </div>
@@ -267,6 +288,77 @@ class TopNav extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
+
+        <div>
+          <Dialog
+            open={this.state.open}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={this.handleClosePopup}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle id="alert-dialog-slide-title">
+              {"User Information :"}
+            </DialogTitle>
+            <DialogContent style={{ marginTop: -15 }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                {user ? (
+                  <Avatar
+                    alt={`${user.firstname} ${user.lastname}`}
+                    src={user.picture}
+                    className={classes.bigAvatar}
+                  />
+                ) : (
+                  <AccountCircle id="svgIcon" />
+                )}
+              </div>
+              {user && (
+                <div style={{ marginTop: 10 }}>
+                  <div>{`Name : ${user.firstname} ${user.lastname}`}</div>
+                  <div> {`email : ${user.email}`}</div>
+                  <div> {`Phone : ${user.phone}`}</div>
+                </div>
+              )}
+            </DialogContent>
+            <DialogActions
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Button onClick={this.handleClosePopup} style={{ color: "red" }}>
+                Cancel
+              </Button>
+              <Button onClick={this.handleRemoveImagePopup} color="primary">
+                Remove Image
+              </Button>
+              <Button
+                onClick={() => {
+                  this.handleChangeImagePopup();
+                  var elem = document.getElementById("theFile");
+                  if (elem && document.createEvent) {
+                    var evt = document.createEvent("MouseEvents");
+                    evt.initEvent("click", false, true);
+                    elem.dispatchEvent(evt);
+                  }
+                }}
+                color="primary"
+              >
+                Change Image
+                <input
+                  type="file"
+                  id="theFile"
+                  // display="hidden"
+                  onChange={event => {
+                    this.handleImageChange(event);
+                    event.target.value = null;
+                    this.setState({
+                      hideTool: true
+                    });
+                  }}
+                />
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
     );
   }
@@ -303,19 +395,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withRouter(withStyles(styles)(TopNav)));
-
-// <div className={classes.search}>
-//     <div className={classes.searchIcon}>
-//         <SearchIcon id="svgIcon" />
-//     </div>
-//     <InputBase
-//         placeholder="Search…"
-//         classes={{
-//             root: classes.inputRoot,
-//             input: classes.inputInput,
-//         }}
-//         value={query}
-//         onChange={this.handleSearch}
-//         id='query'
-//     />
-// </div>
