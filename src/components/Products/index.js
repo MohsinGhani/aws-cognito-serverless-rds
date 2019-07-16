@@ -36,7 +36,8 @@ const styles = theme => ({
     backgroundColor: "#946638	",
     color: "white",
     width: "50vh",
-    justifyContent: "inherit"
+    justifyContent: "inherit",
+    zIndex: 1001
   }
 });
 class Products extends React.Component {
@@ -117,7 +118,6 @@ class Products extends React.Component {
                       onClick={() => this.goto("/signin")}
                       variant="contained"
                       className={classes.signinBtn}
-                     
                     >
                       <i
                         class="fa fa-envelope"
@@ -138,14 +138,14 @@ class Products extends React.Component {
               <Marker
                 coordinates={[longitude, latitude]}
                 anchor="bottom"
-                style={{ position: "absolute" }}
+                // style={{ position: "absolute" }}
               >
                 <img
                   className="c-p"
                   title="your current location"
                   src={require("./../../assets/img/current-location.png")}
                   alt="marker"
-                  style={{ position: "absolute", zIndex: -1 }}
+                  // style={{ position: "absolute", zIndex: -1 }}
                   width="20px"
                   height="25"
                 />
@@ -160,7 +160,7 @@ class Products extends React.Component {
                     <Marker
                       coordinates={[product.longitude, product.latitude]}
                       anchor="bottom"
-                      style={{ position: "absolute", zIndex: -5 }}
+                      //  style={{ position: "absolute"}}
                       onClick={() =>
                         this.setState({ product, isOpenDetailDialog: true })
                       }
@@ -168,7 +168,7 @@ class Products extends React.Component {
                     >
                       <img
                         className="c-p"
-                        style={{ position: "absolute" }}
+                        // style={{ position: "absolute" }}
                         title={product.title}
                         src={require("./../../assets/img/marker.png")}
                         alt="marker"
