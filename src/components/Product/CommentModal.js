@@ -65,7 +65,9 @@ class CommentModal extends Component {
                             value={comment}
                             fullWidth={true}
                             multiline={true}
+                         
                             rows={4}
+   
                             onChange={this.handleInput}
                         />
                     </DialogContent>

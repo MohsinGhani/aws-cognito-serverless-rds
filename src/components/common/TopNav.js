@@ -77,9 +77,6 @@ const styles = theme => ({
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       width: 120,
-      "&:focus": {
-        width: 200
-      }
     }
   },
   appbar: {

@@ -24,7 +24,11 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
-const styles = {
+import InputBase from "@material-ui/core/InputBase";
+import { fade } from "@material-ui/core/styles/colorManipulator";
+// import { withStyles } from "@material-ui/core/styles";
+import SearchIcon from "@material-ui/icons/Search";
+const styles = (theme) => ({
   appBar: {
     position: "relative",
     backgroundColor: "#9e7339	",
@@ -96,6 +100,45 @@ const styles = {
     backgroundColor: "#a98652",
     color: "white"
   },
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25)
+    },
+
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing.unit,
+      width: "auto"
+    }
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  inputRoot: {
+    color: "inherit",
+    width: "100%"
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: 120,
+    }
+  },
   margin: {
     backgroundColor: "#9e7339",
     color: "white"
@@ -103,7 +146,7 @@ const styles = {
   dialog: {
     padding: "0px"
   }
-};
+});
 const stylesTheme = theme => ({
   margin: {
     margin: theme.spacing.unit
@@ -204,18 +247,30 @@ class ProductDetailModal extends React.Component {
                   />
                 </Typography>
               ) : (
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={classes.flex}
-                >
-                  <i className="material-icons account">account_circle</i>
-                </Typography>
-              )}
+                  <Typography
+                    variant="h6"
+                    color="inherit"
+                    className={classes.flex}
+                  >
+                    <i className="material-icons account">account_circle</i>
+                  </Typography>
+                )}
 
-              <Button color="inherit" onClick={() => handleDetailDialog(null)}>
-                <i className="material-icons search">search</i>
-              </Button>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                  }}
+                  // value={query}
+                  onChange={this.handleSearch}
+                  id="query"
+                />
+              </div>
             </Toolbar>
           </AppBar>
           <div>
@@ -369,8 +424,8 @@ class ProductDetailModal extends React.Component {
                 </Card>
               </div>
             ) : (
-              ""
-            )}
+                ""
+              )}
           </div>
         </Dialog>
       </div>

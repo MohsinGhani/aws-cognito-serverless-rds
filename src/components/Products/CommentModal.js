@@ -10,7 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 const styles = theme => ({
-  
+
     root: {
         flexGrow: 1,
         overflow: 'hidden',
@@ -83,15 +83,16 @@ class CommentModal extends Component {
                                         multiline={true}
                                         rows={8}
                                         onChange={this.handleInput}
+                                        maxLength="1000"
                                     />
                                     <Button onClick={handleClose} >
-                                            <i className="material-icons clear"  >
-                                                clear
+                                        <i className="material-icons clear"  >
+                                            clear
                                             </i>
-                                    </Button>                             
+                                    </Button>
                                     <Button onClick={this.doComment} >
-                                            <i className="material-icons send">
-                                                 send
+                                        <i className="material-icons send">
+                                            send
                                             </i>
                                     </Button>
                                 </Grid>

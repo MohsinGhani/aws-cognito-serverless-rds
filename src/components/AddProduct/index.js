@@ -15,7 +15,7 @@ import { ProductAction } from "./../../store/actions";
 import MapToSelectLocation from "./MapToSelectLocation";
 import ReactLoading from "react-loading";
 import swal from "sweetalert";
-
+import AddProductStatusScreen from "./AddProductStatusScreen";
 import "./index.css";
 
 const styles = theme => ({
@@ -78,7 +78,8 @@ class AddProduct extends React.Component {
   }
 
   handleInput = e => {
-    if (!Number(e.target.value)) {
+    var hasNumber = /\d/;
+    if (!hasNumber.test(e.target.value)) {
       this.setState({
         [e.target.id]: e.target.value
       });
@@ -193,7 +194,8 @@ class AddProduct extends React.Component {
       !this.props.saveProductLoader &&
       prevProps.saveProductLoader
     ) {
-      this.goto("/");
+      // this.goto("/");
+      return <AddProductStatusScreen />;
     }
 
     if (
@@ -215,7 +217,8 @@ class AddProduct extends React.Component {
       !this.props.saveProductLoader &&
       prevProps.saveProductLoader
     ) {
-      this.goto("/");
+      // this.goto("/");
+      return <AddProductStatusScreen />;
     }
 
     if (
@@ -453,14 +456,14 @@ class AddProduct extends React.Component {
                 {selectedImage.base64 ? (
                   ""
                 ) : (
-                  <IconButton
-                    color="primary"
-                    className={classes.button}
-                    component="span"
-                  >
-                    <PhotoCamera id="photocamera" />
-                  </IconButton>
-                )}
+                    <IconButton
+                      color="primary"
+                      className={classes.button}
+                      component="span"
+                    >
+                      <PhotoCamera id="photocamera" />
+                    </IconButton>
+                  )}
 
                 <div className="productPicture">
                   {selectedImage && selectedImage.base64 ? (
@@ -470,8 +473,8 @@ class AddProduct extends React.Component {
                       className="productImage"
                     />
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </div>
               </label>
             </Grid>
@@ -531,19 +534,19 @@ class AddProduct extends React.Component {
                   />
                 </Grid>
               ) : (
-                <Grid item md={12} sm={12} xs={12}>
-                  <AutoSelectInputField
-                    type="string"
-                    label={"Search Country"}
-                    variant={"outlined"}
-                    onChange={this.handleInput}
-                    id={"selectedCountry"}
-                    fullWidth={true}
-                    suggestions={countries}
-                    onSelect={this.handleInput}
-                  />
-                </Grid>
-              )}
+                  <Grid item md={12} sm={12} xs={12}>
+                    <AutoSelectInputField
+                      type="string"
+                      label={"Search Country"}
+                      variant={"outlined"}
+                      onChange={this.handleInput}
+                      id={"selectedCountry"}
+                      fullWidth={true}
+                      suggestions={countries}
+                      onSelect={this.handleInput}
+                    />
+                  </Grid>
+                )}
 
               {province ? (
                 <Grid item md={12} sm={12} xs={12}>
@@ -559,18 +562,18 @@ class AddProduct extends React.Component {
                   />
                 </Grid>
               ) : (
-                <Grid item md={12} sm={12} xs={12}>
-                  <AutoSelectInputField
-                    label={"State or Province"}
-                    variant={"outlined"}
-                    id={"selectedState"}
-                    fullWidth={true}
-                    suggestions={states}
-                    onSelect={this.handleInput}
-                    disabled={!selectedCountry}
-                  />
-                </Grid>
-              )}
+                  <Grid item md={12} sm={12} xs={12}>
+                    <AutoSelectInputField
+                      label={"State or Province"}
+                      variant={"outlined"}
+                      id={"selectedState"}
+                      fullWidth={true}
+                      suggestions={states}
+                      onSelect={this.handleInput}
+                      disabled={!selectedCountry}
+                    />
+                  </Grid>
+                )}
 
               {city ? (
                 <Grid item md={12} sm={12} xs={12}>
@@ -585,18 +588,18 @@ class AddProduct extends React.Component {
                   />
                 </Grid>
               ) : (
-                <Grid item md={12} sm={12} xs={12}>
-                  <AutoSelectInputField
-                    label={"Search City"}
-                    variant={"outlined"}
-                    id={"selectedCity"}
-                    fullWidth={true}
-                    suggestions={cities}
-                    onSelect={this.handleInput}
-                    disabled={!selectedState}
-                  />
-                </Grid>
-              )}
+                  <Grid item md={12} sm={12} xs={12}>
+                    <AutoSelectInputField
+                      label={"Search City"}
+                      variant={"outlined"}
+                      id={"selectedCity"}
+                      fullWidth={true}
+                      suggestions={cities}
+                      onSelect={this.handleInput}
+                      disabled={!selectedState}
+                    />
+                  </Grid>
+                )}
 
               <Grid container spacing={8}>
                 <Grid item md={10} sm={10} xs={9}>
@@ -604,6 +607,7 @@ class AddProduct extends React.Component {
                     label={"Street"}
                     variant={"outlined"}
                     id={"street"}
+                    pattern="/^[A-Za-z]+$/"
                     value={street ? street : ""}
                     fullWidth={true}
                     onChange={this.handleInput}
@@ -639,8 +643,8 @@ class AddProduct extends React.Component {
                     width={"25px"}
                   />
                 ) : (
-                  "Submit"
-                )}
+                    "Submit"
+                  )}
               </Button>
             </Grid>
           </Grid>
