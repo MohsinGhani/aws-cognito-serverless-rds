@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .productImage{
     width: 100%;
     height: 30vh;
@@ -57,4 +58,65 @@
 input[type=file] {
     display:none;
     margin:10px;
+=======
+.productImage{
+    width: 100%;
+    height: 30vh;
+}
+.productPicture{
+    width: 100%;
+    height: 30vh;
+}
+#photocamera{
+    font-size: 50px;
+    margin-top: 50px;
+    color: #9e7339;
+}
+.add-product-title{
+    /* border: 6px solid 	#E8E8E8; */
+    background-color:  #f9f2ec;
+    padding-left: 26px;
+    margin: 0px;
+    /* padding-left: 5px; */
+    color: #9e7339;
+    font-size: 18px;
+    /* border-top: 20px solid 	#E8E8E8; */
+}
+/* #selectedCategory, #title, #description, #selectedCountry,
+#selectedState, #selectedCity, #latitude, #latitude {
+    color: #9e7339;
+} */
+#location-button{
+    background-color:  #ac7339;
+    margin-top: 10px;
+    color: white;
+    padding: 0px;
+
+}
+.material-icons.place{
+    color: white;
+    font-size: 45px;
+}
+#submit-button{
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    left: 50%;
+    width: 50%;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    transform: translateX(-50%);
+    background-color: #9e7339;
+    color: white;
+    font-size: 20px;
+}
+#icon-button-file {
+    visibility:hidden;
+    width:0;
+    height:0
+}
+input[type=file] {
+    display:none;
+    margin:10px;
+>>>>>>> add8c4e3abe9f26eaa186d854b857f73e2f6663d
     }
