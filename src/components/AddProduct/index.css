@@ -11,14 +11,10 @@
     margin-top: 50px;
     color: #9e7339;
 }
-.add-product{
-    border: 10px solid  #f9f2ec;
-    border-top: 5px solid 	 #f9f2ec;
-}
 .add-product-title{
     /* border: 6px solid 	#E8E8E8; */
     background-color:  #f9f2ec;
-    padding: 0px;
+    padding-left: 26px;
     margin: 0px;
     /* padding-left: 5px; */
     color: #9e7339;

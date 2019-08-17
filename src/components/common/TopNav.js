@@ -77,9 +77,6 @@ const styles = theme => ({
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       width: 120,
-      "&:focus": {
-        width: 200
-      }
     }
   },
   appbar: {
@@ -329,8 +326,8 @@ class TopNav extends React.Component {
                     className={classes.bigAvatar}
                   />
                 ) : (
-                  <AccountCircle id="svgIcon" />
-                )}
+                    <AccountCircle id="svgIcon" />
+                  )}
               </div>
               {user && (
                 <div style={{ marginTop: 10 }}>
@@ -341,14 +338,17 @@ class TopNav extends React.Component {
               )}
             </DialogContent>
             <DialogActions
-              style={{ display: "flex", justifyContent: "center" }}
+              style={{ display: "flex", justifyContent: "space-between" }}
             >
               <Button onClick={this.handleClosePopup} style={{ color: "red" }}>
                 Cancel
               </Button>
-              <Button onClick={this.handleRemoveImagePopup} color="primary">
-                Remove Image
-              </Button>
+
+              {user &&
+                user.picture !== "https://productmania.s3.us-east-2.amazonaws.com/users/default-user-image" &&
+                <Button onClick={this.handleRemoveImagePopup} color="primary">
+                  Remove Image
+              </Button>}
               <Button
                 onClick={() => {
                   this.handleChangeImagePopup();
@@ -361,7 +361,7 @@ class TopNav extends React.Component {
                 }}
                 color="primary"
               >
-                Change Image
+                Add Image
                 <input
                   type="file"
                   id="theFile"

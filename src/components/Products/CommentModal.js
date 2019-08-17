@@ -9,8 +9,9 @@ import { InputField } from './../MaterialUI/index'
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import "./index.css";
 const styles = theme => ({
-  
+
     root: {
         flexGrow: 1,
         overflow: 'hidden',
@@ -23,6 +24,7 @@ const styles = theme => ({
         margin: `${theme.spacing.unit}px auto`,
         padding: theme.spacing.unit * 2,
     },
+
 })
 class CommentModal extends Component {
     constructor(props) {
@@ -83,17 +85,21 @@ class CommentModal extends Component {
                                         multiline={true}
                                         rows={8}
                                         onChange={this.handleInput}
+                                        maxLength="1000"
                                     />
-                                    <Button onClick={handleClose} >
+                                    <div className="comment-footer-div">
+
+                                        <Button onClick={handleClose} >
                                             <i className="material-icons clear"  >
                                                 clear
                                             </i>
-                                    </Button>                             
-                                    <Button onClick={this.doComment} >
+                                        </Button>
+                                        <Button className={"sendButton"} onClick={this.doComment} >
                                             <i className="material-icons send">
-                                                 send
+                                                send
                                             </i>
-                                    </Button>
+                                        </Button>
+                                    </div>
                                 </Grid>
                             </Grid>
                         </Paper>

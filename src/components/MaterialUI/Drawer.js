@@ -11,6 +11,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { authAction, ProductAction } from "./../../store/actions";
 import "./index.css";
+
 const styles = theme => ({
   appBar: {
     position: "relative"
@@ -20,6 +21,7 @@ const styles = theme => ({
     textAlign: "center",
     fontSize: "10px"
   },
+  drawerCloseButton: { position: "fixed", top: 30, left: 280 },
   list: {
     color: "white"
   },
@@ -193,12 +195,12 @@ class SwipeableTemporaryDrawer extends React.Component {
                     color="inherit"
                     onClick={this.toggleDrawer("left", false)}
                     onKeyDown={this.toggleDrawer("left", false)}
+                    className={classes.drawerCloseButton}
                   >
                     <i className="material-icons clear">clear</i>
                   </Typography>
                 </ListItem>
                 <ListItem>
-                  {" "}
                   <div className={classes.search}>
                     <InputBase
                       placeholder="Search Keyword or Place"
