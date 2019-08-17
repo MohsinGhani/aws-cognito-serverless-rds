@@ -49,6 +49,7 @@ class ProductsList extends Component {
       <div>
         {<TopNav />}
         <ProductDetailModal
+          history={this.props.history}
           product_id={product ? product.product_id : null}
           open={isOpenDetailDialog}
           handleDetailDialog={action =>

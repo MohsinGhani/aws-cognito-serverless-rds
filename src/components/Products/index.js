@@ -53,6 +53,7 @@ class Products extends React.Component {
   }
 
   componentDidMount() {
+   
     this.props.isLoggedInAction();
     this.props.getProductsAction();
   }
@@ -76,6 +77,7 @@ class Products extends React.Component {
           }}
         />
         <ProductDetailModal
+          history={this.props.history}
           product_id={product ? product.product_id : null}
           open={isOpenDetailDialog}
           handleDetailDialog={action =>

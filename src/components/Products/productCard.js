@@ -45,7 +45,7 @@ const styles = theme => ({
 
 function ProductCard(props) {
     const { classes, product, handleClick } = props;
-    console.log(product)
+    // console.log(product)
     return (
         <Card className={classes.card} onClick={() => handleClick(product)}>
             <CardMedia

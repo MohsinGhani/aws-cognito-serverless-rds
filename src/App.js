@@ -11,7 +11,8 @@ import Product from './components/Product'
 import ProductsList from './components/Products/ProductsList'
 import { Provider } from 'react-redux';
 import store from './store/store'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import { createBrowserHistory } from "history";
 import Amplify from 'aws-amplify';
 import awsConfig from './config/awsConfig'
 import credentials from './config/credentials'
@@ -27,7 +28,7 @@ import ShareAppLink from './components/Static/ShareAppLink';
 import TermOfUse from './components/Static/TermsOfUse';
 
 Amplify.configure(awsConfig)
-
+const customHistory = createBrowserHistory();
 class App extends Component {
 
   componentDidMount() {
@@ -56,7 +57,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
+        <Router history={customHistory}>
           <div className="App">
             <Route exact path="/" component={Products} />
             <Route exact path="/signup" component={SignUp} />
@@ -65,15 +66,15 @@ class App extends Component {
             <Route exact path="/confirm-signup" component={ConfirmSignUp} />
             <Route exact path="/product/:product_id" component={Product} />
             <Route exact path="/products-list" component={ProductsList} />
-            <Route exact path="/bookmark" component={Bookmark}/>
-            <Route exact path="/cookie-policy" component={CookiePolicy}/>
-            <Route exact path="/copy-app-link" component={CopyLinkApp}/>
-            <Route exact path="/feedback" component={Feedback}/>
-            <Route exact path="/how-to-use" component={HowToUse}/>
-            <Route exact path="/my-product" component={MyProducts}/>
-            <Route exact path="/privacy" component={Privacy}/>
-            <Route exact path="/share-app-link" component={ShareAppLink}/>
-            <Route exact path="/terms-of-use" component={TermOfUse}/>
+            <Route exact path="/bookmark" component={Bookmark} />
+            <Route exact path="/cookie-policy" component={CookiePolicy} />
+            <Route exact path="/copy-app-link" component={CopyLinkApp} />
+            <Route exact path="/feedback" component={Feedback} />
+            <Route exact path="/how-to-use" component={HowToUse} />
+            <Route exact path="/my-product" component={MyProducts} />
+            <Route exact path="/privacy" component={Privacy} />
+            <Route exact path="/share-app-link" component={ShareAppLink} />
+            <Route exact path="/terms-of-use" component={TermOfUse} />
             <Switch>
               {/* <PrivateRoute exact path="/" component={Products} /> */}
               <PrivateRoute exact path="/select-category" component={SelectCategory} />
