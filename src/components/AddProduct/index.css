@@ -57,3 +57,18 @@ input[type="file"] {
   display: none;
   margin: 10px;
 }
+.input-editimg-btn-parent{
+  display: flex;
+  justify-content: center;
+}
+.input-editimg-btn{
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-weight: 500;
+  outline: none !important;
+  cursor: pointer;
+  background: #9e7339;
+  color: #fff;
+}

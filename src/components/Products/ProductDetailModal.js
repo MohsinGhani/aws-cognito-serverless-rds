@@ -30,6 +30,7 @@ import Fab from '@material-ui/core/Fab';
 import InputBase from "@material-ui/core/InputBase";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";
+import "./index.css"
 const styles = (theme) => ({
 
     appBar: {
@@ -106,9 +107,6 @@ const styles = (theme) => ({
         backgroundColor: '#9e7339',
         color: 'white',
     },
-    // dialog: {
-    //     padding: '0px',
-    // },
     search: {
         position: "relative",
         borderRadius: theme.shape.borderRadius,
@@ -199,8 +197,8 @@ class ProductDetailModal extends React.Component {
         });
     };
     render() {
-        const { classes, open, handleDetailDialog, product, user, history } = this.props;
-        const { showCommentModal, showShareModal } = this.state;
+        const { classes, open, handleDetailDialog, product, user, history, liked } = this.props;
+        const { showCommentModal, showShareModal, isDislike } = this.state;
         console.log(this.props.history)
 
         return (
@@ -219,7 +217,7 @@ class ProductDetailModal extends React.Component {
                     open={open}
                     onClose={() => handleDetailDialog(null)}
                     TransitionComponent={Transition}
-                    className={classes.dialog}
+                    className={"dialog"}
                 >
                     <AppBar className={classes.appBar}>
                         <Toolbar>
@@ -325,23 +323,30 @@ class ProductDetailModal extends React.Component {
                                             })()
                                         }
 
-                                        <BottomNavigation onChange={this.handleChange} className={classes.root}>
+                                        <BottomNavigation
+                                            onChange={this.handleChange} className={classes.root}>
+                                            {
+                                                !liked ? <BottomNavigationAction
+                                                    className="favoriteIcon"
+                                                    icon=
+                                                    {<FavoriteIcon id="favoriteIcon" />}
+                                                /> : (liked && !liked.action)
+                                                        ? <img src={require("./../../assets/img/heartbroken.svg")} className="dislike-heart" />
+                                                        : <img src={require("./../../assets/img/like.svg")} className="like-heart" />}
+                                            <span className="outer-comment-text">Like {product._like}</span>
                                             <BottomNavigationAction
-                                                className="favoriteIcon" icon={
-                                                    <FavoriteIcon id="favoriteIcon" />}
+                                                className="favoriteIcon"
+                                                icon={<Menu id="favoriteIcon"
+                                                    onClick={this.toggleDrawer("bottom", true)}
+                                                />
+                                                }
                                             />
-                                            <Fab aria-label="Add" className={classes.margin}
+                                            <Fab aria-label="Add" className={classes.margin} id="add-product-fabbtn"
                                                 onClick={() => { history.push("/add-product") }}
                                             >
                                                 <AddIcon />
                                             </Fab>
-                                            <Fab
-                                                aria-label="Menu"
-                                                className={classes.margin}
-                                                onClick={this.toggleDrawer("bottom", true)}
-                                            >
-                                                <Menu />
-                                            </Fab>
+
                                             {/* <Button onClick={this.toggleDrawer('bottom', true)}>Open Bottom</Button> */}
                                             <SwipeableDrawer
                                                 anchor="bottom"
@@ -361,7 +366,8 @@ class ProductDetailModal extends React.Component {
                                                             <i class="material-icons comment">
                                                                 mode_comment
                                                             </i>
-                                                            <span className="comment-text">{'Comment'}</span>
+                                                            <span className="comment-text">Comments {product._comments ? product._comments.length : ""}</span>
+
                                                             {/* <i class="material-icons key" onClose={this.toggleDrawer('bottom', false)}>
                                                                 keyboard_arrow_down
                                                             </i> */}
@@ -386,12 +392,6 @@ class ProductDetailModal extends React.Component {
                                                 </div>
                                             </SwipeableDrawer>
                                             {/* <SwipeableTemporaryDrawer fullList={this.props.fullList} /> */}
-                                            <BottomNavigationAction
-                                            // className="check-box" 
-                                            // icon={<i className="material-icons" id="checkBoxIcon">
-                                            //     indeterminate_check_box
-                                            // </i>} 
-                                            />
                                         </BottomNavigation>
 
                                     </Card>

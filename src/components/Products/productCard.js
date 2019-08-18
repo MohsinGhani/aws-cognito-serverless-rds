@@ -34,7 +34,7 @@ const styles = theme => ({
     controls: {
         display: 'flex',
         alignItems: 'center',
-        paddingLeft: theme.spacing.unit,
+        // paddingLeft: theme.spacing.unit,
         paddingBottom: theme.spacing.unit,
     },
     playIcon: {

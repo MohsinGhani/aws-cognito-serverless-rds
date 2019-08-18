@@ -28,6 +28,7 @@ import Menu from "@material-ui/icons/Menu";
 import Fab from "@material-ui/core/Fab";
 import InputBase from "@material-ui/core/InputBase";
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import "./index.css"
 // import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 const styles = (theme) => ({
@@ -145,9 +146,6 @@ const styles = (theme) => ({
     backgroundColor: "#9e7339",
     color: "white"
   },
-  // dialog: {
-  //   padding: "0px"
-  // }
 });
 const stylesTheme = theme => ({
   margin: {
@@ -201,7 +199,7 @@ class ProductDetailModal extends React.Component {
     });
   };
   render() {
-    const { classes, open, handleDetailDialog, product, user } = this.props;
+    const { classes, open, handleDetailDialog, product, user,liked,history } = this.props;
     const { showCommentModal, showShareModal } = this.state;
 
     return (
@@ -220,7 +218,7 @@ class ProductDetailModal extends React.Component {
           open={open}
           onClose={() => handleDetailDialog(null)}
           TransitionComponent={Transition}
-          className={classes.dialog}
+          className={"dialog"}
         >
           <AppBar className={classes.appBar}>
             <Toolbar>
@@ -332,103 +330,74 @@ class ProductDetailModal extends React.Component {
                   })()}
 
                   <BottomNavigation
-                    onChange={this.handleChange}
-                    className={classes.root}
-                  >
+                    onChange={this.handleChange} className={classes.root}>
+                    {
+                      !liked ? <BottomNavigationAction
+                        className="favoriteIcon"
+                        icon=
+                        {<FavoriteIcon id="favoriteIcon" />}
+                      /> : (liked && !liked.action)
+                          ? <img src={require("./../../assets/img/heartbroken.svg")} className="dislike-heart" />
+                          : <img src={require("./../../assets/img/like.svg")} className="like-heart" />}
+                    <span className="outer-comment-text">Like {product._like}</span>
                     <BottomNavigationAction
                       className="favoriteIcon"
-                      icon={<FavoriteIcon id="favoriteIcon" />}
+                      icon={<Menu id="favoriteIcon"
+                        onClick={this.toggleDrawer("bottom", true)}
+                      />
+                      }
                     />
-                    <Fab
-                      aria-label="Add"
-                      className={classes.margin}
-                      // onClick={this.toggleDrawer("bottom", true)}
+                    <Fab aria-label="Add" className={classes.margin} id="add-product-fabbtn"
+                      onClick={() => { history.push("/add-product") }}
                     >
                       <AddIcon />
                     </Fab>
-                    <Fab
-                      aria-label="Menu"
-                      className={classes.margin}
-                      onClick={this.toggleDrawer("bottom", true)}
-                    >
-                      <Menu />
-                    </Fab>
+
                     {/* <Button onClick={this.toggleDrawer('bottom', true)}>Open Bottom</Button> */}
                     <SwipeableDrawer
                       anchor="bottom"
                       open={this.state.bottom}
                       className="swipeableDrawer"
-                      onClose={this.toggleDrawer("bottom", false)}
-                      onOpen={this.toggleDrawer("bottom", true)}
+                      onClose={this.toggleDrawer('bottom', false)}
+                      onOpen={this.toggleDrawer('bottom', true)}
                     >
                       <div
                         tabIndex={0}
                         role="button"
-                        onClick={this.toggleDrawer("bottom", false)}
-                        onKeyDown={this.toggleDrawer("bottom", false)}
+                        onClick={this.toggleDrawer('bottom', false)}
+                        onKeyDown={this.toggleDrawer('bottom', false)}
                       >
                         <List className={classes.fullList}>
-                          <ListItem
-                            button
-                            onClick={() => {
-                              this.setState({ showCommentModal: true });
-                            }}
-                          >
-                            <i class="material-icons comment">mode_comment</i>
-                            <span className="comment-text">{"Comment"}</span>
-                            <i
-                              class="material-icons key"
-                              onClose={this.toggleDrawer("bottom", false)}
-                            >
-                              keyboard_arrow_down
-                            </i>
+                          <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }} >
+                            <i class="material-icons comment">
+                              mode_comment
+                                  </i>
+                            <span className="comment-text">Comments {product._comments ? product._comments.length : ""}</span>
+
+                            {/* <i class="material-icons key" onClose={this.toggleDrawer('bottom', false)}>
+                                      keyboard_arrow_down
+                                  </i> */}
                           </ListItem>
 
-                          <ListItem
-                            button
-                            onClick={() => {
-                              this.setState({ showShareModal: true });
-                            }}
-                          >
-                            <i class="fa fa-share" />
-                            <span className="comment-text">{"share"}</span>
+                          <ListItem button onClick={() => { this.setState({ showShareModal: true }) }}>
+                            <i class="fa fa-share"></i>
+                            <span className="comment-text">{'share'}</span>
 
                             {/* <ListItemText  secondary={'Share'} color= {"white"}/> */}
                           </ListItem>
-                          <ListItem
-                            button
-                            onClick={() => {
-                              this.handleLikeAndDislikeProduct(true);
-                            }}
-                          >
+                          <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(true) }}>
                             <FavoriteIcon id="like" />
-                            <span className="comment-text">
-                              Like {product._like}
-                            </span>
+                            <span className="comment-text">Like {product._like}</span>
                           </ListItem>
-                          <ListItem
-                            button
-                            onClick={() => {
-                              this.handleLikeAndDislikeProduct(false);
-                            }}
-                          >
+                          <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(false) }} >
                             <FavoriteIcon id="dislike" />
-                            <span className="comment-text">
-                              Dislike {product._dislike}
-                            </span>
+                            <span className="comment-text">Dislike {product._dislike}</span>
                           </ListItem>
                         </List>
+
                       </div>
                     </SwipeableDrawer>
                     {/* <SwipeableTemporaryDrawer fullList={this.props.fullList} /> */}
-                    <BottomNavigationAction
-                      className="check-box"
-                      icon={
-                        <i className="material-icons" id="checkBoxIcon">
-                          indeterminate_check_box
-                        </i>
-                      }
-                    />
                   </BottomNavigation>
                 </Card>
               </div>

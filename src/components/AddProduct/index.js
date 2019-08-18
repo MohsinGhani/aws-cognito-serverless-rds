@@ -73,6 +73,7 @@ class AddProduct extends React.Component {
       location: null,
       isSaveButtonDisable: true,
       selectedImage: {},
+      isSelectImg:false,
       isLocationModalOpen: false,
       isGeolocationEnabled: false,
       hideTool: false
@@ -124,7 +125,7 @@ class AddProduct extends React.Component {
   };
 
   onChangeState = (countryCode, StateCode) => {
-    console.log("onChangeState");
+    // console.log("onChangeState");
     Address.GetCities(countryCode, StateCode)
       .then(res => {
         return res.json();
@@ -318,7 +319,7 @@ class AddProduct extends React.Component {
       selectedCity,
       latitude,
       longitude,
-      selectedImage,
+      // selectedImage,
       street
     } = this.state;
     return (
@@ -332,10 +333,10 @@ class AddProduct extends React.Component {
       (street && street.length > 0) &&
       latitude &&
       longitude &&
-      selectedImage &&
-      selectedImage.base64 &&
-      selectedImage.name &&
-      selectedImage.type &&
+      // selectedImage &&
+      // selectedImage.base64 &&
+      // selectedImage.name &&
+      // selectedImage.type &&
       this.props.user &&
       this.props.user.user_id
     );
@@ -353,7 +354,7 @@ class AddProduct extends React.Component {
         size: event.target.files[0].size,
         type: event.target.files[0].type
       };
-      this.setState({ selectedImage: file });
+      this.setState({ selectedImage: file,isSelectImg:true });
 
       let reader = new FileReader();
       reader.onload = e => {
@@ -394,6 +395,7 @@ class AddProduct extends React.Component {
       location,
       isSaveButtonDisable,
       selectedImage,
+      isSelectImg,
       title,
       description,
       isLocationModalOpen,
@@ -403,11 +405,19 @@ class AddProduct extends React.Component {
       selectedState,
       cities,
       longitude,
-      latitude
+      latitude,
     } = this.state;
-
+    console.log(selectedImage)
     return (
       <div className="add-product">
+        <Location
+          temp={isGeolocationEnabled => {
+            this.setState({ isGeolocationEnabled });
+          }}
+          handleLocation={(latitude, longitude) => {
+            this.setState({ latitude, longitude });
+          }}
+        />
         <TopNav />
         <p
           className="add-product-title"
@@ -423,14 +433,7 @@ class AddProduct extends React.Component {
           }
         />
 
-        <Location
-          temp={isGeolocationEnabled => {
-            this.setState({ isGeolocationEnabled });
-          }}
-          handleLocation={(latitude, longitude) => {
-            this.setState({ latitude, longitude });
-          }}
-        />
+
 
         <MapToSelectLocation
           open={isLocationModalOpen}
@@ -483,6 +486,9 @@ class AddProduct extends React.Component {
                     )}
                 </div>
               </label>
+              { isSelectImg && <div className="input-editimg-btn-parent">
+              <button onClick={()=>{}} className="input-editimg-btn">EDIT</button>
+              </div>}
             </Grid>
             {/* </Hidden> */}
             <Grid item md={7} sm={12} xs={12}>

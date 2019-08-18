@@ -27,6 +27,40 @@
 #favoriteIcon {
   font-size: 30px;
 }
+.favoriteIcon {
+  flex: unset !important;
+  outline: none !important;
+}svg#favoriteIcon{
+  width: 36px;
+  height: 36px;
+     
+}
+
+
+#add-product-fabbtn {
+  outline: none !important;
+  width: 36px;
+  height: 36px;
+  margin-top: 16px;
+  
+  margin-left: 18px;
+}
+.dislike-heart {
+  width: 26px;
+  height: 26px;
+  margin-top: 22px;
+  margin-right: 10px;
+}
+.like-heart {
+  width: 26px;
+  height: 26px;
+  margin-top: 22px;
+  margin-right: 10px;
+}
+.outer-comment-text {
+  margin-top: 22px;
+  /* margin-left: -8px;  */
+}
 .material-icons.drawer {
   font-size: 20px;
 }
@@ -125,21 +159,9 @@ list {
   font-size: 40px;
 }
 
-.MuiModal-root-26.MuiDialog-root-28.ProductDetailModal-dialog-435 {
+.dialog {
   padding-right: 0px !important;
 }
-.mui-fixed.MuiModal-root-93.MuiDialog-root-148.MuiModal-hidden-94 {
-  padding-right: 0px !important;
-}
-
-.mui-fixed.MuiModal-root-93.MuiDialog-root-148.ProductDetailModal-dialog-177 {
-  padding-right: 0px !important;
-}
-
-.mui-fixed.MuiModal-root-93.MuiDialog-root-148 {
-  padding-right: 0px !important;
-}
-
 .comment-footer-div {
   display: flex;
   justify-content: space-between;
