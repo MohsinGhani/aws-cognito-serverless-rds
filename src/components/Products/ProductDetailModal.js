@@ -23,6 +23,7 @@ import CardContent from '@material-ui/core/CardContent';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import AddComment from '@material-ui/icons/AddComment';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import AddIcon from '@material-ui/icons/Add';
 import Menu from "@material-ui/icons/Menu";
@@ -199,7 +200,7 @@ class ProductDetailModal extends React.Component {
     render() {
         const { classes, open, handleDetailDialog, product, user, history, liked } = this.props;
         const { showCommentModal, showShareModal, isDislike } = this.state;
-        console.log(this.props.history)
+        // console.log(this.props.history)
 
         return (
             <div className="product-detail-modal-body">
@@ -277,6 +278,8 @@ class ProductDetailModal extends React.Component {
                             product ?
                                 <div className="product-image-container">
                                     <Card className={classes.card} >
+                                        <img src={require("./../../assets/img/more.svg")} className="more-image-icon"
+                                            onClick={this.toggleDrawer('bottom', true)} />
                                         <CardMedia
                                             className={classes.media}
                                             image={product.product_img}
@@ -325,6 +328,7 @@ class ProductDetailModal extends React.Component {
 
                                         <BottomNavigation
                                             onChange={this.handleChange} className={classes.root}>
+                                            <span className="outer-comment-text">{product._like}</span>
                                             {
                                                 !liked ? <BottomNavigationAction
                                                     className="favoriteIcon"
@@ -333,20 +337,29 @@ class ProductDetailModal extends React.Component {
                                                 /> : (liked && !liked.action)
                                                         ? <img src={require("./../../assets/img/heartbroken.svg")} className="dislike-heart" />
                                                         : <img src={require("./../../assets/img/like.svg")} className="like-heart" />}
-                                            <span className="outer-comment-text">Like {product._like}</span>
-                                            <BottomNavigationAction
-                                                className="favoriteIcon"
-                                                icon={<Menu id="favoriteIcon"
-                                                    onClick={this.toggleDrawer("bottom", true)}
-                                                />
-                                                }
-                                            />
+
                                             <Fab aria-label="Add" className={classes.margin} id="add-product-fabbtn"
                                                 onClick={() => { history.push("/add-product") }}
                                             >
                                                 <AddIcon />
                                             </Fab>
 
+                                            <BottomNavigationAction
+                                                className="commentIcon"
+                                                onClick={() => { this.setState({ showCommentModal: true }) }}
+                                                icon=
+                                                {<AddComment id="commentIcon" />
+                                                }
+                                            />
+                                            <span className="comment-text-bottom">{product._comments ? product._comments.length : ""}</span>
+
+                                            {/* <BottomNavigationAction
+                                                className="favoriteIcon"
+                                                icon={<Menu id="favoriteIcon"
+                                                    onClick={this.toggleDrawer("bottom", true)}
+                                                />
+                                                }
+                                            /> */}
                                             {/* <Button onClick={this.toggleDrawer('bottom', true)}>Open Bottom</Button> */}
                                             <SwipeableDrawer
                                                 anchor="bottom"

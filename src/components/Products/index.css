@@ -24,26 +24,33 @@
   font-size: 50px;
 }
 #checkBoxIcon,
-#favoriteIcon {
+#favoriteIcon,
+#commentIcon {
   font-size: 30px;
 }
 .favoriteIcon {
   flex: unset !important;
   outline: none !important;
-}svg#favoriteIcon{
-  width: 36px;
-  height: 36px;
-     
 }
-
-
+.commentIcon {
+  flex: unset !important;
+  outline: none !important;
+}
+svg#favoriteIcon {
+  width: 32px;
+  height: 32px;
+}
+svg#commentIcon {
+  height: 32px;
+  width: 32px;
+}
 #add-product-fabbtn {
   outline: none !important;
-  width: 36px;
-  height: 36px;
-  margin-top: 16px;
-  
-  margin-left: 18px;
+  width: 42px;
+  height: 42px;
+  margin-top: 6px;
+  margin-left: 24px;
+  margin-right: 24px;
 }
 .dislike-heart {
   width: 26px;
@@ -58,8 +65,11 @@
   margin-right: 10px;
 }
 .outer-comment-text {
-  margin-top: 22px;
-  /* margin-left: -8px;  */
+  margin-top: 17px;
+  font-size: 19px;
+  margin-right: -8px;
+  cursor: default !important;
+  color: #9e7339;
 }
 .material-icons.drawer {
   font-size: 20px;
@@ -87,6 +97,7 @@
   text-align: right;
 }
 #favoriteIcon,
+#commentIcon,
 #checkBoxIcon,
 .swipeableDrawer {
   /* s */
@@ -147,10 +158,13 @@ list {
 #dislike {
   font-size: 30px;
 }
-.comment-text {
+.comment-text-bottom {
   font-size: 18px;
-  margin-left: 20px;
+  margin-top: 17px;
+  cursor: default !important;
+  color: #9e7339;
 }
+
 .material-icons.key {
   text-align: right;
   float: right;
@@ -165,4 +179,12 @@ list {
 .comment-footer-div {
   display: flex;
   justify-content: space-between;
+}
+.more-image-icon {
+  position: absolute;
+  height: 8%;
+  width: 8%;
+  top: 100px;
+  right: 20px;
+  cursor: pointer;
 }

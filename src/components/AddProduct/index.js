@@ -73,7 +73,7 @@ class AddProduct extends React.Component {
       location: null,
       isSaveButtonDisable: true,
       selectedImage: {},
-      isSelectImg:false,
+      isSelectImg: false,
       isLocationModalOpen: false,
       isGeolocationEnabled: false,
       hideTool: false
@@ -107,7 +107,7 @@ class AddProduct extends React.Component {
   }
 
   onChangeCountry = countryCode => {
-    console.log("onChangeCountry");
+    // console.log("onChangeCountry");
     Address.GetState(countryCode)
       .then(res => {
         return res.json();
@@ -155,14 +155,14 @@ class AddProduct extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps.selectedCountry, this.props.selectedCountry);
+    // console.log(prevProps.selectedCountry, this.props.selectedCountry);
     if (!Number(prevProps.selectedCountry)) {
       if (
         prevState.selectedCountry !== this.state.selectedCountry &&
         this.state.selectedCountry
       ) {
         // handle selectedCountry onChange
-        console.log(" handle selectedCountry onChange");
+        // console.log(" handle selectedCountry onChange");
 
         let key = this.getKeyByValue(
           this.state.countriesOrignalObj,
@@ -354,7 +354,7 @@ class AddProduct extends React.Component {
         size: event.target.files[0].size,
         type: event.target.files[0].type
       };
-      this.setState({ selectedImage: file,isSelectImg:true });
+      this.setState({ selectedImage: file, isSelectImg: true });
 
       let reader = new FileReader();
       reader.onload = e => {
@@ -369,7 +369,7 @@ class AddProduct extends React.Component {
     }
   };
   handleCountryChange = e => {
-    console.log(e);
+    // console.log(e);
     this.setState({ country: "" });
   };
   pickLocation = () => {
@@ -384,7 +384,7 @@ class AddProduct extends React.Component {
 
   render() {
     let { classes, saveProductLoader } = this.props;
-    // console.log(signupUser);
+
     let {
       isSelectCatModal,
       selectedCategory,
@@ -407,7 +407,7 @@ class AddProduct extends React.Component {
       longitude,
       latitude,
     } = this.state;
-    console.log(selectedImage)
+
     return (
       <div className="add-product">
         <Location
@@ -486,8 +486,8 @@ class AddProduct extends React.Component {
                     )}
                 </div>
               </label>
-              { isSelectImg && <div className="input-editimg-btn-parent">
-              <button onClick={()=>{}} className="input-editimg-btn">EDIT</button>
+              {isSelectImg && <div className="input-editimg-btn-parent">
+                <button onClick={() => { }} className="input-editimg-btn">EDIT</button>
               </div>}
             </Grid>
             {/* </Hidden> */}

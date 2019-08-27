@@ -97,7 +97,7 @@ class SwipeableTemporaryDrawer extends React.Component {
       { label: "Copy App Link", path: "/copy-app-link" },
       { label: "Bookmark", path: "/bookmark" },
       { label: "My Product", path: "/my-product" },
-      { label: "Login", path: "/signin" }
+      // { label: "Login", path: "/signin" }
     ]
   };
 
@@ -115,6 +115,9 @@ class SwipeableTemporaryDrawer extends React.Component {
     this.props.logoutAction();
   };
 
+  login(path) {
+    this.props.history.push(path);
+  }
   handleSearch = e => {
     this.setState({ searchId: e.target.id, query: e.target.value });
     if (e.target.value === "") {
@@ -133,11 +136,11 @@ class SwipeableTemporaryDrawer extends React.Component {
           { label: "Copy App Link", path: "/copy-app-link" },
           { label: "Bookmark", path: "/bookmark" },
           { label: "My Product", path: "/my-product" },
-          { label: "Login", path: "/signin" }
         ]
       });
     }
   };
+
   handleTextSubmit = () => {
     const { query, searchId } = this.state;
     if (query === "") {
@@ -156,7 +159,6 @@ class SwipeableTemporaryDrawer extends React.Component {
           { label: "Copy App Link", path: "/copy-app-link" },
           { label: "Bookmark", path: "/bookmark" },
           { label: "My Product", path: "/my-product" },
-          { label: "Login", path: "/signin" }
         ]
       });
     } else {
@@ -170,7 +172,7 @@ class SwipeableTemporaryDrawer extends React.Component {
   };
   render() {
     const { query, navItems } = this.state;
-    const { classes, isLoggedIn } = this.props;
+    const { classes, isLoggedIn, user } = this.props;
     return (
       <div>
         <MenuIcon onClick={this.toggleDrawer("left", true)} id="svgIcon" />
@@ -275,9 +277,9 @@ class SwipeableTemporaryDrawer extends React.Component {
                   <ListItem className={classes.listItem} onClick={this.logout}>
                     Logout
                   </ListItem>
-                ) : (
-                  <ListItem className={classes.listItem} />
-                )}
+                ) : <ListItem className={classes.listItem} onClick={() => this.login("/signin")}>
+                    Login
+              </ListItem>}
               </List>
             </div>
           </Drawer>
@@ -293,13 +295,14 @@ SwipeableTemporaryDrawer.propTypes = {
 const mapStateToProps = state => {
   const {
     ProductReducer: { searchedProducts, searchLoader, searchError },
-    authReducer: { isLoggedIn }
+    authReducer: { isLoggedIn, user }
   } = state;
   return {
     searchedProducts,
     searchLoader,
     searchError,
-    isLoggedIn
+    isLoggedIn,
+    user
   };
 };
 
