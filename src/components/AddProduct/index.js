@@ -16,7 +16,6 @@ import { ProductAction } from "./../../store/actions";
 import MapToSelectLocation from "./MapToSelectLocation";
 import ReactLoading from "react-loading";
 import swal from "sweetalert";
-import AddProductStatusScreen from "./AddProductStatusScreen";
 import "./index.css";
 // import { timer } from "rxjs";
 
@@ -191,14 +190,19 @@ class AddProduct extends React.Component {
       if (this.validateSaveButton())
         this.setState({ isSaveButtonDisable: false });
     }
-    // savedProduct, saveProductLoader, saveProductError,
+
+    // after saved product
     if (
       this.props.savedProduct &&
       !this.props.saveProductLoader &&
       prevProps.saveProductLoader
     ) {
-      // this.goto("/");
-      return <AddProductStatusScreen />;
+      swal({
+        title: "Successfully Post New Add!",
+        icon: "success",
+        timer: 4000,
+      });
+      this.goto("/");
     }
 
     if (
@@ -213,15 +217,6 @@ class AddProduct extends React.Component {
     if (this.state && this.state.isSaveButtonDisable) {
       if (this.validateSaveButton())
         this.setState({ isSaveButtonDisable: false });
-    }
-    // savedProduct, saveProductLoader, saveProductError,
-    if (
-      this.props.savedProduct &&
-      !this.props.saveProductLoader &&
-      prevProps.saveProductLoader
-    ) {
-      // this.goto("/");
-      return <AddProductStatusScreen />;
     }
 
     if (
@@ -273,12 +268,6 @@ class AddProduct extends React.Component {
   }
 
   onSaveProduct = () => {
-    swal({
-      title: "Successfully Post New Add!",
-      icon: "success",
-      timer: 4000,
-    });
-
     const {
       selectedCategory,
       title,
@@ -622,7 +611,7 @@ class AddProduct extends React.Component {
                     pattern="/^[A-Za-z]+$/"
                     value={street ? street : ""}
                     fullWidth={true}
-                    // onChange={this.handleInput}
+                  // onChange={this.handleInput}
                   />
                 </Grid>
                 <Grid item md={2} sm={2} xs={2}>

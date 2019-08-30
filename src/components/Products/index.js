@@ -53,7 +53,7 @@ class Products extends React.Component {
   }
 
   componentDidMount() {
-   
+
     this.props.isLoggedInAction();
     this.props.getProductsAction();
   }
@@ -96,108 +96,119 @@ class Products extends React.Component {
               />
             </div>
           ) : (
-            <Map
-              style="mapbox://styles/mapbox/streets-v9"
-              containerStyle={{
-                height: "89vh",
-                width: "100%"
-              }}
-              movingMethod={"jumpTo"}
-              center={[longitude, latitude]}
-              zoom={[12]}
+              <Map
+                style="mapbox://styles/mapbox/streets-v9"
+                containerStyle={{
+                  height: "89vh",
+                  width: "100%"
+                }}
+                movingMethod={"jumpTo"}
+                center={[longitude, latitude]}
+                zoom={[12]}
               // onClick={(map, e) => { this.props.reverseGeoCodingAction(e.lngLat) }}
-            >
-              {!this.props.isLoggedIn && (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    position: "relative"
-                  }}
-                >
-                  <div className="mainBodyButtons">
-                    <Button
-                      onClick={() => this.goto("/signin")}
-                      variant="contained"
-                      className={classes.signinBtn}
-                    >
-                      <i
-                        class="fa fa-envelope"
-                        aria-hidden="true"
-                        style={{ marginRight: 10, position: "relative" }}
-                      />
-                      Continue with e-mail
-                    </Button>
-                    <br />
-                    <SignInWithGoogle btnStyle={classes.signinBtn} />
-                    <br />
-                    <SignInWithFacebook btnStyle={classes.signinBtn} />
-                  </div>
-                </div>
-              )}
-
-              {/* current location pointer */}
-              <Marker
-                coordinates={[longitude, latitude]}
-                anchor="bottom"
-                // style={{ position: "absolute" }}
               >
-                <img
-                  className="c-p"
-                  title="your current location"
-                  src={require("./../../assets/img/current-location.png")}
-                  alt="marker"
-                  // style={{ position: "absolute", zIndex: -1 }}
-                  width="20px"
-                  height="25"
-                />
-              </Marker>
+                {!this.props.isLoggedIn && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      position: "relative"
+                    }}
+                  >
+                    <div className="mainBodyButtons">
+                      <Button
+                        onClick={() => this.goto("/signin")}
+                        variant="contained"
+                        className={classes.signinBtn}
+                      >
+                        <i
+                          class="fa fa-envelope"
+                          aria-hidden="true"
+                          style={{ marginRight: 10, position: "relative" }}
+                        />
+                        Continue with e-mail
+                    </Button>
+                      <br />
+                      <SignInWithGoogle btnStyle={classes.signinBtn} />
+                      <br />
+                      <SignInWithFacebook btnStyle={classes.signinBtn} />
+                    </div>
+                  </div>
+                )}
 
-              {!getProductsLoader &&
-                !searchLoader &&
-                !searchedProducts &&
-                products &&
-                products.map((product, i) => {
-                  return (
-                    <Marker
-                      coordinates={[product.longitude, product.latitude]}
-                      anchor="bottom"
-                      //  style={{ position: "absolute"}}
-                      onClick={() =>
-                        this.setState({ product, isOpenDetailDialog: true })
-                      }
-                      key={i}
-                    >
-                      <img
-                        className="c-p"
-                        // style={{ position: "absolute" }}
-                        title={product.title}
-                        src={require("./../../assets/img/marker.png")}
-                        alt="marker"
-                        width="12px"
-                        height="12px"
-                      />
-                    </Marker>
-                  );
-                })}
+                {/* current location pointer */}
+                <Marker
+                  coordinates={[longitude, latitude]}
+                  anchor="bottom"
+                // style={{ position: "absolute" }}
+                >
+                  <img
+                    className="c-p"
+                    title="your current location"
+                    src={require("./../../assets/img/current-location.png")}
+                    alt="marker"
+                    // style={{ position: "absolute", zIndex: -1 }}
+                    width="20px"
+                    height="25"
+                  />
+                </Marker>
 
-              {!getProductsLoader &&
-                !searchLoader &&
-                searchedProducts &&
-                searchedProducts.map((product, i) => {
-                  return (
-                    <Marker
-                      coordinates={[product.longitude, product.latitude]}
-                      anchor="bottom"
-                      onClick={() =>
-                        this.setState({ product, isOpenDetailDialog: true })
-                      }
-                      key={i}
-                    />
-                  );
-                })}
-            </Map>
-          )}
+                {!getProductsLoader &&
+                  !searchLoader &&
+                  !searchedProducts &&
+                  products &&
+                  products.map((product, i) => {
+                    return (
+                      <Marker
+                        coordinates={[product.longitude, product.latitude]}
+                        anchor="bottom"
+                        //  style={{ position: "absolute"}}
+                        onClick={() =>
+                          this.setState({ product, isOpenDetailDialog: true })
+                        }
+                        key={i}
+                      >
+                        <img
+                          className="c-p"
+                          // style={{ position: "absolute" }}
+                          title={product.title}
+                          src={require("./../../assets/img/marker.png")}
+                          alt="marker"
+                          width="12px"
+                          height="12px"
+                        />
+                      </Marker>
+                    );
+                  })}
+
+                {!getProductsLoader &&
+                  !searchLoader &&
+                  searchedProducts &&
+                  searchedProducts.map((product, i) => {
+                    return (
+                      <Marker
+                        coordinates={[product.longitude, product.latitude]}
+                        anchor="bottom"
+                        //  style={{ position: "absolute"}}
+                        onClick={() =>
+                          this.setState({ product, isOpenDetailDialog: true })
+                        }
+                        key={i}
+                      >
+                        <img
+                          className="c-p"
+                          // style={{ position: "absolute" }}
+                          title={product.title}
+                          src={require("./../../assets/img/marker.png")}
+                          alt="marker"
+                          width="12px"
+                          height="12px"
+                        />
+                      </Marker>
+                    );
+                  })}
+              </Map>
+            )}
         </div>
       </div>
     );
