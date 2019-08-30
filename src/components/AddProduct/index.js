@@ -622,7 +622,7 @@ class AddProduct extends React.Component {
                     pattern="/^[A-Za-z]+$/"
                     value={street ? street : ""}
                     fullWidth={true}
-                    onChange={this.handleInput}
+                    // onChange={this.handleInput}
                   />
                 </Grid>
                 <Grid item md={2} sm={2} xs={2}>
