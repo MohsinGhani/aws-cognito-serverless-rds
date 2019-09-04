@@ -53,9 +53,15 @@ class Products extends React.Component {
   }
 
   componentDidMount() {
-
     this.props.isLoggedInAction();
     this.props.getProductsAction();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { searchedProducts } = this.props
+    if(searchedProducts && searchedProducts.length){
+      this.goto('/products-list')
+    }
   }
 
   goto = path => this.props.history.push(path);

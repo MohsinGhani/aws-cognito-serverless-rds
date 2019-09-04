@@ -55,7 +55,7 @@ export default class ProductEpic {
                     .switchMap(({ response }) => {
                         if (response.status === 200) {
                             return Observable.of(
-                                ProductAction.searchSuccess(response.data)
+                                ProductAction.searchSuccess({data: response.data, query: payload.query})
                             )
                         }
                     }).catch((err) => {

@@ -93,8 +93,8 @@ class ProductsList extends Component {
             <ReactLoading
               type={"spin"}
               color={"#9e7339"}
-              height={"50px"}
-              width={"50px"}
+              height={"100px"}
+              width={"100px"}
             />
           </div>
         )}

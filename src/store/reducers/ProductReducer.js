@@ -82,7 +82,8 @@ export default function ProductReducer(state = initialState, action) {
         case SEARCH_SUCCESS:
             return {
                 ...state,
-                searchedProducts: action.payload,
+                searchedProducts: action.payload['data'],
+                searchedQuery: action.payload['query'],
                 searchLoader: false,
                 searchError: null
             }

@@ -108,6 +108,16 @@ class TopNav extends React.Component {
 
     open: false
   };
+
+  componentDidMount() {
+    const { searchedQuery } = this.props
+    if (searchedQuery) {
+      this.setState({
+        query: searchedQuery
+      })
+    }
+  }
+
   handleClickOpenPopup = () => {
     this.setState({ open: true });
   };
@@ -389,7 +399,7 @@ TopNav.propTypes = {
 
 const mapStateToProps = state => {
   const {
-    ProductReducer: { searchedProducts, searchLoader, searchError },
+    ProductReducer: { searchedProducts, searchLoader, searchError, searchedQuery },
     authReducer: { isLoggedIn, user }
   } = state;
   return {
@@ -397,7 +407,8 @@ const mapStateToProps = state => {
     searchLoader,
     searchError,
     isLoggedIn,
-    user
+    user,
+    searchedQuery
   };
 };
 
