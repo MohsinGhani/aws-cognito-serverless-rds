@@ -180,11 +180,48 @@ list {
   display: flex;
   justify-content: space-between;
 }
+
+
 .more-image-icon {
   position: absolute;
-  height: 8%;
-  width: 8%;
-  top: 100px;
-  right: 20px;
+  height: 30px;
+  width: 20px;
+  top: 80px;
+  right: 5px;
   cursor: pointer;
+  border-radius: 5px;
+}
+
+.more-image-icon:hover {
+  background: #000;
+  opacity: 0.5;
+  transition: 0.5s;
+}
+
+.main-product-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.main-product-image-wrapper .main-product-image{
+  width: 100%;
+  height: auto;
+  max-width: 1024px;
+  max-height: 768px;
+}
+
+.product-modal-header{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.product-modal-header .product-modal-back-icon-wrapper{
+
+}
+
+.product-modal-header .product-modal-center-icon-wrapper{
+  padding: 12px 12px 0 0;
 }

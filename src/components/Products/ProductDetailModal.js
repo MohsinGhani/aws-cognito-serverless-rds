@@ -221,32 +221,18 @@ class ProductDetailModal extends React.Component {
                     className={"dialog"}
                 >
                     <AppBar className={classes.appBar}>
-                        <Toolbar>
-                            <IconButton
-                                color="inherit"
-                                onClick={() => handleDetailDialog(null)}
-                                aria-label="Close"
-                            >
-                                <i className="material-icons navigate">navigate_before</i>
-                            </IconButton>
-                            {user ? (
-                                <Typography
-                                    variant="h6"
-                                    color="inherit"
-                                    className={classes.flex}
-                                >
-                                    <img
-                                        src={user.picture}
-                                        alt="profile image"
-                                        style={{
-                                            height: "50px",
-                                            width: "50px",
-                                            borderRadius: "50%",
-                                            cursor: "pointer"
-                                        }}
-                                    />
-                                </Typography>
-                            ) : (
+                        <Toolbar style={{padding: 0}}>
+                            <div className="product-modal-header">
+                                <div className="product-modal-back-icon-wrapper">
+                                    <IconButton
+                                        color="inherit"
+                                        onClick={() => handleDetailDialog(null)}
+                                        aria-label="Close"
+                                    >
+                                        <i className="material-icons navigate">navigate_before</i>
+                                    </IconButton>
+                                </div>
+                                <div className="product-modal-center-icon-wrapper">
                                     <Typography
                                         variant="h6"
                                         color="inherit"
@@ -254,39 +240,28 @@ class ProductDetailModal extends React.Component {
                                     >
                                         <i className="material-icons account">account_circle</i>
                                     </Typography>
-                                )}
-
-                            <div className={classes.search}>
-                                <div className={classes.searchIcon}>
-                                    <SearchIcon />
                                 </div>
-                                <InputBase
-                                    placeholder="Search…"
-                                    classes={{
-                                        root: classes.inputRoot,
-                                        input: classes.inputInput
-                                    }}
-                                    // value={query}
-                                    onChange={this.handleSearch}
-                                    id="query"
-                                />
                             </div>
                         </Toolbar>
                     </AppBar>
+
                     <div>
                         {
                             product ?
                                 <div className="product-image-container">
                                     <Card className={classes.card} >
-                                        <img src={require("./../../assets/img/more.svg")} className="more-image-icon"
-                                            onClick={this.toggleDrawer('bottom', true)} />
-                                        <CardMedia
-                                            className={classes.media}
-                                            image={product.product_img}
-                                            title="Paella dish"
-                                            alt="product"
-
+                                        <img
+                                            src={require("./../../assets/img/more.svg")}
+                                            className="more-image-icon"
+                                            onClick={this.toggleDrawer('bottom', true)}
                                         />
+                                        <div className="main-product-image-wrapper">
+                                            <img
+                                                src={product.product_img}
+                                                className="main-product-image"
+                                                onClick={this.toggleDrawer('bottom', true)}
+                                            />
+                                        </div>
                                         <Typography gutterBottom component="h5" className={classes.typography}>
                                             {product.city}, {product.country}
                                             <span className={classes.span}>
