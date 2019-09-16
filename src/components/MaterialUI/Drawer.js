@@ -96,6 +96,7 @@ class SwipeableTemporaryDrawer extends React.Component {
       { label: "Share App Link", path: "/share-app-link" },
       { label: "Copy App Link", path: "/copy-app-link" },
       { label: "Bookmark", path: "/bookmark" },
+      { label: "Profile", path: "/profile" },
       { label: "My Product", path: "/my-product" },
       // { label: "Login", path: "/signin" }
     ]
@@ -183,6 +184,7 @@ class SwipeableTemporaryDrawer extends React.Component {
               role="button"
               primary="Menu Links"
               className={classes.swipeList}
+              style={{ width: 320 }}
             >
               <List className={classes.list}>
                 <ListItem>
@@ -202,7 +204,7 @@ class SwipeableTemporaryDrawer extends React.Component {
                     <i className="material-icons clear">clear</i>
                   </Typography>
                 </ListItem>
-                <ListItem>
+                {/* <ListItem>
                   <div className={classes.search}>
                     <InputBase
                       placeholder="Search Keyword or Place"
@@ -226,60 +228,29 @@ class SwipeableTemporaryDrawer extends React.Component {
                       search
                     </i>
                   </div>
-                </ListItem>
-                {navItems.map(item => {
-                  return (
-                    <ListItem
-                      className={classes.listItem}
-                      onClick={() => this.goto(item.path)}
-                    >
-                      {item.label}
+                </ListItem> */}
+                {
+                  navItems.map(item => {
+                    return (
+                      <ListItem
+                        className={classes.listItem}
+                        onClick={() => this.goto(item.path)}
+                      >
+                        {item.label}
+                      </ListItem>
+                    );
+                  })
+                }
+                {
+                  isLoggedIn ? (
+                    <ListItem className={classes.listItem} onClick={this.logout}>
+                      Logout
                     </ListItem>
-                  );
-                })}
-                {/* <ListItem className={classes.listItem} onClick={() => this.goto('/add-product')}>
-                                    Add Product
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/')}>
-                                    Map View
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/products-list')}>
-                                    List View
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/feedback')}>
-                                    Feedback
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/privacy')}>
-                                    Privacy
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/terms-of-use')}>
-                                    Terms of Use
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/cookie-policy')}>
-                                    Cookie Policy
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/how-to-use')}>
-                                    How To Use
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/share-app-link')}>
-                                    Share App Link
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/copy-app-link')}>
-                                    Copy App Link
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/bookmark')}>
-                                    Bookmark
-                                </ListItem>
-                                <ListItem className={classes.listItem} onClick={() => this.goto('/my-product')}>
-                                    My Product
-                                </ListItem> */}
-                {isLoggedIn ? (
-                  <ListItem className={classes.listItem} onClick={this.logout}>
-                    Logout
+                  ) :
+                    <ListItem className={classes.listItem} onClick={() => this.login("/signin")}>
+                      Login
                   </ListItem>
-                ) : <ListItem className={classes.listItem} onClick={() => this.login("/signin")}>
-                    Login
-              </ListItem>}
+                }
               </List>
             </div>
           </Drawer>

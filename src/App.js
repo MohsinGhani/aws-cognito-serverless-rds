@@ -66,6 +66,7 @@ class App extends Component {
             <Route exact path="/confirm-signup" component={ConfirmSignUp} />
             <Route exact path="/product/:product_id" component={Product} />
             <Route exact path="/products-list" component={ProductsList} />
+            <Route exact path="/profile" component={ProductsList} />
             <Route exact path="/bookmark" component={Bookmark} />
             <Route exact path="/cookie-policy" component={CookiePolicy} />
             <Route exact path="/copy-app-link" component={CopyLinkApp} />

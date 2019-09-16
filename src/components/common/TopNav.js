@@ -21,7 +21,10 @@ import Avatar from "@material-ui/core/Avatar";
 import { authAction, ProductAction } from "./../../store/actions";
 import SwipeableTemporaryDrawer from "../MaterialUI/Drawer";
 import { withRouter } from "react-router-dom";
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import "./index.css";
+
 const styles = theme => ({
   root: {
     width: "100%",
@@ -243,12 +246,12 @@ class TopNav extends React.Component {
               variant="h6"
               color="inherit"
               noWrap
-              onClick={()=>this.goto('/')}
+              onClick={() => this.goto('/')}
             >
               Productmania
             </Typography>
             <div className={classes.grow} />
-            {isLoggedIn ? (
+            {/* {isLoggedIn ? (
               <div className={classes.sectionDesktop}>
                 {(() => {
                   if (!selectedImage.base64 && user && !user.picture) {
@@ -298,10 +301,13 @@ class TopNav extends React.Component {
                   />
                 )}
               </div>
-            ) : null}
+            ) : null} */}
             <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
+              {/* <div className={classes.searchIcon}>
+                {query ?
+                  <div onClick={() => alert('asdasd sadsa')} style={{ paddingTop: 15, cursor: 'pointer' }}>X</div>
+                  : <SearchIcon onClick={() => alert('asdasd sadsa')} />
+                }
               </div>
               <InputBase
                 placeholder="Search…"
@@ -312,6 +318,28 @@ class TopNav extends React.Component {
                 value={query}
                 onChange={this.handleSearch}
                 id="query"
+              /> */}
+              <TextField
+                id="query"
+                className={classes.textField}
+                type={'text'}
+                label="Search"
+                value={query}
+                onChange={this.handleSearch}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        aria-label="toggle password visibility"
+                        onClick={() => { this.setState({ query: '' }); this.props.searchAction({ query: '' }) }}
+                        onMouseDown={() => { }}
+                      >
+                        {query ? "X" : <SearchIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </div>
           </Toolbar>

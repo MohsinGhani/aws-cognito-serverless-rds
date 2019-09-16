@@ -1,3 +1,12 @@
 #svgIcon{
     font-size : 34px;
 }
+
+label + .MuiInput-formControl-155{
+    margin-top: 10px !important;
+}
+
+.MuiInputLabel-formControl-141{
+    top: -10px !important;
+    left: 10px !important;
+}
