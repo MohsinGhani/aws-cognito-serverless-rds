@@ -178,7 +178,11 @@ class SwipeableTemporaryDrawer extends React.Component {
       <div>
         <MenuIcon onClick={this.toggleDrawer("left", true)} id="svgIcon" />
         <div>
-          <Drawer open={this.state.left} className={classes.drawer}>
+          <Drawer
+            open={this.state.left}
+            className={classes.drawer}
+            onClose={this.toggleDrawer('left', false)}
+          >
             <div
               tabIndex={0}
               role="button"
