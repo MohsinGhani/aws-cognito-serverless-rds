@@ -4,10 +4,7 @@ import TopNav from './../common/TopNav'
 import { connect } from 'react-redux';
 import { ProductAction, authAction } from './../../store/actions'
 import CommentModal from './CommentModal'
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
+import ProductDetailModal from './../Products/ProductDetailModal'
 import "./index.css";
 
 
@@ -15,7 +12,8 @@ class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCommentModal: false
+      showCommentModal: false,
+      isOpenDetailDialog: true,
     }
   }
 
@@ -40,8 +38,8 @@ class Product extends React.Component {
   }
 
   render() {
-    const { product } = this.props;
-    const { showCommentModal } = this.state;
+    const { match } = this.props;
+    const { showCommentModal, isOpenDetailDialog } = this.state;
     return (
       <div>
         <CommentModal
@@ -50,58 +48,15 @@ class Product extends React.Component {
         />
         <TopNav />
         <div className="product-detail-modal-body">
-          {
-            product ?
-              <div>
-                <div className="product-image-container">
-                  <img src={product.product_img} alt="product" className="product-image" />
-                </div>
-                <List>
-                  <ListItem button>
-                    <ListItemText primary={'Product Title'} secondary={product.title} />
-                  </ListItem>
-                  <Divider />
-                  <ListItem button>
-                    <ListItemText primary={'Product Description'} secondary={product.description} />
-                  </ListItem>
-                  <Divider />
-                  <ListItem button>
-                    <ListItemText primary={'Country'} secondary={product.country} />
-                  </ListItem>
-                  <Divider />
-                  <ListItem button>
-                    <ListItemText primary={'City'} secondary={product.city} />
-                  </ListItem>
-                  <Divider />
-                  <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(true) }}>
-                    <ListItemText primary={'Like'} secondary={product._like} />
-                  </ListItem>
-                  <Divider />
-                  <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(false) }}>
-                    <ListItemText primary={'Dislike'} secondary={product._dislike} />
-                  </ListItem>
-                  <Divider />
-                  {
-                    (() => {
-                      if (product && product._comments) {
-                        return product._comments.map((comment, i) => {
-                          return (
-                            <ListItem key={i}>
-                              <ListItemText secondary={comment.comment} />
-                            </ListItem>
-                          )
-                        })
-                      }
-                    })()
-                  }
-                  <Divider />
-                  <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }}>
-                    <ListItemText secondary={'Add Comment'} />
-                  </ListItem>
-                </List>
-              </div>
-              : ''
-          }
+          <ProductDetailModal
+            history={this.props.history}
+            product_id={match.params ? match.params.product_id : null}
+            open={isOpenDetailDialog}
+            handleDetailDialog={action =>{
+              this.setState({ isOpenDetailDialog: action })
+              this.props.history.push('/')
+            }}
+          />
         </div>
       </div>
     );

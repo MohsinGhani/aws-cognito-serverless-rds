@@ -20,136 +20,14 @@ import CommentModal from './CommentModal'
 import ShareModal from './ShareModal'
 import Moment from 'react-moment';
 import CardContent from '@material-ui/core/CardContent';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import AddComment from '@material-ui/icons/AddComment';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import AddIcon from '@material-ui/icons/Add';
-import Menu from "@material-ui/icons/Menu";
 import Fab from '@material-ui/core/Fab';
-import InputBase from "@material-ui/core/InputBase";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import SearchIcon from "@material-ui/icons/Search";
 import TimeAgo from "timeago-react";
-
 import "./index.css"
-const styles = (theme) => ({
 
-    appBar: {
-        position: 'relative',
-        backgroundColor: '#9e7339	',
-        padding: '0px',
-    },
-    flex: {
-        flex: 1,
-        textAlign: 'center',
-        fontSize: '20px',
-    },
-    ul: {
-        listStyleType: 'none',
-    },
-    card: {
-        maxWidth: '100%',
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
-    span: {
-        float: 'right',
-    },
-    typography: {
-        margin: '10px'
-    },
-    listItem: {
-        width: '100%',
-        height: 'auto',
-        padding: '12px 20px',
-        boxShadow: ' 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-        backgroundColor: '#c2d1f0',
-        margin: '2px',
-        borderRadius: '10px',
-        fontSize: '16px',
-        resize: 'none',
-    },
-    commentTime: {
-        margin: '5px',
-    },
-    fabButton: {
-        position: 'absolute',
-        zIndex: 1,
-        top: -20,
-        left: 0,
-        right: 0,
-        margin: '0 auto',
-    },
-    root: {
-        position: 'fixed',
-        left: '0',
-        bottom: '0',
-        width: '100%',
-        height: 'auto',
-        paddingTop: '10px',
-        paddingBottom: '10px'
-    },
-    navIcon: {
-        width: '24px !important',
-        height: '24px !important'
-    },
-    list: {
-        width: 250,
-        color: 'white',
-    },
-    fullList: {
-        width: 'auto',
-        backgroundColor: '#a98652',
-        color: 'white',
-    },
-    margin: {
-        backgroundColor: '#9e7339',
-        color: 'white',
-    },
-    search: {
-        position: "relative",
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        "&:hover": {
-            backgroundColor: fade(theme.palette.common.white, 0.25)
-        },
-
-        marginLeft: 0,
-        width: "100%",
-        [theme.breakpoints.up("sm")]: {
-            marginLeft: theme.spacing.unit,
-            width: "auto"
-        }
-    },
-    searchIcon: {
-        width: theme.spacing.unit * 9,
-        height: "100%",
-        position: "absolute",
-        pointerEvents: "none",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    inputRoot: {
-        color: "inherit",
-        width: "100%"
-    },
-    inputInput: {
-        paddingTop: theme.spacing.unit,
-        paddingRight: theme.spacing.unit,
-        paddingBottom: theme.spacing.unit,
-        paddingLeft: theme.spacing.unit * 10,
-        transition: theme.transitions.create("width"),
-        width: "100%",
-        [theme.breakpoints.up("sm")]: {
-            width: 120,
-        }
-    },
-});
 const stylesTheme = theme => ({
     margin: {
         margin: theme.spacing.unit,
@@ -380,6 +258,123 @@ class ProductDetailModal extends React.Component {
         );
     }
 }
+
+const styles = (theme) => ({
+
+    appBar: {
+        position: 'relative',
+        backgroundColor: '#9e7339	',
+        padding: '0px',
+    },
+    flex: {
+        flex: 1,
+        textAlign: 'center',
+        fontSize: '20px',
+    },
+    ul: {
+        listStyleType: 'none',
+    },
+    card: {
+        maxWidth: '100%',
+    },
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
+    span: {
+        float: 'right',
+    },
+    typography: {
+        margin: '10px'
+    },
+    listItem: {
+        width: '100%',
+        height: 'auto',
+        padding: '12px 20px',
+        boxShadow: ' 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+        backgroundColor: '#c2d1f0',
+        margin: '2px',
+        borderRadius: '10px',
+        fontSize: '16px',
+        resize: 'none',
+    },
+    commentTime: {
+        margin: '5px',
+    },
+    fabButton: {
+        position: 'absolute',
+        zIndex: 1,
+        top: -20,
+        left: 0,
+        right: 0,
+        margin: '0 auto',
+    },
+    root: {
+        position: 'fixed',
+        left: '0',
+        bottom: '0',
+        width: '100%',
+        height: 'auto',
+        paddingTop: '10px',
+        paddingBottom: '10px'
+    },
+    navIcon: {
+        width: '24px !important',
+        height: '24px !important'
+    },
+    list: {
+        width: 250,
+        color: 'white',
+    },
+    fullList: {
+        width: 'auto',
+        backgroundColor: '#a98652',
+        color: 'white',
+    },
+    margin: {
+        backgroundColor: '#9e7339',
+        color: 'white',
+    },
+    search: {
+        position: "relative",
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        "&:hover": {
+            backgroundColor: fade(theme.palette.common.white, 0.25)
+        },
+
+        marginLeft: 0,
+        width: "100%",
+        [theme.breakpoints.up("sm")]: {
+            marginLeft: theme.spacing.unit,
+            width: "auto"
+        }
+    },
+    searchIcon: {
+        width: theme.spacing.unit * 9,
+        height: "100%",
+        position: "absolute",
+        pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    inputRoot: {
+        color: "inherit",
+        width: "100%"
+    },
+    inputInput: {
+        paddingTop: theme.spacing.unit,
+        paddingRight: theme.spacing.unit,
+        paddingBottom: theme.spacing.unit,
+        paddingLeft: theme.spacing.unit * 10,
+        transition: theme.transitions.create("width"),
+        width: "100%",
+        [theme.breakpoints.up("sm")]: {
+            width: 120,
+        }
+    },
+});
 
 
 ProductDetailModal.propTypes = {

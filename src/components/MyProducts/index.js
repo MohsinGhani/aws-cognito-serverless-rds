@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ProductAction, authAction } from '../../store/actions'
 import "./index.css";
 import TopNav from './../common/TopNav'
-import ProductDetailModal from './ProductDetailModal'
+import ProductDetailModal from './../Products/ProductDetailModal'
 import ProductCard from './productCard'
 import ReactLoading from 'react-loading';
 

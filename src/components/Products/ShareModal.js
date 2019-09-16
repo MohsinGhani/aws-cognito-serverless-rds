@@ -19,8 +19,10 @@ class ShareModal extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.product_id !== this.props.product_id && this.props.product_id) {
+            let url = window.location.href
+            let splitedUrl = url.split('/')
             this.setState({
-                product_path: `${window.location.href}product/${this.props.product_id}`,
+                product_path: `${splitedUrl[0]}//${splitedUrl[2]}/product/${this.props.product_id}`,
             })
         }
     }
