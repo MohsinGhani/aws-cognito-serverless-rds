@@ -15,7 +15,7 @@ const styles = theme => ({
         flexGrow: 1,
         overflow: 'hidden',
         padding: `0 ${theme.spacing.unit * 3}px`,
-      
+
     },
     paper: {
         top: '25%',
@@ -23,7 +23,7 @@ const styles = theme => ({
         maxWidth: 400,
         margin: `${theme.spacing.unit}px auto`,
         padding: theme.spacing.unit * 2,
-      
+
     },
 
 })
@@ -37,6 +37,7 @@ class CommentModal extends Component {
 
     componentDidMount() {
         if (!this.props.product) this.props.handleClose()
+        this.setState({ comment: '' })
     }
 
     handleInput = (e) => {
@@ -57,11 +58,14 @@ class CommentModal extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.props.commented && !this.props.doCommentLoader && prevProps.doCommentLoader) this.props.handleClose()
+        if (this.props.commented && !this.props.doCommentLoader && prevProps.doCommentLoader) {
+            this.setState({ comment: '' })
+            this.props.handleClose()
+        }
     }
 
     render() {
-        let { open, handleClose, classes } = this.props
+        let { open, handleClose, classes, doCommentLoader } = this.props
         let { comment } = this.state
         return (
             <div className={classes.root}>
@@ -76,7 +80,7 @@ class CommentModal extends Component {
                     <div className={classes.paper}>
                         <Paper className={classes.paper}>
                             <Grid container wrap="nowrap" spacing={16}>
-                                <Grid item style={{flex:1}}>
+                                <Grid item style={{ flex: 1 }}>
                                     <InputField
                                         label={"Comment Box"}
                                         // variant={"outlined"}
@@ -96,9 +100,7 @@ class CommentModal extends Component {
                                             </i>
                                         </Button>
                                         <Button className={"sendButton"} onClick={this.doComment} >
-                                            <i className="material-icons send">
-                                                send
-                                            </i>
+                                            {doCommentLoader ? '...Loading' : <i className="material-icons send">send</i>}
                                         </Button>
                                     </div>
                                 </Grid>

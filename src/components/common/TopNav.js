@@ -36,6 +36,7 @@ const styles = theme => ({
   },
   title: {
     display: "none",
+    cursor: "pointer",
     [theme.breakpoints.up("sm")]: {
       display: "block"
     }
@@ -242,6 +243,7 @@ class TopNav extends React.Component {
               variant="h6"
               color="inherit"
               noWrap
+              onClick={()=>this.goto('/')}
             >
               Productmania
             </Typography>

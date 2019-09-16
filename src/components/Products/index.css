@@ -52,17 +52,12 @@ svg#commentIcon {
   margin-left: 24px;
   margin-right: 24px;
 }
-.dislike-heart {
-  width: 26px;
-  height: 26px;
-  margin-top: 22px;
-  margin-right: 10px;
-}
+
 .like-heart {
   width: 26px;
   height: 26px;
-  margin-top: 22px;
-  margin-right: 10px;
+  margin-top: 20px;
+  cursor: pointer;
 }
 .outer-comment-text {
   margin-top: 17px;
@@ -70,6 +65,15 @@ svg#commentIcon {
   margin-right: -8px;
   cursor: default !important;
   color: #9e7339;
+}
+.text-badge{
+  background: #9e7339;
+  color: #fff;
+  padding: 5px;
+  border-radius: 10px;
+}
+.comment-text{
+  padding-left: 10px;
 }
 .material-icons.drawer {
   font-size: 20px;
@@ -224,4 +228,11 @@ list {
 
 .product-modal-header .product-modal-center-icon-wrapper{
   padding: 12px 12px 0 0;
+}
+
+.product-modal-footer{
+  display: flex;
+  justify-content: space-evenly;
+  background: #fff;
+  border-top: 1px solid #eaeaea;
 }

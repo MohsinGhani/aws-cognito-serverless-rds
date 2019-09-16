@@ -31,6 +31,8 @@ import Fab from '@material-ui/core/Fab';
 import InputBase from "@material-ui/core/InputBase";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import SearchIcon from "@material-ui/icons/Search";
+import TimeAgo from "timeago-react";
+
 import "./index.css"
 const styles = (theme) => ({
 
@@ -221,7 +223,7 @@ class ProductDetailModal extends React.Component {
                     className={"dialog"}
                 >
                     <AppBar className={classes.appBar}>
-                        <Toolbar style={{padding: 0}}>
+                        <Toolbar style={{ padding: 0 }}>
                             <div className="product-modal-header">
                                 <div className="product-modal-back-icon-wrapper">
                                     <IconButton
@@ -283,15 +285,13 @@ class ProductDetailModal extends React.Component {
                                         {
                                             (() => {
                                                 if (product && product._comments) {
-                                                    return product._comments.map((comment, i) => {
+                                                    return product._comments.reverse().map((comment, i) => {
                                                         return (
                                                             <div className="container">
                                                                 <List key={i}>
                                                                     <ListItem className={classes.listItem}>{comment.comment} </ListItem>
-                                                                    <Typography className={classes.commentTime} component="p">
-                                                                        <Moment fromNow ago>
-                                                                            {comment.time}
-                                                                        </Moment> ago
+                                                                    <Typography className={classes.commentTime} component="p"> 
+                                                                        <TimeAgo datetime={comment.time} />
                                                                     </Typography>
                                                                 </List>
                                                             </div>
@@ -301,87 +301,75 @@ class ProductDetailModal extends React.Component {
                                             })()
                                         }
 
-                                        <BottomNavigation
-                                            onChange={this.handleChange} className={classes.root}>
-                                            <span className="outer-comment-text">{product._like}</span>
-                                            {
-                                                !liked ? <BottomNavigationAction
-                                                    className="favoriteIcon"
-                                                    icon=
-                                                    {<FavoriteIcon id="favoriteIcon" />}
-                                                /> : (liked && !liked.action)
-                                                        ? <img src={require("./../../assets/img/heartbroken.svg")} className="dislike-heart" />
-                                                        : <img src={require("./../../assets/img/like.svg")} className="like-heart" />}
+                                        <div
+                                            onChange={this.handleChange}
+                                            className={`${classes.root} product-modal-footer`}
+                                        >
+                                            <div>
+                                                {(() => {
+                                                    if (!liked) {
+                                                        return <img src={require("./../../assets/img/heart.svg")} className="like-heart" />
+                                                    }
+                                                    else if (liked && !liked.action) {
+                                                        return <img src={require("./../../assets/img/heartbroken.svg")} className="like-heart" />
+                                                    }
+                                                    else {
+                                                        return <img src={require("./../../assets/img/like.svg")} className="like-heart" />
+                                                    }
+                                                })()}
+                                            </div>
 
-                                            <Fab aria-label="Add" className={classes.margin} id="add-product-fabbtn"
-                                                onClick={() => { history.push("/add-product") }}
-                                            >
-                                                <AddIcon />
-                                            </Fab>
-
-                                            <BottomNavigationAction
-                                                className="commentIcon"
-                                                onClick={() => { this.setState({ showCommentModal: true }) }}
-                                                icon=
-                                                {<AddComment id="commentIcon" />
-                                                }
-                                            />
-                                            <span className="comment-text-bottom">{product._comments ? product._comments.length : ""}</span>
-
-                                            {/* <BottomNavigationAction
-                                                className="favoriteIcon"
-                                                icon={<Menu id="favoriteIcon"
-                                                    onClick={this.toggleDrawer("bottom", true)}
-                                                />
-                                                }
-                                            /> */}
-                                            {/* <Button onClick={this.toggleDrawer('bottom', true)}>Open Bottom</Button> */}
-                                            <SwipeableDrawer
-                                                anchor="bottom"
-                                                open={this.state.bottom}
-                                                className="swipeableDrawer"
-                                                onClose={this.toggleDrawer('bottom', false)}
-                                                onOpen={this.toggleDrawer('bottom', true)}
-                                            >
-                                                <div
-                                                    tabIndex={0}
-                                                    role="button"
-                                                    onClick={this.toggleDrawer('bottom', false)}
-                                                    onKeyDown={this.toggleDrawer('bottom', false)}
+                                            <div>
+                                                <Fab
+                                                    aria-label="Add"
+                                                    className={classes.margin}
+                                                    id="add-product-fabbtn"
+                                                    onClick={() => { history.push("/add-product") }}
                                                 >
-                                                    <List className={classes.fullList}>
-                                                        <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }} >
-                                                            <i class="material-icons comment">
-                                                                mode_comment
-                                                            </i>
-                                                            <span className="comment-text">Comments {product._comments ? product._comments.length : ""}</span>
+                                                    <AddIcon />
+                                                </Fab>
+                                            </div>
+                                            <div>
+                                                <img onClick={() => { this.setState({ showCommentModal: true }) }} src={require("./../../assets/img/comment.svg")} className="like-heart" />
+                                            </div>
+                                        </div>
 
-                                                            {/* <i class="material-icons key" onClose={this.toggleDrawer('bottom', false)}>
-                                                                keyboard_arrow_down
-                                                            </i> */}
-                                                        </ListItem>
+                                        <SwipeableDrawer
+                                            anchor="bottom"
+                                            open={this.state.bottom}
+                                            className="swipeableDrawer"
+                                            onClose={this.toggleDrawer('bottom', false)}
+                                            onOpen={this.toggleDrawer('bottom', true)}
+                                        >
+                                            <div
+                                                tabIndex={0}
+                                                role="button"
+                                                onClick={this.toggleDrawer('bottom', false)}
+                                                onKeyDown={this.toggleDrawer('bottom', false)}
+                                            >
+                                                <List className={classes.fullList}>
+                                                    <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }} >
+                                                        <i class="material-icons comment">
+                                                            mode_comment
+                                                        </i>
+                                                        <span className="comment-text">Comments {product._comments ? <span className="text-badge"> {product._comments.length}</span> : ""}</span>
+                                                    </ListItem>
+                                                    <ListItem button onClick={() => { this.setState({ showShareModal: true }) }}>
+                                                        <i class="fa fa-share"></i>
+                                                        <span className="comment-text">{'share'}</span>
+                                                    </ListItem>
+                                                    <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(true) }}>
+                                                        <FavoriteIcon id="like" />
+                                                        <span className="comment-text">Like <span className="text-badge">{product._like}</span></span>
+                                                    </ListItem>
+                                                    <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(false) }} >
+                                                        <FavoriteIcon id="dislike" />
+                                                        <span className="comment-text">Dislike <span className="text-badge">{product._dislike}</span></span>
+                                                    </ListItem>
+                                                </List>
 
-                                                        <ListItem button onClick={() => { this.setState({ showShareModal: true }) }}>
-                                                            <i class="fa fa-share"></i>
-                                                            <span className="comment-text">{'share'}</span>
-
-                                                            {/* <ListItemText  secondary={'Share'} color= {"white"}/> */}
-                                                        </ListItem>
-                                                        <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(true) }}>
-                                                            <FavoriteIcon id="like" />
-                                                            <span className="comment-text">Like {product._like}</span>
-                                                        </ListItem>
-                                                        <ListItem button onClick={() => { this.handleLikeAndDislikeProduct(false) }} >
-                                                            <FavoriteIcon id="dislike" />
-                                                            <span className="comment-text">Dislike {product._dislike}</span>
-                                                        </ListItem>
-                                                    </List>
-
-                                                </div>
-                                            </SwipeableDrawer>
-                                            {/* <SwipeableTemporaryDrawer fullList={this.props.fullList} /> */}
-                                        </BottomNavigation>
-
+                                            </div>
+                                        </SwipeableDrawer>
                                     </Card>
                                 </div>
                                 : ''
