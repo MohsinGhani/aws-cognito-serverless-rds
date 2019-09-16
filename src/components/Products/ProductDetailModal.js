@@ -125,7 +125,7 @@ class ProductDetailModal extends React.Component {
                         </Toolbar>
                     </AppBar>
 
-                    <div>
+                    <div style={{maxWidth: '1024px', margin: '0 auto'}}>
                         {
                             product ?
                                 <div className="product-image-container">
@@ -149,66 +149,69 @@ class ProductDetailModal extends React.Component {
                                                     {product.created_date}</Moment>
                                             </span>
                                         </Typography>
-                                        <CardContent>
-                                            <Typography gutterBottom variant="h5" component="h2">
-                                                {product.title}
-                                            </Typography>
-                                            <Typography component="p">
-                                                {product.description}
-                                            </Typography>
-                                            <Typography gutterBottom component="h5" >
-                                                Posted By : Mohsin Ghani
-                                            </Typography>
-                                        </CardContent>
-                                        {
-                                            (() => {
-                                                if (product && product._comments) {
-                                                    return product._comments.reverse().map((comment, i) => {
-                                                        return (
-                                                            <div className="container">
-                                                                <List key={i}>
-                                                                    <ListItem className={classes.listItem}>{comment.comment} </ListItem>
-                                                                    <Typography className={classes.commentTime} component="p"> 
-                                                                        <TimeAgo datetime={comment.time} />
-                                                                    </Typography>
-                                                                </List>
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
-                                            })()
-                                        }
 
-                                        <div
-                                            onChange={this.handleChange}
-                                            className={`${classes.root} product-modal-footer`}
-                                        >
-                                            <div>
-                                                {(() => {
-                                                    if (!liked) {
-                                                        return <img src={require("./../../assets/img/heart.svg")} className="like-heart" />
+                                        <div>
+                                            <CardContent>
+                                                <Typography gutterBottom variant="h5" component="h2">
+                                                    {product.title}
+                                                </Typography>
+                                                <Typography component="p">
+                                                    {product.description}
+                                                </Typography>
+                                                <Typography gutterBottom component="h5" >
+                                                    Posted By : Mohsin Ghani
+                                            </Typography>
+                                            </CardContent>
+                                            {
+                                                (() => {
+                                                    if (product && product._comments) {
+                                                        return product._comments.reverse().map((comment, i) => {
+                                                            return (
+                                                                <div className="container">
+                                                                    <List key={i}>
+                                                                        <ListItem className={classes.listItem}>{comment.comment} </ListItem>
+                                                                        <Typography className={classes.commentTime} component="p">
+                                                                            <TimeAgo datetime={comment.time} />
+                                                                        </Typography>
+                                                                    </List>
+                                                                </div>
+                                                            )
+                                                        })
                                                     }
-                                                    else if (liked && !liked.action) {
-                                                        return <img src={require("./../../assets/img/heartbroken.svg")} className="like-heart" />
-                                                    }
-                                                    else {
-                                                        return <img src={require("./../../assets/img/like.svg")} className="like-heart" />
-                                                    }
-                                                })()}
-                                            </div>
+                                                })()
+                                            }
 
-                                            <div>
-                                                <Fab
-                                                    aria-label="Add"
-                                                    className={classes.margin}
-                                                    id="add-product-fabbtn"
-                                                    onClick={() => { history.push("/add-product") }}
-                                                >
-                                                    <AddIcon />
-                                                </Fab>
-                                            </div>
-                                            <div>
-                                                <img onClick={() => { this.setState({ showCommentModal: true }) }} src={require("./../../assets/img/comment.svg")} className="like-heart" />
+                                            <div
+                                                onChange={this.handleChange}
+                                                className={`${classes.root} product-modal-footer`}
+                                            >
+                                                <div>
+                                                    {(() => {
+                                                        if (!liked) {
+                                                            return <img src={require("./../../assets/img/heart.svg")} className="like-heart" />
+                                                        }
+                                                        else if (liked && !liked.action) {
+                                                            return <img src={require("./../../assets/img/heartbroken.svg")} className="like-heart" />
+                                                        }
+                                                        else {
+                                                            return <img src={require("./../../assets/img/like.svg")} className="like-heart" />
+                                                        }
+                                                    })()}
+                                                </div>
+
+                                                <div>
+                                                    <Fab
+                                                        aria-label="Add"
+                                                        className={classes.margin}
+                                                        id="add-product-fabbtn"
+                                                        onClick={() => { history.push("/add-product") }}
+                                                    >
+                                                        <AddIcon />
+                                                    </Fab>
+                                                </div>
+                                                <div>
+                                                    <img onClick={() => { this.setState({ showCommentModal: true }) }} src={require("./../../assets/img/comment.svg")} className="like-heart" />
+                                                </div>
                                             </div>
                                         </div>
 

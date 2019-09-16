@@ -48,7 +48,7 @@ svg#commentIcon {
   outline: none !important;
   width: 42px;
   height: 42px;
-  margin-top: 6px;
+  margin-top: 0px;
   margin-left: 24px;
   margin-right: 24px;
 }
@@ -56,7 +56,7 @@ svg#commentIcon {
 .like-heart {
   width: 26px;
   height: 26px;
-  margin-top: 20px;
+  margin-top: 10px;
   cursor: pointer;
 }
 .outer-comment-text {
@@ -205,7 +205,6 @@ list {
 .main-product-image-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 5px;
   border-bottom: 1px solid #eaeaea;
 }
 
