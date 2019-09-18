@@ -112,6 +112,9 @@ class ProductDetailModal extends React.Component {
                                         <i className="material-icons navigate">navigate_before</i>
                                     </IconButton>
                                 </div>
+                                <div>
+                                    <h4 style={{ margin: 0, padding: '20px 0' }}>Productmania</h4>
+                                </div>
                                 <div className="product-modal-center-icon-wrapper">
                                     <Typography
                                         variant="h6"
@@ -125,7 +128,7 @@ class ProductDetailModal extends React.Component {
                         </Toolbar>
                     </AppBar>
 
-                    <div style={{maxWidth: '1024px', margin: '0 auto'}}>
+                    <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
                         {
                             product ?
                                 <div className="product-image-container">
@@ -210,7 +213,12 @@ class ProductDetailModal extends React.Component {
                                                     </Fab>
                                                 </div>
                                                 <div>
-                                                    <img onClick={() => { this.setState({ showCommentModal: true }) }} src={require("./../../assets/img/comment.svg")} className="like-heart" />
+                                                    <img
+                                                        src={require("./../../assets/img/more.svg")}
+                                                        className="like-heart"
+                                                        onClick={this.toggleDrawer('bottom', true)}
+                                                    />
+                                                    {/* <img onClick={() => { this.setState({ showCommentModal: true }) }} src={require("./../../assets/img/comment.svg")} className="like-heart" /> */}
                                                 </div>
                                             </div>
                                         </div>

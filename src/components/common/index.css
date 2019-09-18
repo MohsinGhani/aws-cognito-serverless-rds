@@ -10,3 +10,62 @@ label + .MuiInput-formControl-155{
     top: -10px !important;
     left: 10px !important;
 }
+
+/* TOP NAV SEARCH BAR */
+
+.TopNav-menuButton-43{
+    margin-right: 5px !important;
+}
+.TopNav-search-45{
+    width: 40% !important;
+}
+
+.MuiFormControl-root-169{
+    width: 100% !important;
+}
+
+.MuiInputLabel-animated-181{
+    top: -15px !important;
+    left: 10px !important;
+}
+
+label + .MuiInput-formControl-192{
+    margin-top: 0 !important;
+    position: initial;
+    line-height: 0;
+}
+
+.MuiInput-underline-195:before,
+.MuiInput-underline-195:after{
+    content: none !important;
+}
+
+/* // Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575px) { 
+    .TopNav-search-45{
+        width: 90% !important;
+    }
+}
+
+/* // Small devices (landscape phones, less than 768px) */
+@media (max-width: 767px) {
+    .TopNav-search-45{
+        width: 40% !important;
+    }
+}
+
+@media (max-width: 601px) { 
+    .TopNav-search-45{
+        width: 50% !important;
+    }
+}
+
+/* // Medium devices (tablets, less than 992px) */
+@media (max-width: 991px) { 
+    .TopNav-search-45{
+        width: 90% !important;
+    }
+}
+
+/* // Large devices (desktops, less than 1200px) */
+@media (max-width: 1199px) {  }
