@@ -17,6 +17,7 @@ import MapToSelectLocation from "./MapToSelectLocation";
 import ReactLoading from "react-loading";
 import swal from "sweetalert";
 import "./index.css";
+import TextModal from './../common/TextModal'
 // import { timer } from "rxjs";
 
 const styles = theme => ({
@@ -75,7 +76,10 @@ class AddProduct extends React.Component {
       isSelectImg: false,
       isLocationModalOpen: false,
       isGeolocationEnabled: false,
-      hideTool: false
+      hideTool: false,
+      openTextModal: false,
+      textModalTitle: '',
+      textModalText: ''
     };
   }
 
@@ -275,19 +279,31 @@ class AddProduct extends React.Component {
       selectedCountry,
       selectedState,
       selectedCity,
+      country,
+      province,
+      city,
       latitude,
       longitude,
       selectedImage
     } = this.state;
     const { user, saveProductAction } = this.props;
+
+    if(selectedImage && !selectedImage.base64){
+      return this.setState({
+        openTextModal: true,
+        textModalTitle: "Image Selection Warning",
+        textModalText: "Kindly Select the Product Image before uploading product"
+      })
+    } 
+
     saveProductAction({
       product_id: uuidv1(),
       title,
       description,
       category_id: selectedCategory.category_id,
-      country: selectedCountry,
-      state: selectedState,
-      city: selectedCity,
+      country: selectedCountry ? selectedCountry : country,
+      state: selectedState ? selectedState : province,
+      city: selectedCity ? selectedCity : city,
       latitude,
       longitude,
       creator_id: user.user_id,
@@ -371,6 +387,10 @@ class AddProduct extends React.Component {
     }
   };
 
+  closeTextModal = () => {
+    this.setState({openTextModal: false})
+  }
+
   render() {
     let { classes, saveProductLoader } = this.props;
 
@@ -395,6 +415,9 @@ class AddProduct extends React.Component {
       cities,
       longitude,
       latitude,
+      openTextModal,
+      textModalTitle,
+      textModalText
     } = this.state;
 
     return (
@@ -422,7 +445,13 @@ class AddProduct extends React.Component {
           }
         />
 
-
+        <TextModal
+          open={openTextModal}
+          handleClose={this.closeTextModal}
+          title={textModalTitle}
+          text={textModalText}
+          isTimer={true}
+        />
 
         <MapToSelectLocation
           open={isLocationModalOpen}
@@ -501,7 +530,7 @@ class AddProduct extends React.Component {
                   fullWidth={true}
                   onChange={this.handleInput}
                   value={title ? title : ""}
-                  maxLength={300}
+                  maxLength={500}
                 />
               </Grid>
 
@@ -516,7 +545,7 @@ class AddProduct extends React.Component {
                   rowsMax={"4"}
                   rows={"4"}
                   value={description ? description : ""}
-                  maxLength={1000}
+                  maxLength={15000}
                 />
               </Grid>
 
@@ -608,10 +637,11 @@ class AddProduct extends React.Component {
                     label={"Street"}
                     variant={"outlined"}
                     id={"street"}
-                    pattern="/^[A-Za-z]+$/"
+                    // pattern="/^[A-Za-z]+$/"
                     value={street ? street : ""}
                     fullWidth={true}
-                  // onChange={this.handleInput}
+                    onChange={this.handleInput}
+                    maxLength={15000}
                   />
                 </Grid>
                 <Grid item md={2} sm={2} xs={2}>
