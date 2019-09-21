@@ -183,115 +183,103 @@ class SignUp extends Component {
     let { latitude, longitude } = this.state
 
     return (
-      <div>
-        <Location handleLocation={(latitude, longitude) => { this.setState({ latitude, longitude }) }} />
+      <div style={{ backgroundImage: 'url(' + require("./../../assets/img/map-image.jpg") + ')', height: "100vh" }}>
         <TopNav />
-        <Map
-          style="mapbox://styles/mapbox/streets-v9"
-          containerStyle={{
-            height: "95vh",
-            width: "100%"
-          }}
-          movingMethod={'jumpTo'}
-          center={[longitude, latitude]}
-          zoom={[12]}
-        // onClick={(map, e) => { this.props.reverseGeoCodingAction(e.lngLat) }}
-        >
-          <br />
-          <Card className="signup-container">
-            <Grid container spacing={16}>
-              <Grid item md={7} sm={12} xs={12}>
-                <h1 className={`title ${classes.p05}`}>
-                  Create your Productmania Account
+        <br />
+        <Card className="signup-container">
+          <Grid container spacing={16}>
+            <Grid item md={7} sm={12} xs={12}>
+              <h1 className={`title ${classes.p05}`}>
+                Create your Productmania Account
               </h1>
-                <h3 className={`sub-title ${classes.p05}`}>
-                  Continue to Productmania
+              <h3 className={`sub-title ${classes.p05}`}>
+                Continue to Productmania
               </h3>
 
 
-                <Grid container>
-                  <Grid item md={6} sm={12} xs={12} className={classes.p05}>
-                    <InputField
-                      label={"First name"}
-                      variant={"outlined"}
-                      id={"firstname"}
-                      fullWidth={true}
-                      value={this.state.firstname}
-                      onChange={this.handleInput}
-                    />
-                  </Grid>
-                  <Grid item md={6} sm={12} xs={12} className={classes.p05}>
-                    <InputField
-                      label={"Last name"}
-                      variant={"outlined"}
-                      id={"lastname"}
-                      fullWidth={true}
-                      value={this.state.lastname}
-                      onChange={this.handleInput}
-                    />
-                  </Grid>
+              <Grid container>
+                <Grid item md={6} sm={12} xs={12} className={classes.p05}>
+                  <InputField
+                    label={"First name"}
+                    variant={"outlined"}
+                    id={"firstname"}
+                    fullWidth={true}
+                    value={this.state.firstname}
+                    onChange={this.handleInput}
+                  />
                 </Grid>
-                <Grid container>
-                  <Grid item md={12} sm={12} xs={12} className={classes.p05}>
-                    <InputField
-                      label={"Email address"}
-                      variant={"outlined"}
-                      id={"email"}
-                      fullWidth={true}
-                      value={this.state.email}
-                      onChange={this.handleInput}
-                      helperText={"You can use letters, numbers & periods"}
-                    />
-                  </Grid>
+                <Grid item md={6} sm={12} xs={12} className={classes.p05}>
+                  <InputField
+                    label={"Last name"}
+                    variant={"outlined"}
+                    id={"lastname"}
+                    fullWidth={true}
+                    value={this.state.lastname}
+                    onChange={this.handleInput}
+                  />
                 </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item md={12} sm={12} xs={12} className={classes.p05}>
+                  <InputField
+                    label={"Email address"}
+                    variant={"outlined"}
+                    id={"email"}
+                    fullWidth={true}
+                    value={this.state.email}
+                    onChange={this.handleInput}
+                    helperText={"You can use letters, numbers & periods"}
+                  />
+                </Grid>
+              </Grid>
 
-                <Grid container>
-                  <Grid item md={12} sm={12} xs={12} className={classes.p05}>
-                    <InputField
-                      label={"Phone Number"}
-                      variant={"outlined"}
-                      id={"phone"}
-                      fullWidth={true}
-                      value={this.state.phone}
-                      onChange={this.handleInput}
-                      helperText={"Phone number must be in E.164 format"}
-                    />
-                  </Grid>
+              <Grid container>
+                <Grid item md={12} sm={12} xs={12} className={classes.p05}>
+                  <InputField
+                    label={"Phone Number"}
+                    variant={"outlined"}
+                    id={"phone"}
+                    fullWidth={true}
+                    value={this.state.phone}
+                    onChange={this.handleInput}
+                    helperText={"Phone number must be in E.164 format"}
+                  />
                 </Grid>
+              </Grid>
 
-                <Grid container>
-                  <Grid item md={6} sm={12} xs={12} className={classes.p05}>
-                    <InputFieldWithEndAdornment
-                      label={"Password"}
-                      variant={"outlined"}
-                      id={"password"}
-                      fullWidth={true}
-                      type={"password"}
-                      onChange={this.handleInput}
-                      value={this.state.password}
-                      error={this.state.error.password}
-                      helperText={this.state.error.password}
-                    />
-                  </Grid>
-                  <Grid item md={6} sm={12} xs={12} className={classes.p05}>
-                    <InputFieldWithEndAdornment
-                      label={"Confirm Password"}
-                      variant={"outlined"}
-                      id={"confirmPassword"}
-                      fullWidth={true}
-                      type={"password"}
-                      onChange={this.handleInput}
-                      value={this.state.confirmPassword}
-                      error={this.state.error.confirmPassword}
-                      helperText={this.state.error.confirmPassword}
-                    />
-                  </Grid>
-                  <label className={`custom-input-label ${classes.p05}`}>
-                    Use 8 or more characters with a mix of letters, numbers &amp;
-                    symbols
+              <Grid container>
+                <Grid item md={6} sm={12} xs={12} className={classes.p05}>
+                  <InputFieldWithEndAdornment
+                    label={"Password"}
+                    variant={"outlined"}
+                    id={"password"}
+                    fullWidth={true}
+                    type={"password"}
+                    onChange={this.handleInput}
+                    value={this.state.password}
+                    error={this.state.error.password}
+                    helperText={this.state.error.password}
+                  />
+                </Grid>
+                <Grid item md={6} sm={12} xs={12} className={classes.p05}>
+                  <InputFieldWithEndAdornment
+                    label={"Confirm Password"}
+                    variant={"outlined"}
+                    id={"confirmPassword"}
+                    fullWidth={true}
+                    type={"password"}
+                    onChange={this.handleInput}
+                    value={this.state.confirmPassword}
+                    error={this.state.error.confirmPassword}
+                    helperText={this.state.error.confirmPassword}
+                  />
+                </Grid>
+                <label className={`custom-input-label ${classes.p05}`}>
+                  Use 8 or more characters with a mix of letters, numbers &amp;
+                  symbols
               </label>
-                </Grid>
-                {/* <hr />
+              </Grid>
+              {/* <hr />
             <Grid container>
               <Grid item md={12} sm={12} xs={12} className={classes.p05}>
                 <div style={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -318,46 +306,45 @@ class SignUp extends Component {
                 </div>
               </Grid>
             </Grid> */}
-                <hr />
-                <Grid container className={classes.btns_parent}>
-                  <Button
-                    onClick={() => this.goto("/signin")}
-                    color="primary"
-                    className={classes.button}
-                  >
-                    Sign in instead
+              <hr />
+              <Grid container className={classes.btns_parent}>
+                <Button
+                  onClick={() => this.goto("/signin")}
+                  color="primary"
+                  className={classes.button}
+                >
+                  Sign in instead
               </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    disabled={this.state.isSignupButtonDisabled || authLoader}
-                    onClick={this.handleSignUp}
-                  >
-                    Next
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  disabled={this.state.isSignupButtonDisabled || authLoader}
+                  onClick={this.handleSignUp}
+                >
+                  Next
               </Button>
-                </Grid>
               </Grid>
-              <Hidden smDown>
-                <Grid item md={5}>
-                  <figure className="vertical-center">
-                    <center>
-                      <img
-                        src={require("./../../assets/img/account.svg")}
-                        alt="Signup"
-                        height="244"
-                        width="244"
-                      />
-                      <figcaption className="figcaption">
-                        One account. All of Productmania working for you.
-                  </figcaption>
-                    </center>
-                  </figure>
-                </Grid>
-              </Hidden>
             </Grid>
-          </Card>
-        </Map>
+            <Hidden smDown>
+              <Grid item md={5}>
+                <figure className="vertical-center">
+                  <center>
+                    <img
+                      src={require("./../../assets/img/account.svg")}
+                      alt="Signup"
+                      height="244"
+                      width="244"
+                    />
+                    <figcaption className="figcaption">
+                      One account. All of Productmania working for you.
+                  </figcaption>
+                  </center>
+                </figure>
+              </Grid>
+            </Hidden>
+          </Grid>
+        </Card>
         {
           authError ? (
             <div>
@@ -396,44 +383,46 @@ class SignUp extends Component {
                 </div>
               </Dialog>
             </div>
-          ) : setTimeout(() => (
-            <div>
-              <p>sorry</p>
-              <Dialog
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-                open={this.state.open}
-                className={classes.confirmModel}
-                onClose={this.handleClose}
-                BackdropProps={{
-                  classes: {
-                    root: classes.root
+          ) : () => {
+            setTimeout(() => (
+              <div>
+                <p>sorry</p>
+                <Dialog
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                  open={this.state.open}
+                  className={classes.confirmModel}
+                  onClose={this.handleClose}
+                  BackdropProps={{
+                    classes: {
+                      root: classes.root
+                    }
                   }
-                }
-                }
-                PaperProps={{
-                  classes: {
-                    root: classes.paper
                   }
-                }}
-              >
-                <div>
-                  <DialogTitle variant="h1" id="dialogTitle">Thank You!</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="dialogText">
-                      You have succesfully submitted the form
+                  PaperProps={{
+                    classes: {
+                      root: classes.paper
+                    }
+                  }}
+                >
+                  <div>
+                    <DialogTitle variant="h1" id="dialogTitle">Thank You!</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="dialogText">
+                        You have succesfully submitted the form
                           </DialogContentText>
-                  </DialogContent>
-                  <Typography>
-                    <Button onClick={this.handleClose} id="closeButton">
-                      OK
+                    </DialogContent>
+                    <Typography>
+                      <Button onClick={this.handleClose} id="closeButton">
+                        OK
                           </Button>
-                  </Typography>
-                </div>
-              </Dialog>
-            </div>), 3000)
+                    </Typography>
+                  </div>
+                </Dialog>
+              </div>), 3000)
+          }
         }
-      </div>
+      </div >
     );
   }
 }

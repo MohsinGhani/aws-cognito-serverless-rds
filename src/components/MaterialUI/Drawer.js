@@ -136,6 +136,7 @@ class SwipeableTemporaryDrawer extends React.Component {
           { label: "Share App Link", path: "/share-app-link" },
           { label: "Copy App Link", path: "/copy-app-link" },
           { label: "Bookmark", path: "/bookmark" },
+          { label: "Profile", path: "/profile" },
           { label: "My Product", path: "/my-product" },
         ]
       });
@@ -159,6 +160,7 @@ class SwipeableTemporaryDrawer extends React.Component {
           { label: "Share App Link", path: "/share-app-link" },
           { label: "Copy App Link", path: "/copy-app-link" },
           { label: "Bookmark", path: "/bookmark" },
+          { label: "Profile", path: "/profile" },
           { label: "My Product", path: "/my-product" },
         ]
       });
@@ -235,7 +237,7 @@ class SwipeableTemporaryDrawer extends React.Component {
                 </ListItem> */}
                 {
                   navItems.map(item => {
-                    if(!isLoggedIn && item.label === 'My Product') return
+                    if (!isLoggedIn && item.label === 'My Product') return
 
                     return (
                       <ListItem

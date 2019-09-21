@@ -57,18 +57,18 @@ input[type="file"] {
   display: none;
   margin: 10px;
 }
-.input-editimg-btn-parent{
+.input-editimg-btn-parent {
   display: flex;
   justify-content: center;
+  margin-top: 24px;
 }
-.input-editimg-btn{
-  width: 100px;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-weight: 500;
+.input-editimg-btn {
+  height: 44px !important;
+  border-radius: 10px !important;
+  border: 1px solid #ccc !important;
+  font-weight: 500 !important;
   outline: none !important;
-  cursor: pointer;
-  background: #9e7339;
-  color: #fff;
+  cursor: pointer !important;
+  background: #9e7339 !important;
+  color: #fff !important;
 }

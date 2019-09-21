@@ -15,7 +15,9 @@ const styles = theme => ({
         [theme.breakpoints.down('sm')]: {
             margin: 10,
         },
-        cursor: "pointer"
+        cursor: "pointer",
+        boxShadow: "none",
+        border: "1px solid #ccc"
     },
     details: {
         display: 'flex',

@@ -15,7 +15,9 @@ const styles = theme => ({
         [theme.breakpoints.down('sm')]: {
             margin: 10,
         },
-        cursor: "pointer"
+        cursor: "pointer",
+        boxShadow: "none",
+        border: "1px solid #ccc"
     },
     details: {
         display: 'flex',
@@ -56,7 +58,7 @@ function ProductCard(props) {
             <div className={classes.details}>
                 <CardContent className={classes.content}>
                     <Typography component="h6" variant="h6" title={product.description}>
-                        {product.description && product.description.length >= 30 ? product.description.split('').splice(0,30).join('') + "..." : product.description}
+                        {product.description && product.description.length >= 30 ? product.description.split('').splice(0, 30).join('') + "..." : product.description}
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary">
                         {/* <RemoveRedEye />  */}

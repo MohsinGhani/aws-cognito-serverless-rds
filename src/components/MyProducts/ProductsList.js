@@ -38,7 +38,6 @@ class ProductsList extends Component {
   }
 
   render() {
-
     let { products, getProductsLoader, searchedProducts, searchLoader } = this.props;
     let { product, isOpenDetailDialog } = this.state;
 
@@ -46,6 +45,7 @@ class ProductsList extends Component {
       <div>
         <TopNav />
         <ProductDetailModal
+          history={this.props.history}
           product_id={product ? product.product_id : null}
           open={isOpenDetailDialog}
           handleDetailDialog={(action) => this.setState({ isOpenDetailDialog: action })}

@@ -11,11 +11,11 @@ import { Address } from "./../../services/address";
 import uuidv1 from "uuid/v1";
 import IconButton from "@material-ui/core/IconButton";
 import { connect } from "react-redux";
+import ProductDetailModal from "./../Products/ProductDetailModal";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import { ProductAction } from "./../../store/actions";
 import MapToSelectLocation from "./MapToSelectLocation";
 import ReactLoading from "react-loading";
-import swal from "sweetalert";
 import "./index.css";
 import TextModal from './../common/TextModal'
 // import { timer } from "rxjs";
@@ -79,7 +79,10 @@ class AddProduct extends React.Component {
       hideTool: false,
       openTextModal: false,
       textModalTitle: '',
-      textModalText: ''
+      textModalText: '',
+      isOpenDetailDialog: false,
+      product: null,
+      addPostModalToMyPrdctI: ""
     };
   }
 
@@ -201,12 +204,19 @@ class AddProduct extends React.Component {
       !this.props.saveProductLoader &&
       prevProps.saveProductLoader
     ) {
-      swal({
-        title: "Successfully Post New Add!",
-        icon: "success",
-        timer: 4000,
-      });
-      this.goto("/");
+      // swal({
+      //   title: "Successfully Post New Add!",
+      //   icon: "success",
+      //   timer: 4000,
+      // });
+      this.setState({
+        openTextModal: true,
+        textModalText: "Successfully Post New Add!",
+        textModalTitle: "Success",
+        product: this.props.savedProduct,
+        addPostModalToMyPrdctI: "my-product"
+      })
+      // this.goto("/my-product")
     }
 
     if (
@@ -288,13 +298,13 @@ class AddProduct extends React.Component {
     } = this.state;
     const { user, saveProductAction } = this.props;
 
-    if(selectedImage && !selectedImage.base64){
+    if (selectedImage && !selectedImage.base64) {
       return this.setState({
         openTextModal: true,
         textModalTitle: "Image Selection Warning",
         textModalText: "Kindly Select the Product Image before uploading product"
       })
-    } 
+    }
 
     saveProductAction({
       product_id: uuidv1(),
@@ -388,7 +398,8 @@ class AddProduct extends React.Component {
   };
 
   closeTextModal = () => {
-    this.setState({openTextModal: false})
+    // console.log("close")
+    this.setState({ openTextModal: false, isOpenDetailDialog: true })
   }
 
   render() {
@@ -417,7 +428,9 @@ class AddProduct extends React.Component {
       latitude,
       openTextModal,
       textModalTitle,
-      textModalText
+      textModalText,
+      product,
+      isOpenDetailDialog
     } = this.state;
 
     return (
@@ -453,6 +466,16 @@ class AddProduct extends React.Component {
           isTimer={true}
         />
 
+        <ProductDetailModal
+          history={this.props.history}
+          product_id={product ? product.product_id : null}
+          open={isOpenDetailDialog}
+          handleDetailDialog={action =>
+            this.setState({ isOpenDetailDialog: action })
+          }
+          identifier={this.state.addPostModalToMyPrdctI}
+        />
+
         <MapToSelectLocation
           open={isLocationModalOpen}
           handleClose={() => this.setState({ isLocationModalOpen: false })}
@@ -465,20 +488,23 @@ class AddProduct extends React.Component {
           <Grid container className={classes.root} spacing={16}>
             {/* <Hidden smDown> */}
             <Grid item md={5} sm={12} xs={12}>
-              <input
-                accept="image/*"
-                Style={{ display: "none" }}
-                className={classes.input}
-                id="icon-button-file"
-                type="file"
-                onChange={event => {
-                  this.handleImageChange(event);
-                  event.target.value = null;
-                  this.setState({
-                    hideTool: true
-                  });
-                }}
-              />
+              {
+                (selectedImage && !selectedImage.base64) && <input
+                  accept="image/*"
+                  Style={{ display: "none" }}
+                  className={classes.input}
+                  id="icon-button-file"
+                  type="file"
+                  onChange={event => {
+                    this.handleImageChange(event);
+                    event.target.value = null;
+                    this.setState({
+                      hideTool: true
+                    });
+                  }}
+                />
+              }
+
               <label htmlFor="icon-button-file" className={classes.cameraIcon}>
                 {selectedImage.base64 ? (
                   ""
@@ -504,9 +530,36 @@ class AddProduct extends React.Component {
                     )}
                 </div>
               </label>
-              {isSelectImg && <div className="input-editimg-btn-parent">
-                <button onClick={() => { }} className="input-editimg-btn">EDIT</button>
-              </div>}
+              {isSelectImg &&
+                <div className="input-editimg-btn-parent">
+                  <Button
+                    onClick={() => {
+                      // this.handleChangeImagePopup();
+                      var elem = document.getElementById("theFile");
+                      if (elem && document.createEvent) {
+                        var evt = document.createEvent("MouseEvents");
+                        evt.initEvent("click", false, true);
+                        elem.dispatchEvent(evt);
+                      }
+                    }}
+                    className="input-editimg-btn"
+                    color="primary"
+                  >
+                    Change Image
+                <input
+                      type="file"
+                      id="theFile"
+                      // display="hidden"
+                      onChange={event => {
+                        this.handleImageChange(event);
+                        event.target.value = null;
+                        this.setState({
+                          hideTool: true
+                        });
+                      }}
+                    />
+                  </Button>
+                </div>}
             </Grid>
             {/* </Hidden> */}
             <Grid item md={7} sm={12} xs={12}>

@@ -26,6 +26,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import TimeAgo from "timeago-react";
+import TextModal from './../common/TextModal'
 import "./index.css"
 
 const stylesTheme = theme => ({
@@ -45,10 +46,14 @@ class ProductDetailModal extends React.Component {
             showCommentModal: false,
             showShareModal: false,
             bottom: false,
+            openTextModal: false,
+            textModalTitle: '',
+            textModalText: '',
         }
     }
 
     componentDidMount() {
+
         let { product_id, getProductByIdAction } = this.props
         if (product_id) getProductByIdAction({ product_id })
     }
@@ -72,14 +77,43 @@ class ProductDetailModal extends React.Component {
             alert("you can't perform any action before authentication")
         }
     }
+
+    handleNavigateToBefore = () => {
+        const { handleDetailDialog, identifier } = this.props;
+        handleDetailDialog(null)
+        if (identifier === "my-product") {
+            this.props.history.push("/my-product")
+        }
+    }
+
     toggleDrawer = (side, open) => () => {
         this.setState({
             [side]: open,
         });
     };
+
+    handleCommentLoginModal = () => {
+        const { user } = this.props;
+        if (user) {
+            this.setState({ showCommentModal: true })
+        }
+        else {
+            this.setState({
+                openTextModal: true,
+                textModalTitle: "Login Required",
+                textModalText: "You must login than you are able to comment"
+            })
+        }
+    }
+
+    closeTextModal = () => {
+        // console.log("close")
+        this.setState({ openTextModal: false, isOpenDetailDialog: true })
+    }
+
     render() {
-        const { classes, open, handleDetailDialog, product, user, history, liked } = this.props;
-        const { showCommentModal, showShareModal, isDislike } = this.state;
+        const { classes, open, handleDetailDialog, product, user, history, liked, addPostModalToMyPrdctI } = this.props;
+        const { showCommentModal, showShareModal, isDislike, openTextModal, textModalTitle, textModalText } = this.state;
         // console.log(this.props.history)
 
         return (
@@ -100,13 +134,24 @@ class ProductDetailModal extends React.Component {
                     TransitionComponent={Transition}
                     className={"dialog"}
                 >
+
+                    <TextModal
+                        open={openTextModal}
+                        handleClose={this.closeTextModal}
+                        title={textModalTitle}
+                        text={textModalText}
+                        isTimer={true}
+                        btnAction={() => { this.props.history.push("/signin") }}
+                        btnTitle={"Login"}
+                    />
+
                     <AppBar className={classes.appBar}>
                         <Toolbar style={{ padding: 0 }}>
                             <div className="product-modal-header">
                                 <div className="product-modal-back-icon-wrapper">
                                     <IconButton
                                         color="inherit"
-                                        onClick={() => handleDetailDialog(null)}
+                                        onClick={this.handleNavigateToBefore}
                                         aria-label="Close"
                                     >
                                         <i className="material-icons navigate">navigate_before</i>
@@ -133,18 +178,21 @@ class ProductDetailModal extends React.Component {
                             product ?
                                 <div className="product-image-container">
                                     <Card className={classes.card} >
-                                        <img
-                                            src={require("./../../assets/img/more.svg")}
-                                            className="more-image-icon"
-                                            onClick={this.toggleDrawer('bottom', true)}
-                                        />
+
                                         <div className="main-product-image-wrapper">
                                             <img
                                                 src={product.product_img}
                                                 className="main-product-image"
                                                 onClick={this.toggleDrawer('bottom', true)}
                                             />
+                                            <img
+                                                src={require("./../../assets/img/more.svg")}
+                                                className="more-image-icon"
+                                                onClick={this.toggleDrawer('bottom', true)}
+                                            />
                                         </div>
+
+
                                         <Typography gutterBottom component="h5" className={classes.typography}>
                                             {product.city}, {product.country}
                                             <span className={classes.span}>
@@ -207,7 +255,7 @@ class ProductDetailModal extends React.Component {
                                                         aria-label="Add"
                                                         className={classes.margin}
                                                         id="add-product-fabbtn"
-                                                        onClick={() => { history.push("/add-product") }}
+                                                        onClick={() => { this.props.history.push("/add-product") }}
                                                     >
                                                         <AddIcon />
                                                     </Fab>
@@ -237,7 +285,7 @@ class ProductDetailModal extends React.Component {
                                                 onKeyDown={this.toggleDrawer('bottom', false)}
                                             >
                                                 <List className={classes.fullList}>
-                                                    <ListItem button onClick={() => { this.setState({ showCommentModal: true }) }} >
+                                                    <ListItem button onClick={this.handleCommentLoginModal} >
                                                         <i class="material-icons comment">
                                                             mode_comment
                                                         </i>
@@ -287,6 +335,8 @@ const styles = (theme) => ({
     },
     card: {
         maxWidth: '100%',
+        boxShadow: "none",
+        border: "1px solid #ccc"
     },
     media: {
         height: 0,

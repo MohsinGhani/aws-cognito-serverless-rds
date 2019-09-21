@@ -16,7 +16,8 @@ import TopNav from "./../common/TopNav";
 import credentials from "../../config/credentials";
 import ReactMapboxGl from "react-mapbox-gl";
 import Location from "./../common/Location";
-import swal from "sweetalert";
+import TextModal from './../common/TextModal'
+// import swal from "sweetalert";
 
 const Map = ReactMapboxGl({
   accessToken: credentials.MAP_ACCESS_TOCKEN
@@ -48,7 +49,10 @@ class SignIn extends React.Component {
       email: "",
       password: "",
       latitude: 36.778259,
-      longitude: -119.417931
+      longitude: -119.417931,
+      openTextModal: false,
+      textModalTitle: '',
+      textModalText: ''
     };
     this.login = this.login.bind(this);
   }
@@ -66,18 +70,14 @@ class SignIn extends React.Component {
   login = () => {
     let { email, password } = this.state;
 
-    !email && !password
-      ? swal("", "email & password are required fields!", "error")
-      : !email || !password
-      ? !email
-        ? swal("", "email is required!", "error")
-        : swal("", "password is required!", "error")
-      : this.props.signInAction({
-          email,
-          password
-        });
+    this.props.signInAction({
+      email, password
+    });
   };
 
+  closeTextModal = () => {
+    this.setState({ openTextModal: false })
+  }
   componentDidMount() {
     this.props.isLoggedInAction();
     if (this.props.isLoggedIn) {
@@ -91,117 +91,108 @@ class SignIn extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    let { authError } = this.props;
+    if (prevProps.authError !== authError && authError !== null) {
+    
+      this.setState({ openTextModal: true, textModalTitle: authError, textModalText: "Create Account Then Login to Continue" })
+    }
+  }
+
   render() {
     let { classes, authError, authLoader } = this.props;
-    let { latitude, longitude } = this.state;
+    let { latitude, longitude, email, password, textModalText, textModalTitle, openTextModal } = this.state;
+    let isDisableBtn = email && password
     return (
-      <div>
-        <Location
-          handleLocation={(latitude, longitude) => {
-            this.setState({
-              latitude,
-              longitude
-            });
-          }}
-        />{" "}
+      <div style={{ backgroundImage: 'url(' + require("./../../assets/img/map-image.jpg") + ')', height: "100vh" }}>
         <TopNav />
-        <Map
-          style="mapbox://styles/mapbox/streets-v9"
-          containerStyle={{
-            height: "89vh",
-            width: "100%"
-          }}
-          movingMethod={"jumpTo"}
-          center={[longitude, latitude]}
-          zoom={[12]}
-          // onClick={(map, e) => { this.props.reverseGeoCodingAction(e.lngLat) }}
-        >
-          <br />
-          <Card className="signip-container">
-            <Grid container spacing={16}>
-              <Grid item md={12} sm={12} xs={12}>
-                <h1 className={`title center ${classes.p05}`}> Sign In </h1>{" "}
-                <h3 className={`sub-title center ${classes.p05}`}>
-                  to continue to Productmania{" "}
-                </h3>{" "}
-                {authError ? (
-                  <p className="text-alert"> {JSON.stringify(authError)} </p>
-                ) : (
-                  ""
-                )}{" "}
-                <Grid container>
-                  <Grid item md={12} sm={12} xs={12} className={classes.p05}>
-                    <InputField
-                      label={"Email address"}
-                      variant={"outlined"}
-                      id={"email"}
-                      name={"email"}
-                      fullWidth={true}
-                      onChange={this.handleInput}
-                    />{" "}
-                  </Grid>{" "}
+        <TextModal
+          open={openTextModal}
+          handleClose={this.closeTextModal}
+          title={textModalTitle}
+          text={textModalText}
+        />
+        <br />
+        <Card className="signip-container">
+          <Grid container spacing={16}>
+            <Grid item md={12} sm={12} xs={12}>
+              <h1 className={`title center ${classes.p05}`}> Sign In </h1>{" "}
+              <h3 className={`sub-title center ${classes.p05}`}>
+                to continue to Productmania{" "}
+              </h3>{" "}
+
+              <Grid container>
+                <Grid item md={12} sm={12} xs={12} className={classes.p05}>
+                  <InputField
+                    label={"Email address"}
+                    variant={"outlined"}
+                    id={"email"}
+                    name={"email"}
+                    fullWidth={true}
+                    onChange={this.handleInput}
+                  />{" "}
                 </Grid>{" "}
-                <Grid container>
-                  <Grid item md={12} sm={12} xs={12} className={classes.p05}>
-                    <InputFieldWithEndAdornment
-                      label={"Password"}
-                      variant={"outlined"}
-                      id={"password"}
-                      name={"password"}
-                      fullWidth={true}
-                      type={"password"}
-                      onChange={this.handleInput}
-                    />{" "}
-                  </Grid>{" "}
+              </Grid>{" "}
+              <Grid container>
+                <Grid item md={12} sm={12} xs={12} className={classes.p05}>
+                  <InputFieldWithEndAdornment
+                    label={"Password"}
+                    variant={"outlined"}
+                    id={"password"}
+                    name={"password"}
+                    fullWidth={true}
+                    type={"password"}
+                    onChange={this.handleInput}
+                  />{" "}
                 </Grid>{" "}
-                <Grid container className={classes.login_btn_parent}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    fullWidth
-                    onClick={this.login}
-                    disabled={authLoader}
-                  >
-                    {" "}
-                    {authLoader ? (
-                      <div>
-                        <ReactLoading
-                          type={"spin"}
-                          color={"#fff"}
-                          height={"25px"}
-                          width={"25px"}
-                        />{" "}
-                      </div>
-                    ) : (
+              </Grid>{" "}
+              <Grid container className={classes.login_btn_parent}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  fullWidth
+                  onClick={this.login}
+                  disabled={!isDisableBtn || authLoader}
+                >
+                  {" "}
+                  {authLoader ? (
+                    <div>
+                      <ReactLoading
+                        type={"spin"}
+                        color={"#fff"}
+                        height={"25px"}
+                        width={"25px"}
+                      />{" "}
+                    </div>
+                  ) : (
                       "Login"
                     )}{" "}
-                  </Button>{" "}
-                </Grid>{" "}
-                <Divider />
-                <Grid container className={classes.btns_parent}>
-                  <Button
-                    onClick={() => this.goto("/signup")}
-                    color="primary"
-                    className={classes.button}
-                  >
-                    Create account{" "}
-                  </Button>{" "}
-                  <Button
-                    onClick={() => this.goto("/forgot-password")}
-                    color="primary"
-                    className={classes.button}
-                  >
-                    Forgot password ?
-                  </Button>{" "}
-                </Grid>{" "}
-                <SignInWithGoogle history={this.props.history} /> <br />
-                <SignInWithFacebook history={this.props.history} />{" "}
+                </Button>{" "}
               </Grid>{" "}
+              <Divider />
+              <Grid container className={classes.btns_parent}>
+                <Button
+                  onClick={() => this.goto("/signup")}
+                  color="primary"
+                  className={classes.button}
+                >
+                  Create account{" "}
+                </Button>{" "}
+                <Button
+                  onClick={() => this.goto("/forgot-password")}
+                  color="primary"
+                  className={classes.button}
+                >
+                  Forgot password ?
+                  </Button>{" "}
+              </Grid>{" "}
+              <SignInWithGoogle history={this.props.history} /> <br />
+              <SignInWithFacebook history={this.props.history} />{" "}
             </Grid>{" "}
-          </Card>{" "}
-        </Map>{" "}
-      </div>
+          </Grid>{" "}
+        </Card>{" "}
+      </div >
     );
   }
 }

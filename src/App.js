@@ -26,6 +26,7 @@ import MyProducts from './components/MyProducts';
 import Privacy from './components/Static/Privacy';
 import ShareAppLink from './components/Static/ShareAppLink';
 import TermOfUse from './components/Static/TermsOfUse';
+import Profile from "./components/Profile"
 
 Amplify.configure(awsConfig)
 const customHistory = createBrowserHistory();
@@ -58,7 +59,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router history={customHistory}>
-          <div className="App">
+          <div className="App" >
             <Route exact path="/" component={Products} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/signin" component={SignIn} />
@@ -66,7 +67,7 @@ class App extends Component {
             <Route exact path="/confirm-signup" component={ConfirmSignUp} />
             <Route exact path="/product/:product_id" component={Product} />
             <Route exact path="/products-list" component={ProductsList} />
-            <Route exact path="/profile" component={ProductsList} />
+            <Route exact path="/profile" component={Profile} />
             <Route exact path="/bookmark" component={Bookmark} />
             <Route exact path="/cookie-policy" component={CookiePolicy} />
             <Route exact path="/copy-app-link" component={CopyLinkApp} />
