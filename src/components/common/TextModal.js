@@ -35,14 +35,14 @@ const styles = theme => ({
 })
 
 const timer = (func) => {
-    setTimeout(()=>{
+    setTimeout(() => {
         func()
     }, 3000)
 }
 
-const TextModal = ({ open, handleClose, classes, title, text, isTimer }) => {
+const TextModal = ({ open, handleClose, classes, title, text, isTimer, btnTitle, btnAction }) => {
     // getModalStyle is not a pure function, we roll the style only on the first render
-    if(isTimer && open) timer(handleClose)
+    if (isTimer && open) timer(handleClose)
     return (
         <Modal
             aria-labelledby="simple-modal-title"
@@ -55,7 +55,12 @@ const TextModal = ({ open, handleClose, classes, title, text, isTimer }) => {
                 <p id="simple-modal-description">
                     {text}
                 </p>
-                <button className={'text-modal-button'} onClick={handleClose}>Close</button>
+                {
+                    btnTitle && btnAction ?
+                        <button className={'text-modal-button'} onClick={btnAction}>{btnTitle}</button> :
+                        <button className={'text-modal-button'} onClick={handleClose}>Close</button>
+                }
+
             </div>
         </Modal>
     );

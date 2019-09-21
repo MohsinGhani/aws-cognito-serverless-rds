@@ -235,6 +235,8 @@ class SwipeableTemporaryDrawer extends React.Component {
                 </ListItem> */}
                 {
                   navItems.map(item => {
+                    if(!isLoggedIn && item.label === 'My Product') return
+
                     return (
                       <ListItem
                         className={classes.listItem}

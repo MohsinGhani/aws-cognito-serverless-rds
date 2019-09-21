@@ -38,6 +38,7 @@ class ProductsList extends Component {
   render() {
     let {
       products,
+      searchedQuery,
       getProductsLoader,
       searchedProducts,
       searchLoader,
@@ -88,6 +89,10 @@ class ProductsList extends Component {
             );
           })}
 
+        {
+          getProductsLoader || (searchedQuery && !searchedProducts) ? "" : <h4 className="text-alert">NO PRODUCT FOUND</h4>
+        }
+
         {(getProductsLoader || searchLoader) && (
           <div style={{ width: "50px", margin: "50px auto" }}>
             <ReactLoading
@@ -109,6 +114,7 @@ const mapStateToProps = state => {
       products,
       getProductsLoader,
       getProductsError,
+      searchedQuery,
       searchedProducts,
       searchLoader,
       searchError
@@ -119,6 +125,7 @@ const mapStateToProps = state => {
     products,
     getProductsLoader,
     getProductsError,
+    searchedQuery,
     searchedProducts,
     searchLoader,
     searchError,

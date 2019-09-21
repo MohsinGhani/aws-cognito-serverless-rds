@@ -71,6 +71,10 @@ class MyProducts extends Component {
           </div>
         }
 
+        {
+          (getProductsLoader || (products && products.filter(product => user && user.user_id === product.creator_id)[0])) ? "" : <p className="text-alert"> NO PRODUCT FOUND </p>
+        }
+
       </div>
     )
   }
