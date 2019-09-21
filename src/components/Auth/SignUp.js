@@ -183,7 +183,7 @@ class SignUp extends Component {
     let { latitude, longitude } = this.state
 
     return (
-      <div style={{ backgroundImage: 'url(' + require("./../../assets/img/map-image.jpg") + ')', height: "100vh" }}>
+      <div style={{ backgroundImage: 'url(' + require("./../../assets/img/map-image.jpg") + ')', height: "100vh", backgroundRepeat: 'no', backgroundSize: 'cover' }}>
         <TopNav />
         <br />
         <Card className="signup-container">

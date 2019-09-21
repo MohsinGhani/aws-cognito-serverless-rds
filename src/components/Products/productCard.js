@@ -16,8 +16,7 @@ const styles = theme => ({
             margin: 10,
         },
         cursor: "pointer",
-        boxShadow: "none",
-        border: "1px solid #ccc"
+        boxShadow: "none"
     },
     details: {
         display: 'flex',

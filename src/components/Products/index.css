@@ -209,8 +209,9 @@ list {
 }
 
 .main-product-image-wrapper .main-product-image {
-  width: 100%;
+  width: auto;
   height: auto;
+  min-height: 250px;
   max-width: 1024px;
   max-height: 768px;
 }

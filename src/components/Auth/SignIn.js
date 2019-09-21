@@ -95,7 +95,7 @@ class SignIn extends React.Component {
     let { authError } = this.props;
     if (prevProps.authError !== authError && authError !== null) {
     
-      this.setState({ openTextModal: true, textModalTitle: authError, textModalText: "Create Account Then Login to Continue" })
+      this.setState({ openTextModal: true, textModalTitle: "Login Failed!", textModalText: authError })
     }
   }
 
@@ -104,7 +104,7 @@ class SignIn extends React.Component {
     let { latitude, longitude, email, password, textModalText, textModalTitle, openTextModal } = this.state;
     let isDisableBtn = email && password
     return (
-      <div style={{ backgroundImage: 'url(' + require("./../../assets/img/map-image.jpg") + ')', height: "100vh" }}>
+      <div style={{ backgroundImage: 'url(' + require("./../../assets/img/map-image.jpg") + ')', height: "100vh", backgroundRepeat: 'no', backgroundSize: 'cover' }}>
         <TopNav />
         <TextModal
           open={openTextModal}

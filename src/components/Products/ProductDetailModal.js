@@ -158,7 +158,7 @@ class ProductDetailModal extends React.Component {
                                     </IconButton>
                                 </div>
                                 <div>
-                                    <h4 style={{ margin: 0, padding: '20px 0' }}>Productmania</h4>
+                                    <h4 style={{ margin: 0, padding: '20px 0', cursor: 'pointer' }} onClick={() => { handleDetailDialog(null); this.props.history.push('/') }}>Productmania</h4>
                                 </div>
                                 <div className="product-modal-center-icon-wrapper">
                                     <Typography
@@ -173,7 +173,7 @@ class ProductDetailModal extends React.Component {
                         </Toolbar>
                     </AppBar>
 
-                    <div style={{ maxWidth: '1024px', margin: '0 auto' }}>
+                    <div style={{ width: '100%', maxWidth: '1024px', margin: '0 auto' }}>
                         {
                             product ?
                                 <div className="product-image-container">
@@ -185,11 +185,11 @@ class ProductDetailModal extends React.Component {
                                                 className="main-product-image"
                                                 onClick={this.toggleDrawer('bottom', true)}
                                             />
-                                            <img
+                                            {/* <img
                                                 src={require("./../../assets/img/more.svg")}
                                                 className="more-image-icon"
                                                 onClick={this.toggleDrawer('bottom', true)}
-                                            />
+                                            /> */}
                                         </div>
 
 
@@ -335,8 +335,7 @@ const styles = (theme) => ({
     },
     card: {
         maxWidth: '100%',
-        boxShadow: "none",
-        border: "1px solid #ccc"
+        boxShadow: "none"
     },
     media: {
         height: 0,
