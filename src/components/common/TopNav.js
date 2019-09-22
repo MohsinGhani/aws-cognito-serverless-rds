@@ -35,7 +35,7 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
+    marginRight: 0
   },
   title: {
     display: "none",
@@ -48,6 +48,7 @@ const styles = theme => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
+    overflow: 'hidden',
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25)
     },
@@ -302,7 +303,22 @@ class TopNav extends React.Component {
                 )}
               </div>
             ) : null} */}
-            <div className={classes.search}>
+            {/* <div className={classes.search}> */}
+            <div className={'search-field-container'}>
+              <input
+                type={'text'}
+                className={'search-field'}
+                value={query}
+                onChange={this.handleSearch}
+                id="query"
+              />
+              <div className={'search-field-addon'}>
+                {query ?
+                  <div onClick={() => { this.setState({ query: '' }); this.props.searchAction({ query: '' }); }} className={'search-field-addon-icon'}>X</div>
+                  : <SearchIcon className={'search-field-addon-icon'} />
+                }
+              </div>
+              {/* </div> */}
               {/* <div className={classes.searchIcon}>
                 {query ?
                   <div onClick={() => alert('asdasd sadsa')} style={{ paddingTop: 15, cursor: 'pointer' }}>X</div>
@@ -319,7 +335,7 @@ class TopNav extends React.Component {
                 onChange={this.handleSearch}
                 id="query"
               /> */}
-              <TextField
+              {/* <TextField
                 id="query"
                 className={classes.textField}
                 type={'text'}
@@ -340,7 +356,7 @@ class TopNav extends React.Component {
                     </InputAdornment>
                   ),
                 }}
-              />
+              /> */}
             </div>
           </Toolbar>
         </AppBar>

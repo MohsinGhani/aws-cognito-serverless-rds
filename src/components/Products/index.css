@@ -235,3 +235,11 @@ list {
   background: #fff;
   border-top: 1px solid #eaeaea;
 }
+
+.description{
+  width: 100%;
+  max-width: 1024px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

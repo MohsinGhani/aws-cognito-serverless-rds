@@ -210,6 +210,7 @@ class SwipeableTemporaryDrawer extends React.Component {
                     <i className="material-icons clear">clear</i>
                   </Typography>
                 </ListItem>
+                <h4 style={{ textAlign: 'center' }}>Productmania</h4>
                 {/* <ListItem>
                   <div className={classes.search}>
                     <InputBase

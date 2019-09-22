@@ -57,8 +57,9 @@ function ProductCard(props) {
             <div className={classes.details}>
                 {/* <img src={require("./../../assets/img/more.svg")} className="more-image-icon" /> */}
                 <CardContent className={classes.content}>
-                    <Typography component="h6" variant="h6" title={product.description}>
-                        {product.description && product.description.length >= 30 ? product.description.split('').splice(0, 30).join('') + "..." : product.description}
+                    <Typography component="h6" variant="h6" title={product.description} className={'description'}>
+                        {/* {product.description && product.description.length >= 30 ? product.description.split('').splice(0, 30).join('') + "..." : product.description} */}
+                        {product.description}
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary">
                         {/* <RemoveRedEye />  */}
