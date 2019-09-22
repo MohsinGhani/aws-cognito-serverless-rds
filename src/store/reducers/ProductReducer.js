@@ -34,6 +34,7 @@ const initialState = {
     doCommentLoader: false,
     doCommentError: null,
 
+    searchedQuery: '',
     searchedProducts: null,
     searchLoader: false,
     searchError: null,
@@ -74,6 +75,7 @@ export default function ProductReducer(state = initialState, action) {
         case SEARCH:
             return {
                 ...state,
+                searchedQuery: '',
                 searchedProducts: null,
                 searchLoader: true,
                 searchError: null
@@ -82,7 +84,7 @@ export default function ProductReducer(state = initialState, action) {
         case SEARCH_SUCCESS:
             return {
                 ...state,
-                searchedProducts: action.payload['data'],
+                searchedProducts: action.payload['data'] && action.payload['data'].length ? action.payload['data'] : null,
                 searchedQuery: action.payload['query'],
                 searchLoader: false,
                 searchError: null

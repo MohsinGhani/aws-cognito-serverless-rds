@@ -5,7 +5,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
 import Drawer from "@material-ui/core/Drawer";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -174,14 +173,14 @@ class SwipeableTemporaryDrawer extends React.Component {
     }
   };
   render() {
-    const { query, navItems } = this.state;
-    const { classes, isLoggedIn, user } = this.props;
+    const { navItems, left } = this.state;
+    const { classes, isLoggedIn } = this.props;
     return (
       <div>
         <MenuIcon onClick={this.toggleDrawer("left", true)} id="svgIcon" />
         <div>
           <Drawer
-            open={this.state.left}
+            open={left}
             className={classes.drawer}
             onClose={this.toggleDrawer('left', false)}
           >
@@ -238,8 +237,7 @@ class SwipeableTemporaryDrawer extends React.Component {
                 </ListItem> */}
                 {
                   navItems.map(item => {
-                    if (!isLoggedIn && item.label === 'My Product') return
-
+                    if (!isLoggedIn && item.label === 'My Product') return <span></span>
                     return (
                       <ListItem
                         className={classes.listItem}

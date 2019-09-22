@@ -5,13 +5,11 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
@@ -21,8 +19,6 @@ import Avatar from "@material-ui/core/Avatar";
 import { authAction, ProductAction } from "./../../store/actions";
 import SwipeableTemporaryDrawer from "../MaterialUI/Drawer";
 import { withRouter } from "react-router-dom";
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import "./index.css";
 
 const styles = theme => ({
@@ -227,8 +223,8 @@ class TopNav extends React.Component {
     this.setState({ open: false });
   };
   render() {
-    const { query, selectedImage, isImageClickPopup } = this.state;
-    const { classes, isLoggedIn, user } = this.props;
+    const { query } = this.state;
+    const { classes, user } = this.props;
 
     return (
       <div className={classes.root}>
@@ -311,6 +307,7 @@ class TopNav extends React.Component {
                 value={query}
                 onChange={this.handleSearch}
                 id="query"
+                placeholder={'Search...'}
               />
               <div className={'search-field-addon'}>
                 {query ?

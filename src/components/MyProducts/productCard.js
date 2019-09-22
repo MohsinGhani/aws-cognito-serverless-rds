@@ -6,7 +6,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import TimeAgo from "timeago-react";
-import { RemoveRedEye } from '@material-ui/icons'
 
 const styles = theme => ({
     card: {

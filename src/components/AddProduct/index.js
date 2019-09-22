@@ -711,7 +711,7 @@ class AddProduct extends React.Component {
                 fullWidth
                 onClick={this.onSaveProduct}
                 disabled={isSaveButtonDisable}
-                style={{ opacity: isSaveButtonDisable ? 0.6 : 1 }}
+                style={{ opacity: isSaveButtonDisable ? 0.6 : 1, height: 45 }}
                 variant="contained"
                 color="primary"
                 id="submit-button"
@@ -720,7 +720,7 @@ class AddProduct extends React.Component {
                   <ReactLoading
                     type={"spin"}
                     color={"#fff"}
-                    height={"25px"}
+                    height={"40px"}
                     width={"25px"}
                   />
                 ) : (

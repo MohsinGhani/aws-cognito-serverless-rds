@@ -7,6 +7,7 @@ import TopNav from './../common/TopNav'
 import ProductDetailModal from './../Products/ProductDetailModal'
 import ProductCard from './productCard'
 import ReactLoading from 'react-loading';
+import TextError from './../common/TextError'
 
 class MyProducts extends Component {
 
@@ -37,9 +38,21 @@ class MyProducts extends Component {
     }
   }
 
+  renderNotProductError = () => {
+    const { getProductsLoader, products, user, searchLoader, searchedQuery, searchedProducts } = this.props
+    let condition = ((products && products.filter(product => user && user.user_id === product.creator_id)[0]))
+    let searchedCondition = ((searchedProducts && searchedProducts.filter(product => user && user.user_id === product.creator_id)[0]))
+    if (!condition && !getProductsLoader && !searchLoader) {
+      return <TextError text={"Product Not Fount! You don't have any product."} />
+    }
+    else if(!searchedCondition){
+      return <TextError text={"Product Not Fount! Please search for different keywords."} />
+    }
+  }
+
   render() {
 
-    let { products, getProductsLoader, searchedProducts, searchLoader, user } = this.props;
+    let { products, getProductsLoader, searchedProducts, searchLoader, user, searchedQuery } = this.props;
     let { product, isOpenDetailDialog } = this.state;
 
     return (
@@ -53,7 +66,7 @@ class MyProducts extends Component {
         />
 
         {
-          !getProductsLoader && !searchLoader && !searchedProducts && products && products.map((product, i) => {
+          !getProductsLoader && !searchLoader && !searchedQuery && products && products.map((product, i) => {
             if (user && user.user_id !== product.creator_id) return
             return <ProductCard key={i} product={product} handleClick={(product) => this.setState({ product, isOpenDetailDialog: true })} />
           })
@@ -73,7 +86,7 @@ class MyProducts extends Component {
         }
 
         {
-          (getProductsLoader || (products && products.filter(product => user && user.user_id === product.creator_id)[0])) ? "" : <p className="text-alert"> NO PRODUCT FOUND </p>
+          this.renderNotProductError()
         }
 
       </div>
@@ -85,13 +98,15 @@ const mapStateToProps = (state) => {
   const {
     ProductReducer: {
       products, getProductsLoader, getProductsError,
-      searchedProducts, searchLoader, searchError
+      searchedProducts, searchLoader, searchError,
+      searchedQuery
     },
     authReducer: { user, isLoggedIn }
   } = state;
   return {
     products, getProductsLoader, getProductsError,
     searchedProducts, searchLoader, searchError,
+    searchedQuery,
     user, isLoggedIn
   }
 }

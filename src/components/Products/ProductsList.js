@@ -7,6 +7,7 @@ import TopNav from "./../common/TopNav";
 import ProductDetailModal from "./ProductDetailModal";
 import ProductCard from "./productCard";
 import ReactLoading from "react-loading";
+import TextError from './../common/TextError'
 
 class ProductsList extends Component {
   constructor(props) {
@@ -60,7 +61,7 @@ class ProductsList extends Component {
 
         {!getProductsLoader &&
           !searchLoader &&
-          !searchedProducts &&
+          !searchedQuery &&
           products &&
           products.map((product, i) => {
             return (
@@ -90,7 +91,7 @@ class ProductsList extends Component {
           })}
 
         {
-          getProductsLoader || (searchedQuery && !searchedProducts) ? "" : <h4 className="text-alert">NO PRODUCT FOUND</h4>
+          (searchedQuery && !searchedProducts && !searchLoader) ? <TextError text={'No Product Found. Please search for different keywords.'} /> : ""
         }
 
         {(getProductsLoader || searchLoader) && (

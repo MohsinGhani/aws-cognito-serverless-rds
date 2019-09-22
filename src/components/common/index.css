@@ -40,8 +40,15 @@ label + .MuiInput-formControl-155{
     cursor: pointer;
 }
 
-/* TOP NAV SEARCH BAR */
+/* TextError */
+.text-error{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
 
+/* TOP NAV SEARCH BAR */
 .search-field-container{
     display: flex;
     justify-content: space-between;
@@ -54,6 +61,8 @@ label + .MuiInput-formControl-155{
 .search-field-container .search-field{
     border: none;
     width: 100%;
+    padding: 3px;
+    color: #9e7339;
 }
 
 .search-field-container .search-field-addon{

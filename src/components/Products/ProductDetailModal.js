@@ -81,7 +81,8 @@ class ProductDetailModal extends React.Component {
                 textModalTitle: "Successfull!",
                 textModalText: `you have successfully ${action ? 'Like' : 'Dislike'} this product`,
                 btnTitle: 'Close',
-                btnAction: () => { this.setState({ openTextModal: false }) }
+                btnAction: () => { this.setState({ openTextModal: false }) },
+                strickedAction: null
             }, this.handleActionPopoverClose())
         }
         else {
@@ -130,7 +131,8 @@ class ProductDetailModal extends React.Component {
             textModalTitle: "Login Required!",
             textModalText: "You must login to perform this action",
             btnAction: () => { this.props.history.push("/signin") },
-            btnTitle: "Login"
+            btnTitle: "Login",
+            strickedAction: () => { this.props.history.push("/signin") }
         })
     }
 
@@ -158,7 +160,7 @@ class ProductDetailModal extends React.Component {
 
     render() {
         const { classes, open, handleDetailDialog, product, user, history, liked, addPostModalToMyPrdctI } = this.props;
-        const { showCommentModal, actionPopoverOpen, anchorEl, showShareModal, isDislike, openTextModal, textModalTitle, textModalText, btnTitle, btnAction } = this.state;
+        const { showCommentModal, actionPopoverOpen, anchorEl, showShareModal, isDislike, openTextModal, textModalTitle, textModalText, btnTitle, btnAction, strickedAction } = this.state;
         const actionPopoverId = actionPopoverOpen ? 'simple-popover' : undefined;
 
         return (
@@ -189,6 +191,7 @@ class ProductDetailModal extends React.Component {
                     isTimer={true}
                     btnAction={btnAction}
                     btnTitle={btnTitle}
+                    strickedAction={strickedAction}
                 />
 
                 <Dialog
