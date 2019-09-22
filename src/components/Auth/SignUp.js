@@ -348,7 +348,6 @@ class SignUp extends Component {
         {
           authError ? (
             <div>
-              <p>sorry</p>
               <Dialog
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
@@ -378,7 +377,7 @@ class SignUp extends Component {
                   <Typography>
                     <Button onClick={this.handleClose} id="closeButton">
                       OK
-                        </Button>
+                    </Button>
                   </Typography>
                 </div>
               </Dialog>
@@ -386,7 +385,6 @@ class SignUp extends Component {
           ) : () => {
             setTimeout(() => (
               <div>
-                <p>sorry</p>
                 <Dialog
                   aria-labelledby="simple-modal-title"
                   aria-describedby="simple-modal-description"

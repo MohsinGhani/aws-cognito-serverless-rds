@@ -87,12 +87,9 @@ class AddProduct extends React.Component {
   }
 
   handleInput = e => {
-    var hasNumber = /\d/;
-    if (!hasNumber.test(e.target.value)) {
-      this.setState({
-        [e.target.id]: e.target.value
-      });
-    }
+    this.setState({
+      [e.target.id]: e.target.value
+    });
   };
 
   componentDidMount() {

@@ -27,6 +27,7 @@ import Fab from '@material-ui/core/Fab';
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import TimeAgo from "timeago-react";
 import TextModal from './../common/TextModal'
+import Popover from '@material-ui/core/Popover';
 import "./index.css"
 
 const stylesTheme = theme => ({
@@ -49,11 +50,12 @@ class ProductDetailModal extends React.Component {
             openTextModal: false,
             textModalTitle: '',
             textModalText: '',
+            actionPopoverOpen: false,
+            anchorEl: null
         }
     }
 
     componentDidMount() {
-
         let { product_id, getProductByIdAction } = this.props
         if (product_id) getProductByIdAction({ product_id })
     }
@@ -72,9 +74,19 @@ class ProductDetailModal extends React.Component {
                 product_id,
                 action
             })
+
+            // display confirmation modal
+            this.setState({
+                openTextModal: true,
+                textModalTitle: "Successfull!",
+                textModalText: `you have successfully ${action ? 'Like' : 'Dislike'} this product`,
+                btnTitle: 'Close',
+                btnAction: () => { this.setState({ openTextModal: false }) }
+            }, this.handleActionPopoverClose())
         }
         else {
-            alert("you can't perform any action before authentication")
+            this.showLoginModal()
+            this.handleActionPopoverClose()
         }
     }
 
@@ -98,26 +110,67 @@ class ProductDetailModal extends React.Component {
             this.setState({ showCommentModal: true })
         }
         else {
-            this.setState({
-                openTextModal: true,
-                textModalTitle: "Login Required",
-                textModalText: "You must login than you are able to comment"
-            })
+            this.showLoginModal()
         }
+    }
+
+    handleAddPostClick = () => {
+        const { user } = this.props;
+        if (user) {
+            this.props.history.push('/add-product')
+        }
+        else {
+            this.showLoginModal()
+        }
+    }
+
+    showLoginModal = () => {
+        this.setState({
+            openTextModal: true,
+            textModalTitle: "Login Required!",
+            textModalText: "You must login to perform this action",
+            btnAction: () => { this.props.history.push("/signin") },
+            btnTitle: "Login"
+        })
     }
 
     closeTextModal = () => {
         // console.log("close")
-        this.setState({ openTextModal: false, isOpenDetailDialog: true })
+        this.setState({
+            openTextModal: false,
+            isOpenDetailDialog: true
+        })
+    }
+
+    handleActionPopoverClose = () => {
+        this.setState({
+            actionPopoverOpen: false,
+            anchorEl: null
+        })
+    }
+
+    handleActionPopoverClick = (event) => {
+        this.setState({
+            anchorEl: event.currentTarget,
+            actionPopoverOpen: true
+        })
     }
 
     render() {
         const { classes, open, handleDetailDialog, product, user, history, liked, addPostModalToMyPrdctI } = this.props;
-        const { showCommentModal, showShareModal, isDislike, openTextModal, textModalTitle, textModalText } = this.state;
-        // console.log(this.props.history)
+        const { showCommentModal, actionPopoverOpen, anchorEl, showShareModal, isDislike, openTextModal, textModalTitle, textModalText, btnTitle, btnAction } = this.state;
+        const actionPopoverId = actionPopoverOpen ? 'simple-popover' : undefined;
 
         return (
             <div className="product-detail-modal-body">
+                <ActionPopover
+                    id={actionPopoverId}
+                    open={actionPopoverOpen}
+                    anchorEl={anchorEl}
+                    handleClose={this.handleActionPopoverClose}
+                    classes={classes}
+                    handleLikeAndDislikeProduct={this.handleLikeAndDislikeProduct}
+                />
                 <CommentModal
                     open={showCommentModal}
                     handleClose={() => this.setState({ showCommentModal: false })}
@@ -127,6 +180,17 @@ class ProductDetailModal extends React.Component {
                     handleClose={() => this.setState({ showShareModal: false })}
                     product_id={product ? product.product_id : ''}
                 />
+
+                <TextModal
+                    open={openTextModal}
+                    handleClose={this.closeTextModal}
+                    title={textModalTitle}
+                    text={textModalText}
+                    isTimer={true}
+                    btnAction={btnAction}
+                    btnTitle={btnTitle}
+                />
+
                 <Dialog
                     fullScreen
                     open={open}
@@ -135,15 +199,6 @@ class ProductDetailModal extends React.Component {
                     className={"dialog"}
                 >
 
-                    <TextModal
-                        open={openTextModal}
-                        handleClose={this.closeTextModal}
-                        title={textModalTitle}
-                        text={textModalText}
-                        isTimer={true}
-                        btnAction={() => { this.props.history.push("/signin") }}
-                        btnTitle={"Login"}
-                    />
 
                     <AppBar className={classes.appBar}>
                         <Toolbar style={{ padding: 0 }}>
@@ -210,7 +265,7 @@ class ProductDetailModal extends React.Component {
                                                     {product.description}
                                                 </Typography>
                                                 <Typography gutterBottom component="h5" >
-                                                    Posted By : Mohsin Ghani
+                                                    Posted By : Post Writer Name
                                             </Typography>
                                             </CardContent>
                                             {
@@ -239,13 +294,13 @@ class ProductDetailModal extends React.Component {
                                                 <div>
                                                     {(() => {
                                                         if (!liked) {
-                                                            return <img src={require("./../../assets/img/heart.svg")} className="like-heart" />
+                                                            return <img src={require("./../../assets/img/heart.svg")} onClick={this.handleActionPopoverClick} className="like-heart" />
                                                         }
                                                         else if (liked && !liked.action) {
-                                                            return <img src={require("./../../assets/img/heartbroken.svg")} className="like-heart" />
+                                                            return <img src={require("./../../assets/img/heartbroken.svg")} onClick={this.handleActionPopoverClick} className="like-heart" />
                                                         }
                                                         else {
-                                                            return <img src={require("./../../assets/img/like.svg")} className="like-heart" />
+                                                            return <img src={require("./../../assets/img/like.svg")} onClick={this.handleActionPopoverClick} className="like-heart" />
                                                         }
                                                     })()}
                                                 </div>
@@ -255,7 +310,7 @@ class ProductDetailModal extends React.Component {
                                                         aria-label="Add"
                                                         className={classes.margin}
                                                         id="add-product-fabbtn"
-                                                        onClick={() => { this.props.history.push("/add-product") }}
+                                                        onClick={this.handleAddPostClick}
                                                     >
                                                         <AddIcon />
                                                     </Fab>
@@ -316,6 +371,44 @@ class ProductDetailModal extends React.Component {
             </div>
         );
     }
+}
+
+const ActionPopover = ({ id, open, anchorEl, handleClose, classes, handleLikeAndDislikeProduct }) => {
+    return (
+        <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+        >
+            <div className={'action-popover-wrapper'}>
+                <div className={'action-popover-item'}>
+                    <img
+                        onClick={() => handleLikeAndDislikeProduct(true)}
+                        title={'like this product'}
+                        src={require("./../../assets/img/like.svg")}
+                        className="like-heart"
+                    />
+                </div>
+                <div className={'action-popover-item'}>
+                    <img
+                        onClick={() => handleLikeAndDislikeProduct(false)}
+                        title={'dislike this product'}
+                        src={require("./../../assets/img/heartbroken.svg")}
+                        className="like-heart"
+                    />
+                </div>
+            </div>
+        </Popover>
+    )
 }
 
 const styles = (theme) => ({
