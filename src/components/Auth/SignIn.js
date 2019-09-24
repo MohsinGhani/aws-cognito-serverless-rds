@@ -94,8 +94,7 @@ class SignIn extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     let { authError } = this.props;
     if (prevProps.authError !== authError && authError !== null) {
-    
-      this.setState({ openTextModal: true, textModalTitle: "Login Failed!", textModalText: authError })
+      this.setState({ openTextModal: true, textModalTitle: "Login Failed!", textModalText: 'Please enter correct email and password or create an account using email or Facebook or Google' })
     }
   }
 
@@ -111,6 +110,7 @@ class SignIn extends React.Component {
           handleClose={this.closeTextModal}
           title={textModalTitle}
           text={textModalText}
+          isTimer={3000}
         />
         <br />
         <Card className="signip-container">

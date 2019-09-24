@@ -45,7 +45,7 @@ class MyProducts extends Component {
     if (!condition && !getProductsLoader && !searchLoader) {
       return <TextError text={"Product Not Fount! You don't have any product."} />
     }
-    else if(!searchedCondition){
+    else if(!searchedCondition && searchedQuery){
       return <TextError text={"Product Not Fount! Please search for different keywords."} />
     }
   }

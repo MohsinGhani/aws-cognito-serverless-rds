@@ -34,16 +34,16 @@ const styles = theme => ({
     },
 })
 
-const timer = (func, strickedAction) => {
+const timer = (func, strickedAction, isTimer) => {
     setTimeout(() => {
         func()
-        if(strickedAction) strickedAction();
-    }, 3000)
+        if (strickedAction) strickedAction();
+    }, typeof isTimer === 'number' ? isTimer : 3000)
 }
 
 const TextModal = ({ open, handleClose, classes, title, text, isTimer, btnTitle, btnAction, strickedAction }) => {
     // getModalStyle is not a pure function, we roll the style only on the first render
-    if (isTimer && open) timer(handleClose, strickedAction)
+    if (isTimer && open) timer(handleClose, strickedAction, isTimer)
     return (
         <Modal
             aria-labelledby="simple-modal-title"
