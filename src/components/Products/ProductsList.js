@@ -5,7 +5,7 @@ import { ProductAction, authAction } from "../../store/actions";
 import "./index.css";
 import TopNav from "./../common/TopNav";
 import ProductDetailModal from "./ProductDetailModal";
-import ProductCard from "./productCard";
+import ProductCard from "./../common/productCard";
 import ReactLoading from "react-loading";
 import TextError from './../common/TextError'
 
@@ -49,7 +49,7 @@ class ProductsList extends Component {
 
     return (
       <div>
-        {<TopNav />}
+        <TopNav />
         <ProductDetailModal
           history={this.props.history}
           product_id={product ? product.product_id : null}
@@ -58,52 +58,53 @@ class ProductsList extends Component {
             this.setState({ isOpenDetailDialog: action })
           }
         />
+        <div className="product-card-container">
+          {!getProductsLoader &&
+            !searchLoader &&
+            !searchedQuery &&
+            products &&
+            products.map((product, i) => {
+              return (
+                <ProductCard
+                  key={i}
+                  product={product}
+                  handleClick={product =>
+                    this.setState({ product, isOpenDetailDialog: true })
+                  }
+                />
+              );
+            })}
 
-        {!getProductsLoader &&
-          !searchLoader &&
-          !searchedQuery &&
-          products &&
-          products.map((product, i) => {
-            return (
-              <ProductCard
-                key={i}
-                product={product}
-                handleClick={product =>
-                  this.setState({ product, isOpenDetailDialog: true })
-                }
+          {!getProductsLoader &&
+            !searchLoader &&
+            searchedProducts &&
+            searchedProducts.map((product, i) => {
+              return (
+                <ProductCard
+                  key={i}
+                  product={product}
+                  handleClick={product =>
+                    this.setState({ product, isOpenDetailDialog: true })
+                  }
+                />
+              );
+            })}
+
+          {
+            (searchedQuery && !searchedProducts && !searchLoader) ? <TextError text={'No Product Found. Please search for different keywords.'} /> : ""
+          }
+
+          {(getProductsLoader || searchLoader) && (
+            <div style={{ width: "50px", margin: "50px auto" }}>
+              <ReactLoading
+                type={"spin"}
+                color={"#9e7339"}
+                height={"50px"}
+                width={"50px"}
               />
-            );
-          })}
-
-        {!getProductsLoader &&
-          !searchLoader &&
-          searchedProducts &&
-          searchedProducts.map((product, i) => {
-            return (
-              <ProductCard
-                key={i}
-                product={product}
-                handleClick={product =>
-                  this.setState({ product, isOpenDetailDialog: true })
-                }
-              />
-            );
-          })}
-
-        {
-          (searchedQuery && !searchedProducts && !searchLoader) ? <TextError text={'No Product Found. Please search for different keywords.'} /> : ""
-        }
-
-        {(getProductsLoader || searchLoader) && (
-          <div style={{ width: "50px", margin: "50px auto" }}>
-            <ReactLoading
-              type={"spin"}
-              color={"#9e7339"}
-              height={"100px"}
-              width={"100px"}
-            />
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     );
   }

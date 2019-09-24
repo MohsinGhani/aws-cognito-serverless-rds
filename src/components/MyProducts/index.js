@@ -5,7 +5,7 @@ import { ProductAction, authAction } from '../../store/actions'
 import "./index.css";
 import TopNav from './../common/TopNav'
 import ProductDetailModal from './../Products/ProductDetailModal'
-import ProductCard from './productCard'
+import ProductCard from './../common/productCard'
 import ReactLoading from 'react-loading';
 import TextError from './../common/TextError'
 
@@ -45,7 +45,7 @@ class MyProducts extends Component {
     if (!condition && !getProductsLoader && !searchLoader) {
       return <TextError text={"Product Not Fount! You don't have any product."} />
     }
-    else if(!searchedCondition && searchedQuery){
+    else if (!searchedCondition && searchedQuery) {
       return <TextError text={"Product Not Fount! Please search for different keywords."} />
     }
   }
@@ -65,30 +65,31 @@ class MyProducts extends Component {
           handleDetailDialog={(action) => this.setState({ isOpenDetailDialog: action })}
         />
 
-        {
-          !getProductsLoader && !searchLoader && !searchedQuery && products && products.map((product, i) => {
-            if (user && user.user_id !== product.creator_id) return
-            return <ProductCard key={i} product={product} handleClick={(product) => this.setState({ product, isOpenDetailDialog: true })} />
-          })
-        }
+        <div className="product-card-container">
+          {
+            !getProductsLoader && !searchLoader && !searchedQuery && products && products.map((product, i) => {
+              if (user && user.user_id !== product.creator_id) return
+              return <ProductCard key={i} product={product} handleClick={(product) => this.setState({ product, isOpenDetailDialog: true })} />
+            })
+          }
 
-        {
-          !getProductsLoader && !searchLoader && searchedProducts && searchedProducts.map((product, i) => {
-            if (user && user.user_id !== product.creator_id) return
-            return <ProductCard key={i} product={product} handleClick={(product) => this.setState({ product, isOpenDetailDialog: true })} />
-          })
-        }
+          {
+            !getProductsLoader && !searchLoader && searchedProducts && searchedProducts.map((product, i) => {
+              if (user && user.user_id !== product.creator_id) return
+              return <ProductCard key={i} product={product} handleClick={(product) => this.setState({ product, isOpenDetailDialog: true })} />
+            })
+          }
 
-        {
-          (getProductsLoader || searchLoader) && <div style={{ width: '50px', margin: '50px auto' }}>
-            <ReactLoading type={'spin'} color={'#9e7339'} height={'50px'} width={'50px'} />
-          </div>
-        }
+          {
+            (getProductsLoader || searchLoader) && <div style={{ width: '50px', margin: '50px auto' }}>
+              <ReactLoading type={'spin'} color={'#9e7339'} height={'50px'} width={'50px'} />
+            </div>
+          }
 
-        {
-          this.renderNotProductError()
-        }
-
+          {
+            this.renderNotProductError()
+          }
+        </div>
       </div>
     )
   }
