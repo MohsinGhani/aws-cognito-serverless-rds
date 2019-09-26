@@ -1,9 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from "react-router-dom"
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
@@ -14,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import Slide from '@material-ui/core/Slide';
 import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
-import CardMedia from '@material-ui/core/CardMedia';
 import { ProductAction } from './../../store/actions'
 import CommentModal from './CommentModal'
 import ShareModal from './ShareModal'
@@ -243,11 +240,6 @@ class ProductDetailModal extends React.Component {
                                                 className="main-product-image"
                                                 onClick={this.toggleDrawer('bottom', true)}
                                             />
-                                            {/* <img
-                                                src={require("./../../assets/img/more.svg")}
-                                                className="more-image-icon"
-                                                onClick={this.toggleDrawer('bottom', true)}
-                                            /> */}
                                         </div>
 
 

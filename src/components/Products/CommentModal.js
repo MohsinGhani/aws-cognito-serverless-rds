@@ -8,6 +8,7 @@ import { InputField } from './../MaterialUI/index'
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import ReactLoading from "react-loading";
 import "./index.css";
 const styles = theme => ({
 
@@ -91,6 +92,7 @@ class CommentModal extends Component {
                                         rows={8}
                                         onChange={this.handleInput}
                                         maxLength="1000"
+                                        autoFocus={true}
                                     />
                                     <div className="comment-footer-div">
 
@@ -100,7 +102,15 @@ class CommentModal extends Component {
                                             </i>
                                         </Button>
                                         <Button className={"sendButton"} onClick={this.doComment} >
-                                            {doCommentLoader ? '...Loading' : <i className="material-icons send">send</i>}
+                                            {doCommentLoader ?
+                                                <ReactLoading
+                                                    type={"spin"}
+                                                    color={"#9e7339"}
+                                                    height={"20px"}
+                                                    width={"25px"}
+                                                />
+                                                :
+                                                <i className="material-icons send">send</i>}
                                         </Button>
                                     </div>
                                 </Grid>

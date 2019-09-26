@@ -158,7 +158,12 @@ class AddProduct extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log(prevProps.selectedCountry, this.props.selectedCountry);
+
+    const { searchedProducts } = this.props
+    if(searchedProducts && searchedProducts.length){
+      this.goto('/products-list')
+    }
+
     if (!Number(prevProps.selectedCountry)) {
       if (
         prevState.selectedCountry !== this.state.selectedCountry &&
@@ -754,7 +759,8 @@ const mapStateToProps = state => {
       savedProduct,
       saveProductLoader,
       saveProductError,
-      reversedGeoCoding
+      reversedGeoCoding,
+      searchedProducts
     },
     authReducer: { user }
   } = state;
@@ -766,7 +772,7 @@ const mapStateToProps = state => {
     saveProductLoader,
     saveProductError,
     user,
-
+    searchedProducts,
     reversedGeoCoding
   };
 };

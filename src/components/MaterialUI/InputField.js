@@ -26,7 +26,8 @@ class InputField extends React.Component {
       onClick,
       maxLength,
       isAddon,
-      onClickAdornment
+      onClickAdornment,
+      autoFocus
     } = this.props;
     return (
       <TextField
@@ -47,6 +48,7 @@ class InputField extends React.Component {
         rowsMax={rowsMax}
         rows={rows}
         onClick={onClick}
+        autoFocus={autoFocus ? autoFocus : false}
         inputProps={{ maxLength: maxLength ? maxLength : 100000000 }}
         InputProps={isAddon && {
           endAdornment: (

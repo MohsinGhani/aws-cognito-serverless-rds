@@ -315,45 +315,6 @@ class TopNav extends React.Component {
                   : <SearchIcon className={'search-field-addon-icon'} />
                 }
               </div>
-              {/* </div> */}
-              {/* <div className={classes.searchIcon}>
-                {query ?
-                  <div onClick={() => alert('asdasd sadsa')} style={{ paddingTop: 15, cursor: 'pointer' }}>X</div>
-                  : <SearchIcon onClick={() => alert('asdasd sadsa')} />
-                }
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-                value={query}
-                onChange={this.handleSearch}
-                id="query"
-              /> */}
-              {/* <TextField
-                id="query"
-                className={classes.textField}
-                type={'text'}
-                label="Search"
-                value={query}
-                onChange={this.handleSearch}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        edge="end"
-                        aria-label="toggle password visibility"
-                        onClick={() => { this.setState({ query: '' }); this.props.searchAction({ query: '' }) }}
-                        onMouseDown={() => { }}
-                      >
-                        {query ? "X" : <SearchIcon />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              /> */}
             </div>
           </Toolbar>
         </AppBar>
