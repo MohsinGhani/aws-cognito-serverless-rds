@@ -9,6 +9,8 @@ import Drawer from "@material-ui/core/Drawer";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { authAction, ProductAction } from "./../../store/actions";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import TextModal from './../common/TextModal'
 import "./index.css";
 
 const styles = theme => ({
@@ -98,7 +100,8 @@ class SwipeableTemporaryDrawer extends React.Component {
       { label: "Profile", path: "/profile" },
       { label: "My Product", path: "/my-product" },
       // { label: "Login", path: "/signin" }
-    ]
+    ],
+    openTextModal: false
   };
 
   toggleDrawer = (side, open) => () => {
@@ -172,11 +175,22 @@ class SwipeableTemporaryDrawer extends React.Component {
       });
     }
   };
+
   render() {
-    const { navItems, left } = this.state;
+    const { navItems, left, openTextModal } = this.state;
     const { classes, isLoggedIn } = this.props;
     return (
       <div>
+        <TextModal
+          open={openTextModal}
+          handleClose={() => this.setState({ openTextModal: false })}
+          title={"Copied!"}
+          text={"You have successfully copied our link"}
+          isTimer={true}
+          btnAction={() => this.setState({ openTextModal: false })}
+          btnTitle={"Copied"}
+        />
+
         <MenuIcon onClick={this.toggleDrawer("left", true)} id="svgIcon" />
         <div>
           <Drawer
@@ -210,34 +224,23 @@ class SwipeableTemporaryDrawer extends React.Component {
                   </Typography>
                 </ListItem>
                 <h4 style={{ textAlign: 'center' }}>Productmania</h4>
-                {/* <ListItem>
-                  <div className={classes.search}>
-                    <InputBase
-                      placeholder="Search Keyword or Place"
-                      classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput
-                      }}
-                      value={query}
-                      onChange={this.handleSearch}
-                      id="query"
-                    />
-                  </div>
-                </ListItem>
-                <ListItem className="searchItem">
-                  <div
-                    className="searchButton"
-                    style={{ cursor: "pointer" }}
-                    onClick={this.handleTextSubmit}
-                  >
-                    <i className="material-icons searchh" type="btn">
-                      search
-                    </i>
-                  </div>
-                </ListItem> */}
                 {
                   navItems.map(item => {
                     if (!isLoggedIn && item.label === 'My Product') return <span></span>
+
+                    // when user want to copy url
+                    if (item.label === "Share App Link" || item.label === "Copy App Link") {
+                      return (
+                        <ListItem
+                          className={classes.listItem}
+                        >
+                          <CopyToClipboard text={window.location.origin}
+                            onCopy={() => this.setState({ openTextModal: true })}>
+                            <span>{item.label}</span>
+                          </CopyToClipboard>
+                        </ListItem>
+                      )
+                    }
                     return (
                       <ListItem
                         className={classes.listItem}

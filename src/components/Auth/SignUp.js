@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import { InputField, InputFieldWithEndAdornment } from "./../MaterialUI";
-import "./index.css";
 import Hidden from "@material-ui/core/Hidden";
 import Button from "@material-ui/core/Button";
 import Typography from '@material-ui/core/Typography';
@@ -14,16 +13,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Radio from '@material-ui/core/Radio';
-import FormLabel from '@material-ui/core/FormLabel';
 import TopNav from './../common/TopNav'
-import credentials from '../../config/credentials'
-import ReactMapboxGl from "react-mapbox-gl";
-import Location from './../common/Location'
-
-const Map = ReactMapboxGl({
-  accessToken: credentials.MAP_ACCESS_TOCKEN
-});
+import "./index.css";
 
 const styles = theme => ({
   p05: {
@@ -180,7 +171,6 @@ class SignUp extends Component {
 
   render() {
     let { classes, authLoader, authError } = this.props;
-    let { latitude, longitude } = this.state
 
     return (
       <div style={{ backgroundImage: 'url(' + require("./../../assets/img/map-image.jpg") + ')', height: "100vh", backgroundRepeat: 'no', backgroundSize: 'cover' }}>

@@ -13,15 +13,8 @@ import SignInWithFacebook from "./SignInWithFacebook";
 import { authAction } from "./../../store/actions";
 import ReactLoading from "react-loading";
 import TopNav from "./../common/TopNav";
-import credentials from "../../config/credentials";
-import ReactMapboxGl from "react-mapbox-gl";
-import Location from "./../common/Location";
 import TextModal from './../common/TextModal'
-// import swal from "sweetalert";
 
-const Map = ReactMapboxGl({
-  accessToken: credentials.MAP_ACCESS_TOCKEN
-});
 
 const styles = theme => ({
   p05: {
@@ -99,8 +92,8 @@ class SignIn extends React.Component {
   }
 
   render() {
-    let { classes, authError, authLoader } = this.props;
-    let { latitude, longitude, email, password, textModalText, textModalTitle, openTextModal } = this.state;
+    let { classes, authLoader } = this.props;
+    let { email, password, textModalText, textModalTitle, openTextModal } = this.state;
     let isDisableBtn = email && password
     return (
       <div style={{ backgroundImage: 'url(' + require("./../../assets/img/map-image.jpg") + ')', height: "100vh", backgroundRepeat: 'no', backgroundSize: 'cover' }}>
@@ -110,7 +103,6 @@ class SignIn extends React.Component {
           handleClose={this.closeTextModal}
           title={textModalTitle}
           text={textModalText}
-          isTimer={3000}
         />
         <br />
         <Card className="signip-container">

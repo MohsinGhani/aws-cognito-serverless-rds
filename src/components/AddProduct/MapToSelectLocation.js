@@ -94,7 +94,7 @@ class MapToSelectLocation extends React.Component {
                             {location}
                         </Typography>
                         <Button color="inherit" onClick={handleClose}>
-                            Close
+                            Select
                         </Button>
                     </Toolbar>
                 </AppBar>

@@ -230,27 +230,20 @@ class AddProduct extends React.Component {
       this.props.reversedGeoCoding
     ) {
       if (this.props.reversedGeoCoding.length >= 3) {
-        let street = this.props.reversedGeoCoding[0].text;
+        let street = `${this.props.reversedGeoCoding[0].address ? this.props.reversedGeoCoding[0].address : ''} ${this.props.reversedGeoCoding[0].text}`;
         let location = this.props.reversedGeoCoding[0].place_name;
+
         let city = this.props.reversedGeoCoding.filter(
           item => item.place_type[0] === "place"
         )[0].text;
+
         let province = this.props.reversedGeoCoding.filter(
           item => item.place_type[0] === "region"
         )[0].text;
+
         let country = this.props.reversedGeoCoding.filter(
           item => item.place_type[0] === "country"
         )[0].text;
-
-        if (
-          this.props.reversedGeoCoding.filter(
-            item => item.place_type[0] === "address"
-          ).length !== 0
-        ) {
-          street = this.props.reversedGeoCoding.filter(
-            item => item.place_type[0] === "address"
-          )[0].text;
-        }
 
         this.setState({
           street,
@@ -294,7 +287,6 @@ class AddProduct extends React.Component {
     } = this.state;
     const { user, saveProductAction } = this.props;
 
-
     if (selectedImage && !selectedImage.base64) {
       const productImg = {
         name: "c2.jpg",
@@ -307,9 +299,9 @@ class AddProduct extends React.Component {
         title,
         description,
         category_id: selectedCategory.category_id,
-        country: selectedCountry ? selectedCountry : country,
-        state: selectedState ? selectedState : province,
-        city: selectedCity ? selectedCity : city,
+        country: country ? country : selectedCountry,
+        state: province ? province : selectedState,
+        city: city ? city : selectedCity,
         latitude,
         longitude,
         creator_id: user.user_id,
@@ -322,9 +314,9 @@ class AddProduct extends React.Component {
         title,
         description,
         category_id: selectedCategory.category_id,
-        country: selectedCountry ? selectedCountry : country,
-        state: selectedState ? selectedState : province,
-        city: selectedCity ? selectedCity : city,
+        country: country ? country : selectedCountry,
+        state: province ? province : selectedState,
+        city: city ? city : selectedCity,
         latitude,
         longitude,
         creator_id: user.user_id,
@@ -395,9 +387,11 @@ class AddProduct extends React.Component {
       reader.readAsDataURL(event.target.files[0]);
     }
   };
+
   handleCountryChange = e => {
     this.setState({ country: "" });
   };
+
   pickLocation = () => {
     const { isGeolocationEnabled, latitude, longitude } = this.state;
     // if isGeolocationEnabled is true then don't need to open map directly get current location
