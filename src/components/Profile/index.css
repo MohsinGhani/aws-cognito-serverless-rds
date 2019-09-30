@@ -1,0 +1,58 @@
+.profile-container {
+}
+.profile-info {
+  margin-left: 14px;
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+.profile-info-heading {
+  font-size: 24px;
+}
+.profile-info-body {
+  max-width: 390px;
+  text-align: center;
+  margin: 0 auto;
+}
+.hr {
+  border: 1px dashed gray;
+}
+.user-picture {
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+}
+.profile-info-detail {
+  margin-top: 24px;
+  text-align: left;
+}
+.profile-info-detail > p {
+  font-size: 18px;
+}
+.profile-info-detail > p > span {
+}
+.profile-my-product {
+}
+.my-products-heading {
+  font-size: 24px;
+  margin-left: 14px;
+}
+.profile-btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+.change-image-button {
+  background-color: red;
+  border: 1px solid #ccc;
+  height: 42px;
+  border-radius: 8px;
+  outline: none !important;
+  cursor: pointer;
+}
+.rmv-image-button {
+  background-color: red;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none !important;
+  cursor: pointer;
+  height: 42px;
+}

@@ -97,7 +97,7 @@ class SwipeableTemporaryDrawer extends React.Component {
       { label: "Share App Link", path: "/share-app-link" },
       { label: "Copy App Link", path: "/copy-app-link" },
       { label: "Bookmark", path: "/bookmark" },
-      { label: "Profile", path: "/profile" },
+      // { label: "Profile", path: "/profile" },
       { label: "My Product", path: "/my-product" },
       // { label: "Login", path: "/signin" }
     ],
@@ -111,7 +111,7 @@ class SwipeableTemporaryDrawer extends React.Component {
   };
 
   goto = path => {
-    console.log(path);
+    // console.log(path);
     this.props.history.push(path);
   };
   logout = () => {
@@ -138,7 +138,6 @@ class SwipeableTemporaryDrawer extends React.Component {
           { label: "Share App Link", path: "/share-app-link" },
           { label: "Copy App Link", path: "/copy-app-link" },
           { label: "Bookmark", path: "/bookmark" },
-          { label: "Profile", path: "/profile" },
           { label: "My Product", path: "/my-product" },
         ]
       });
@@ -162,7 +161,6 @@ class SwipeableTemporaryDrawer extends React.Component {
           { label: "Share App Link", path: "/share-app-link" },
           { label: "Copy App Link", path: "/copy-app-link" },
           { label: "Bookmark", path: "/bookmark" },
-          { label: "Profile", path: "/profile" },
           { label: "My Product", path: "/my-product" },
         ]
       });
@@ -253,9 +251,14 @@ class SwipeableTemporaryDrawer extends React.Component {
                 }
                 {
                   isLoggedIn ? (
-                    <ListItem className={classes.listItem} onClick={this.logout}>
-                      Logout
+                    <div>
+                      <ListItem className={classes.listItem} onClick={() => { this.props.history.push("/profile"); }}>
+                        Profile
+                  </ListItem>
+                      <ListItem className={classes.listItem} onClick={this.logout}>
+                        Logout
                     </ListItem>
+                    </div>
                   ) :
                     <ListItem className={classes.listItem} onClick={() => this.login("/signin")}>
                       Login
