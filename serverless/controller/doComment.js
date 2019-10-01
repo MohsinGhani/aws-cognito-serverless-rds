@@ -3,13 +3,13 @@ const { sendSuccessRes, sendErrorRes } = require('./../lib/sendResponse')
 
 function doComment(event, context, callback) {
     const { comment_id, user_id, product_id, comment } = JSON.parse(event.body);
-    const saveCommentQuery = `INSERT INTO public."Comment" (comment_id, user_id, product_id, comment, time) 
+    const saveCommentQuery = `INSERT INTO public."Comment" (comment_id, user_id, product_id, comment, created_timestamp) 
     VALUES(
         '${comment_id}',
         '${user_id}',
         '${product_id}',
         '${comment}',
-        now()
+        '${new Date().getTime()}'
     ) RETURNING *`
 
     return client.query(saveCommentQuery)

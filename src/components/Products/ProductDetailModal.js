@@ -247,7 +247,8 @@ class ProductDetailModal extends React.Component {
                                             {product.city}, {product.country}
                                             <span className={classes.span}>
                                                 <Moment format="MMMM D, YYYY h:mm a">
-                                                    {product.created_date}</Moment>
+                                                    {product.created_date}
+                                                </Moment>
                                             </span>
                                         </Typography>
 
@@ -260,8 +261,8 @@ class ProductDetailModal extends React.Component {
                                                     {product.description}
                                                 </Typography>
                                                 <Typography gutterBottom component="h5" >
-                                                    Posted By : Post Writer Name
-                                            </Typography>
+                                                    Posted By : <span style={{ fontWeigth: 'bold' }}>{product._creator ? `${product._creator.firstname} ${product._creator.lastname}` : 'Name not Found'} </span>
+                                                </Typography>
                                             </CardContent>
                                             {
                                                 (() => {
@@ -272,7 +273,7 @@ class ProductDetailModal extends React.Component {
                                                                     <List key={i}>
                                                                         <ListItem className={classes.listItem}>{comment.comment} </ListItem>
                                                                         <Typography className={classes.commentTime} component="p">
-                                                                            <TimeAgo datetime={comment.time} />
+                                                                            <TimeAgo style={{ color: '#5e4422', fontWeigth: 'bold' }} datetime={comment.time} />
                                                                         </Typography>
                                                                     </List>
                                                                 </div>

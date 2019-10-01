@@ -57,6 +57,7 @@ class ProductsList extends Component {
           handleDetailDialog={action =>
             this.setState({ isOpenDetailDialog: action })
           }
+          identifier={'not'}
         />
         <div className="product-card-container">
           {!getProductsLoader &&

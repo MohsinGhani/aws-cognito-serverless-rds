@@ -31,9 +31,15 @@ const styles = theme => ({
     },
 });
 
+const makeDateFormat = (time) => {
+    return (
+        new Date(time).getUTCFullYear() + "-" + new Date(time).getUTCMonth()+1 + "-" + new Date(time).getUTCDate() + "T" + new Date(time).getHours() + ":" + new Date(time).getUTCMinutes() + ":" + new Date(time).getUTCSeconds() + "." + new Date(time).getUTCMilliseconds() + "Z"
+    )
+}
+
 function ProductCard(props) {
     const { classes, product, handleClick } = props;
-    // console.log(product)
+    console.log(product.created_date, '2019-10-01 06:16:26.192108')
     return (
         <Card className={classes.card} onClick={() => handleClick(product)}>
             <div className="product-card-image-wrapper">
