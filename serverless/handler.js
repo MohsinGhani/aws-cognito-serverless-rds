@@ -20,7 +20,8 @@ const {
   uploadFile,
   search,
   postSocialAuth,
-  updateProfileImage
+  updateProfileImage,
+  sendFeedback
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -105,4 +106,8 @@ module.exports.uploadFile = (event, context, callback) => {
 
 module.exports.search = (event, context, callback) => {
   search(event, context, callback);
+};
+
+module.exports.sendFeedback = (event, context, callback) => {
+  sendFeedback(event, context, callback);
 };

@@ -18,6 +18,7 @@ const { uploadFile } = require('./uploadFile')
 const { search } = require('./search')
 const { postSocialAuth } = require('./postSocialAuth')
 const { updateProfileImage } = require('./updateProfileImage')
+const { sendFeedback } = require('./sendFeedback')
 
 module.exports = {
     getCategory,
@@ -39,5 +40,6 @@ module.exports = {
     uploadFile,
     search,
     postSocialAuth,
-    updateProfileImage
+    updateProfileImage,
+    sendFeedback
 }
