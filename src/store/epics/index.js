@@ -25,6 +25,7 @@ const rootEpic = combineEpics(
     ProductEpic.reverseGeoCoding,
     ProductEpic.doCommentOnProduct,
     ProductEpic.search,
+    ProductEpic.sendFeedback,
 );
 
 export default rootEpic;

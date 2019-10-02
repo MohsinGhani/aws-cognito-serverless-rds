@@ -31,6 +31,7 @@ function getProducts(event, context, callback) {
                 ) _creator
             FROM public."User" us WHERE us.user_id=P.creator_id
         )_creator ON true
+        ORDER BY P.created_date DESC
     `
     return client.query(getAllProductsQuery)
         .then((data) => {

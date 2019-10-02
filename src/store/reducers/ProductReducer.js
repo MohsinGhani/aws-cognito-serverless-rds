@@ -7,6 +7,7 @@ import {
     DO_COMMENT_ON_PRODUCT, DO_COMMENT_ON_PRODUCT_SUCCESS, DO_COMMENT_ON_PRODUCT_FAILURE,
     REVERSE_GEOCODING, REVERSE_GEOCODING_SUCCESS, REVERSE_GEOCODING_FAILURE,
     SEARCH, SEARCH_SUCCESS, SEARCH_FAILURE,
+    SEND_FEEDBACK, SEND_FEEDBACK_SUCCESS, SEND_FEEDBACK_FAILURE,
 } from './../constants'
 
 const initialState = {
@@ -42,6 +43,10 @@ const initialState = {
     reversedGeoCoding: null,
     reverseGeoCodingLoader: false,
     reverseGeoCodingError: null,
+
+    sentFeedback: null,
+    sendFeedbackLoader: false,
+    sendFeedbackError: null
 }
 
 export default function ProductReducer(state = initialState, action) {
@@ -231,7 +236,7 @@ export default function ProductReducer(state = initialState, action) {
         case GET_PRODUCT_BY_ID:
             return {
                 ...state,
-                product: null,
+                // product: null,
                 getProductByIdLoader: true,
                 getProductByIdError: null
             }
@@ -250,6 +255,31 @@ export default function ProductReducer(state = initialState, action) {
                 product: null,
                 getProductByIdLoader: false,
                 getProductByIdError: action.error
+            }
+
+        //////////////
+        case SEND_FEEDBACK:
+            return {
+                ...state,
+                sentFeedback: null,
+                sendFeedbackLoader: true,
+                sendFeedbackError: null
+            }
+
+        case SEND_FEEDBACK_SUCCESS:
+            return {
+                ...state,
+                sentFeedback: action.payload,
+                sendFeedbackLoader: false,
+                sendFeedbackError: null
+            }
+
+        case SEND_FEEDBACK_FAILURE:
+            return {
+                ...state,
+                sentFeedback: null,
+                sendFeedbackLoader: false,
+                sendFeedbackError: action.error
             }
 
         default:

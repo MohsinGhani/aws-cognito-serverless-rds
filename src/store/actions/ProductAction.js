@@ -8,6 +8,7 @@ import {
     DO_COMMENT_ON_PRODUCT, DO_COMMENT_ON_PRODUCT_SUCCESS, DO_COMMENT_ON_PRODUCT_FAILURE,
     REVERSE_GEOCODING, REVERSE_GEOCODING_SUCCESS, REVERSE_GEOCODING_FAILURE,
     SEARCH, SEARCH_SUCCESS, SEARCH_FAILURE,
+    SEND_FEEDBACK, SEND_FEEDBACK_SUCCESS, SEND_FEEDBACK_FAILURE,
 } from './../constants'
 
 export class ProductAction {
@@ -183,6 +184,28 @@ export class ProductAction {
     static getProductByIdFailure(error) {
         return {
             type: GET_PRODUCT_BY_ID_FAILURE,
+            error
+        }
+    }
+
+    //////////////////
+    static sendFeedback(payload) {
+        return {
+            type: SEND_FEEDBACK,
+            payload
+        }
+    }
+
+    static sendFeedbackSuccess(payload) {
+        return {
+            type: SEND_FEEDBACK_SUCCESS,
+            payload
+        }
+    }
+
+    static sendFeedbackFailure(error) {
+        return {
+            type: SEND_FEEDBACK_FAILURE,
             error
         }
     }

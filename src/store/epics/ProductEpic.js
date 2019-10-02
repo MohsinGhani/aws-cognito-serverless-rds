@@ -6,7 +6,8 @@ import {
     LIKE_DISLIKE_PRODUCT,
     DO_COMMENT_ON_PRODUCT,
     REVERSE_GEOCODING,
-    SEARCH
+    SEARCH,
+    SEND_FEEDBACK
 } from './../constants'
 import { Observable } from 'rxjs/Rx';
 import { ProductAction } from './../actions/index'
@@ -48,6 +49,21 @@ export default class ProductEpic {
                     })
             })
 
+    static sendFeedback = (action$) =>
+        action$.ofType(SEND_FEEDBACK)
+            .switchMap(({ payload }) => {
+                return HttpService.post(path.SEND_FEEDBACK, payload)
+                    .switchMap(({ response }) => {
+                        if (response.status === 200) {
+                            return Observable.of(
+                                ProductAction.sendFeedbackSuccess(response.data)
+                            )
+                        }
+                    }).catch((err) => {
+                        return Observable.of(ProductAction.sendFeedbackFailure({ error: err.message }))
+                    })
+            })
+
     static search = (action$) =>
         action$.ofType(SEARCH)
             .switchMap(({ payload }) => {
@@ -55,7 +71,7 @@ export default class ProductEpic {
                     .switchMap(({ response }) => {
                         if (response.status === 200) {
                             return Observable.of(
-                                ProductAction.searchSuccess({data: response.data, query: payload.query})
+                                ProductAction.searchSuccess({ data: response.data, query: payload.query })
                             )
                         }
                     }).catch((err) => {
