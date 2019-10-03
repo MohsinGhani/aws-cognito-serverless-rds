@@ -56,7 +56,7 @@ export default class ProductEpic {
                     .switchMap(({ response }) => {
                         if (response.status === 200) {
                             return Observable.of(
-                                ProductAction.sendFeedbackSuccess(response.data)
+                                ProductAction.sendFeedbackSuccess("Successfully sent Feedback")
                             )
                         }
                     }).catch((err) => {
