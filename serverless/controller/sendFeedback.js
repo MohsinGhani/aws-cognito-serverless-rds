@@ -11,10 +11,10 @@ const emails = [
 ]
 
 function sendFeedback(event, context, callback) {
-    let { id, email, description } = JSON.parse(event.body);
+    let { id, email, description, subject } = JSON.parse(event.body);
     return client.query(`INSERT INTO public."Feedback" (id, email, description, created_timestamp) VALUES('${id}', '${email}','${description}', '${new Date().getTime()}')`)
         .then((data) => {
-            return sendEmails(emails, `${email} sent a feedback, "${description}"`)
+            return sendEmails(emails, `${email} sent a feedback, "${description}"`, subject)
         })
         .then(() => {
             sendSuccessRes(context, 200, null, 'success', 1)
@@ -24,7 +24,7 @@ function sendFeedback(event, context, callback) {
         })
 }
 
-const sendEmails = (emails, msg) => {
+const sendEmails = (emails, msg, subject) => {
     let params = {
         Destination: {
             CcAddresses: emails,
@@ -43,7 +43,7 @@ const sendEmails = (emails, msg) => {
             },
             Subject: {
                 Charset: "UTF-8",
-                Data: "Productmania Feedback"
+                Data: subject
             }
         },
         Source: "digitmaticllc@gmail.com",

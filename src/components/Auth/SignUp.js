@@ -267,7 +267,7 @@ class SignUp extends Component {
                 <label className={`custom-input-label ${classes.p05}`}>
                   Use 8 or more characters with a mix of letters, numbers &amp;
                   symbols
-              </label>
+                </label>
               </Grid>
               {/* <hr />
             <Grid container>

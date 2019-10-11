@@ -16,10 +16,11 @@ class Feedback extends Component {
   state = {
     email: "",
     description: "",
-    isSaveButtonDisable: true,
     openTextModal: false,
+    isEmailFormatValid: false,
     textModalTitle: '',
     textModalText: '',
+    subject: ''
   }
   handleInputs = (e) => {
     this.setState({ [e.target.name]: e.target.value })
@@ -27,38 +28,45 @@ class Feedback extends Component {
 
   handleSubmitFeedbackForm = () => {
     const { sentFeedbackAction } = this.props;
-    sentFeedbackAction({
-      email: this.state.email,
-      description: this.state.description,
-      id: uuidv1()
-    })
-    this.setState({ description: "", email: "" })
+    const { email, description, subject } = this.state
+
+    if (this.validateSaveButton()) {
+      sentFeedbackAction({
+        email: email,
+        description: description,
+        id: uuidv1(),
+        subject
+      })
+    }
   }
+
   validateEmail = () => {
-    return /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
+    let isEmailFormatValid = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email)
+    this.setState({ isEmailFormatValid: !isEmailFormatValid })
+    return isEmailFormatValid
   }
+
   validateSaveButton = () => {
     const {
       description,
+      subject
     } = this.state;
+
     return (
       (description && description.length >= 3) &&
+      (subject && subject.length >= 3) &&
       this.validateEmail()
-
     );
   };
 
   closeTextModal = () => {
     this.setState({ openTextModal: false })
-    // if (this.props.savedProduct) {
-    //   this.setState({ isOpenDetailDialog: true })
-    // }
   }
 
 
   componentDidUpdate(prevProps, prevState) {
     const { sentFeedback, sendFeedbackLoader, sendFeedbackError } = this.props
-
+    const { email, description, subject } = this.state
     // after saved product Error message if any error
     if (
       !sendFeedbackLoader && prevProps.sendFeedbackError !== sendFeedbackError) {
@@ -74,28 +82,15 @@ class Feedback extends Component {
       this.setState({
         openTextModal: true,
         textModalTitle: "Successfull",
-        textModalText: `${sentFeedback}`
+        textModalText: `${sentFeedback}`,
+        description: "", email: "", subject: ""
       })
     }
-
-
-    if (
-      (prevState.description !== this.state.description && this.state.description === "") ||
-      (prevState.email !== this.state.email && !this.validateEmail())
-    ) {
-      this.setState({ isSaveButtonDisable: true });
-    }
-
-    if (this.state && this.state.isSaveButtonDisable) {
-      if (this.validateSaveButton())
-        this.setState({ isSaveButtonDisable: false });
-    }
-
   }
 
   render() {
     const { sendFeedbackLoader } = this.props
-    const { isSaveButtonDisable, openTextModal, textModalTitle, textModalText, } = this.state
+    const { openTextModal, textModalTitle, textModalText, isEmailFormatValid, email, description, subject } = this.state
 
     return (
       <div className="privacy">
@@ -114,6 +109,23 @@ class Feedback extends Component {
             <p>Please fill out the following form for feedback or customer support</p>
             <Grid item md={12} sm={12} xs={12}>
               <InputField
+                type="string"
+                label={"Subject (max 300 length)"}
+                variant={"outlined"}
+                id={"subject"}
+                fullWidth={true}
+                name="subject"
+                value={subject}
+                fullWidth={true}
+                onChange={this.handleInputs}
+                maxLength={300}
+              />
+              {
+                (subject.length <= 3) && <label className={`custom-input-label`} style={{ color: 'red' }}>Subject Must be contain 4 characters</label>
+              }
+            </Grid>
+            <Grid item md={12} sm={12} xs={12}>
+              <InputField
                 label={"Description"}
                 variant={"outlined"}
                 id={"description"}
@@ -123,9 +135,12 @@ class Feedback extends Component {
                 multiline={true}
                 rowsMax={"8"}
                 rows={"8"}
-                value={this.state.description}
+                value={description}
                 maxLength={500}
               />
+              {
+                (description.length <= 3) && <label className={`custom-input-label`} style={{ color: 'red' }}>Description Must be contain 4 characters</label>
+              }
               <p className="text-areabox-para">0 of 500</p>
             </Grid>
             <Grid item md={12} sm={12} xs={12}>
@@ -136,18 +151,21 @@ class Feedback extends Component {
                 id={"Email"}
                 fullWidth={true}
                 name="email"
-                value={this.state.email}
+                value={email}
                 fullWidth={true}
                 onChange={this.handleInputs}
+                maxLength={300}
               />
+              {
+                isEmailFormatValid && <label className={`custom-input-label`} style={{ color: 'red' }}>Email Format is not valid</label>
+              }
             </Grid>
           </div>
           <div className="privacy-content-form-btn-parent">
             <Button
               onClick={this.handleSubmitFeedbackForm}
               className="privacy-content-form-btn"
-              style={{ opacity: isSaveButtonDisable ? 0.6 : 1, height: 45 }}
-              disabled={isSaveButtonDisable}
+              style={{ height: 45 }}
             > {sendFeedbackLoader ? (
               <ReactLoading
                 type={"spin"}

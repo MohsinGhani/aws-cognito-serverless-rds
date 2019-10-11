@@ -2,7 +2,8 @@ const { client } = require("./../lib/db");
 const { sendSuccessRes, sendErrorRes } = require('./../lib/sendResponse')
 
 function search(event, context, callback) {
-    let { query } = event.pathParameters  
+    let { query } = event.pathParameters
+    query = query.replace("%20", " ")
     const searchProductQuery = `
         SELECT * FROM public."Product" WHERE
             lower(title) LIKE '%${query.toLowerCase()}%' OR
