@@ -58,13 +58,18 @@ class ShareModal extends Component {
                     <h2 id="simple-modal-title">Copy this Product to share</h2>
                     <p id="simple-modal-description">
                         Copy this Product to share
-                        </p>
+                    </p>
 
                     <button className={'text-modal-button'}>
                         {
                             copied ? 'Copied!' :
                                 <CopyToClipboard text={product_path}
-                                    onCopy={() => this.setState({ copied: true })}>
+                                    onCopy={() => {
+                                        this.setState({ copied: true });
+                                        setTimeout(() => {
+                                            handleClose()
+                                        }, 400)
+                                    }}>
                                     <span>Copy to clipboard</span>
                                 </CopyToClipboard>
                         }

@@ -110,7 +110,7 @@ class SignIn extends React.Component {
             <Grid item md={12} sm={12} xs={12}>
               <h1 className={`title center ${classes.p05}`}> Sign In </h1>{" "}
               <h3 className={`sub-title center ${classes.p05}`}>
-                to continue to Productmania{" "}
+                By continuing you accept our<a onClick={()=>this.goto('/privacy')} style={{ cursor: "pointer", color: "blue", paddingLeft: '5px' }}> Policies</a>{" "}
               </h3>{" "}
 
               <Grid container>

@@ -102,12 +102,7 @@ const base64BrownImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqEAAAKh
 
 class TopNav extends React.Component {
   state = {
-    anchorEl: null,
-    mobileMoreAnchorEl: null,
-    query: "",
-    selectedImage: {},
-
-    open: false
+    query: ""
   };
 
   componentDidMount() {
@@ -115,34 +110,14 @@ class TopNav extends React.Component {
     if (searchedQuery) {
       this.setState({
         query: searchedQuery
+      }, () => {
+        const { history } = this.props
+        if ((history && history.location) && history.location.pathname !== "/my-product") {
+          this.goto('/products-list');
+        }
       })
     }
   }
-
-  handleClickOpenPopup = () => {
-    this.setState({ open: true });
-  };
-
-  handleClosePopup = () => {
-    this.setState({ open: false });
-  };
-
-  handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
-    this.handleMobileMenuClose();
-  };
-
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
-  };
-
-  handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null });
-  };
 
   logout = () => {
     this.props.logoutAction();
@@ -156,72 +131,16 @@ class TopNav extends React.Component {
     this.setState(
       {
         [e.target.id]: e.target.value
-      },
-      () => {
-        console.log(this.state.query);
+      }, () => {
         this.props.searchAction({ query: this.state.query });
+        const { history } = this.props
+        if ((history && history.location) && history.location.pathname !== "/my-product") {
+          this.goto('/products-list');
+        }
       }
     );
   };
 
-  handleImageChange = event => {
-    // console.log(event, "event");
-    // funciton for get file and save in state
-    if (event.target.files && event.target.files[0]) {
-      let file = {
-        name: event.target.files[0].name,
-        size: event.target.files[0].size,
-        type: event.target.files[0].type
-      };
-      this.setState({ selectedImage: file }, () => {
-        // console.log(this.state.selectedImage.base64);
-      });
-
-      let reader = new FileReader();
-      reader.onload = e => {
-        this.setState({
-          selectedImage: {
-            ...this.state.selectedImage,
-            base64: e.target.result
-          }
-        });
-        const { user, uploadProfileImageAction } = this.props;
-        uploadProfileImageAction({
-          user_id: user.user_id,
-          user_img: JSON.stringify({
-            ...this.state.selectedImage,
-            base64: e.target.result
-          })
-        });
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-    this.setState({ open: false });
-  };
-
-  handleChangeImagePopup = () => {
-    this.setState({ open: true });
-  };
-
-  handleRemoveImagePopup = () => {
-    this.setState({
-      selectedImage: {
-        ...this.state.selectedImage,
-        base64: base64BrownImage
-      }
-    });
-    const { user, uploadProfileImageAction } = this.props;
-    uploadProfileImageAction({
-      user_id: user.user_id,
-      user_img: JSON.stringify({
-        name: "default-user-image",
-        size: 12,
-        type: "image/png",
-        base64: base64BrownImage
-      })
-    });
-    this.setState({ open: false });
-  };
   render() {
     const { query } = this.state;
     const { classes, user } = this.props;
@@ -235,7 +154,6 @@ class TopNav extends React.Component {
               color="inherit"
               aria-label="Open drawer"
             >
-              {/* <MenuIcon /> */}
               <SwipeableTemporaryDrawer />
             </IconButton>
             <Typography
@@ -248,58 +166,6 @@ class TopNav extends React.Component {
               Productmania
             </Typography>
             <div className={classes.grow} />
-            {/* {isLoggedIn ? (
-              <div className={classes.sectionDesktop}>
-                {(() => {
-                  if (!selectedImage.base64 && user && !user.picture) {
-                    return (
-                      <IconButton
-                        aria-haspopup="true"
-                        color="inherit"
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center"
-                        }}
-                        onClick={this.handleClickOpenPopup}
-                      >
-                        <AccountCircle id="svgIcon" />
-                      </IconButton>
-                    );
-                  } else if (!selectedImage.base64 && user && user.picture) {
-                    return (
-                      <img
-                        src={user.picture}
-                        alt="profile image"
-                        style={{
-                          height: "50px",
-                          width: "50px",
-                          borderRadius: "50%",
-                          cursor: "pointer",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center"
-                        }}
-                        onClick={this.handleClickOpenPopup}
-                      />
-                    );
-                  }
-                })()}
-                {selectedImage && selectedImage.base64 && (
-                  <img
-                    src={selectedImage.base64}
-                    alt="product"
-                    style={{
-                      height: "50px",
-                      width: "50px",
-                      borderRadius: "50%"
-                    }}
-                    onClick={this.handleClickOpenPopup}
-                  />
-                )}
-              </div>
-            ) : null} */}
-            {/* <div className={classes.search}> */}
             <div className={'search-field-container'}>
               <input
                 type={'text'}
@@ -318,80 +184,6 @@ class TopNav extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-
-        <div>
-          <Dialog
-            open={this.state.open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={this.handleClosePopup}
-            aria-labelledby="alert-dialog-slide-title"
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle id="alert-dialog-slide-title">
-              {"User Information :"}
-            </DialogTitle>
-            <DialogContent style={{ marginTop: -15 }}>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                {user ? (
-                  <Avatar
-                    alt={`${user.firstname} ${user.lastname}`}
-                    src={user.picture}
-                    className={classes.bigAvatar}
-                  />
-                ) : (
-                    <AccountCircle id="svgIcon" />
-                  )}
-              </div>
-              {user && (
-                <div style={{ marginTop: 10 }}>
-                  <div>{`Name : ${user.firstname} ${user.lastname}`}</div>
-                  <div> {`email : ${user.email}`}</div>
-                  <div> {`Phone : ${user.phone}`}</div>
-                </div>
-              )}
-            </DialogContent>
-            <DialogActions
-              style={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Button onClick={this.handleClosePopup} style={{ color: "red" }}>
-                Cancel
-              </Button>
-
-              {user &&
-                user.picture !== "https://productmania.s3.us-east-2.amazonaws.com/users/default-user-image" &&
-                <Button onClick={this.handleRemoveImagePopup} color="primary">
-                  Remove Image
-              </Button>}
-              <Button
-                onClick={() => {
-                  this.handleChangeImagePopup();
-                  var elem = document.getElementById("theFile");
-                  if (elem && document.createEvent) {
-                    var evt = document.createEvent("MouseEvents");
-                    evt.initEvent("click", false, true);
-                    elem.dispatchEvent(evt);
-                  }
-                }}
-                color="primary"
-              >
-                Add Image
-                <input
-                  type="file"
-                  id="theFile"
-                  // display="hidden"
-                  onChange={event => {
-                    this.handleImageChange(event);
-                    event.target.value = null;
-                    this.setState({
-                      hideTool: true
-                    });
-                  }}
-                />
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
       </div>
     );
   }

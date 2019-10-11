@@ -183,7 +183,7 @@ class SignUp extends Component {
                 Create your Productmania Account
               </h1>
               <h3 className={`sub-title ${classes.p05}`}>
-                Continue to Productmania
+                By continuing you accept our <a onClick={() => this.goto('/privacy')} style={{ cursor: "pointer", color: "blue" }}> Policies</a>{" "}
               </h3>
 
 
