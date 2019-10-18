@@ -236,7 +236,7 @@ list {
   border-top: 1px solid #eaeaea;
 }
 
-.action-popover-wrapper{
+.action-popover-wrapper {
   display: flex;
   width: 90px;
   justify-content: space-around;
@@ -246,7 +246,7 @@ list {
 
 /* product cards */
 
-.product-card-container{
+.product-card-container {
   max-width: 1024px;
   margin: 0 auto;
 }

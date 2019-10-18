@@ -1,178 +1,194 @@
-#svgIcon{
-    font-size : 34px;
+#svgIcon {
+  font-size: 34px;
 }
 
-label + .MuiInput-formControl-155{
-    margin-top: 10px !important;
+label + .MuiInput-formControl-155 {
+  margin-top: 10px !important;
 }
 
-.MuiInputLabel-formControl-141{
-    top: -10px !important;
-    left: 10px !important;
+.MuiInputLabel-formControl-141 {
+  top: -10px !important;
+  left: 10px !important;
 }
 
 /* TEXT MODAL */
-.text-modal-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.text-modal-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-#simple-modal-title{
-    font-size: 20px;
-    background: red;
-    padding: 15px;
-    color: #fff;
-    border-bottom: 2px solid red;
+#simple-modal-title {
+  font-size: 20px;
+  background: red;
+  padding: 15px;
+  color: #fff;
+  border-bottom: 2px solid red;
 }
 
-#simple-modal-description{
-    padding: 15px;
+#simple-modal-description {
+  padding: 15px;
 }
 
-.text-modal-button{
-    background: #eaeaea;
-    border: none;
-    border-top: 2px solid red;
-    padding: 5px;
-    color: red;
-    font-weight: bold;
-    cursor: pointer;
+.text-modal-button {
+  background: #eaeaea;
+  border: none;
+  border-top: 2px solid red;
+  padding: 5px;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* TextError */
-.text-error{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
+.text-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
 }
 
 /* TOP NAV SEARCH BAR */
-.search-field-container{
-    display: flex;
-    justify-content: space-between;
-    width: 40%;
-    border: 1px solid #eaeaea;
-    border-radius: 5px;
-    overflow: hidden;
+.search-field-container {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  border: 1px solid #eaeaea;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
-.search-field-container .search-field{
-    border: none;
-    width: 100%;
-    padding: 3px;
-    color: #9e7339;
+.search-field-container .search-field {
+  border: none;
+  width: 100%;
+  padding: 3px;
+  color: #9e7339;
 }
 
-.search-field-container .search-field-addon{
-    width: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+.search-field-container .search-field-addon {
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 /* PRODUCT CARD */
 
-.product-card-image{
-    width: 140px;
-    height: 130px;
+.product-card-image {
+  width: 140px;
+  height: 130px;
 }
 
-.product-card-bottom-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding-bottom: 0 !important;
-    color: #5e4422 !important;
-    width: 100%;
+.product-card-bottom-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 0 !important;
+  color: #5e4422 !important;
+  width: 100%;
 }
 
-.product-card-bottom-section{
-    display: flex;
-    justify-content: space-between;
+.product-card-bottom-section {
+  display: flex;
+  justify-content: space-between;
 }
 
-.product-card-more-image-icon{
-    height: 25px;
-    width: 17px;
-    right: 10px;
-    top: 12px;
-    cursor: pointer;
-    border-radius: 5px;
+.product-card-more-image-icon {
+  height: 25px;
+  width: 17px;
+  right: 10px;
+  top: 12px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-.product-card-more-image-icon:hover{
-    background: #000;
-    opacity: 0.5;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
+.product-card-more-image-icon:hover {
+  background: #000;
+  opacity: 0.5;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+/* Add Post Bottom Nav */
+.product-modal-footer {
+  display: flex;
+  justify-content: space-evenly;
+  background: #fff;
+  border-top: 1px solid #eaeaea;
+}
+#add-product-fabbtn {
+  outline: none !important;
+  width: 42px;
+  height: 42px;
+  margin-top: 0px;
+  margin-left: 24px;
+  margin-right: 24px;
 }
 
 /* mixin for multiline */
 .product-card-title {
-    overflow: hidden;
-    position: relative;
-    line-height: 1.2em;
-    max-height: 3.1em;
-    text-align: left;
-    margin-right: -1em;
-    padding-right: 1em;
-    color: #5e4422 !important;
+  overflow: hidden;
+  position: relative;
+  line-height: 1.2em;
+  max-height: 3.1em;
+  text-align: left;
+  margin-right: -1em;
+  padding-right: 1em;
+  color: #5e4422 !important;
 }
 .product-card-title:before {
-    content: '...';
-    position: absolute;
-    right: 0;
-    bottom: 0;
+  content: "...";
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 .product-card-title:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    width: 1em;
-    height: 1em;
-    margin-top: 0.2em;
-    background:#f8f3ec;
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  background: #f8f3ec;
 }
 
 /* // Extra small devices (portrait phones, less than 576px) */
-@media (max-width: 575px) { 
-    .search-field-container{
-        width: 90% !important;
-    }
+@media (max-width: 575px) {
+  .search-field-container {
+    width: 90% !important;
+  }
 
-    .product-card-image{
-        width: 120px;
-        height: 110px;
-    }
+  .product-card-image {
+    width: 120px;
+    height: 110px;
+  }
 }
 
 /* // Small devices (landscape phones, less than 768px) */
 @media (max-width: 767px) {
-    .search-field-container{
-        width: 40% !important;
-    }
+  .search-field-container {
+    width: 40% !important;
+  }
 
-    .product-card-image{
-        width: 130px;
-        height: 120px;
-    }
+  .product-card-image {
+    width: 130px;
+    height: 120px;
+  }
 }
 
-@media (max-width: 601px) { 
-    .search-field-container{
-        width: 50% !important;
-    }
+@media (max-width: 601px) {
+  .search-field-container {
+    width: 50% !important;
+  }
 }
 
 /* // Medium devices (tablets, less than 992px) */
-@media (max-width: 991px) { 
-    .search-field-container{
-        width: 90% !important;
-    }
+@media (max-width: 991px) {
+  .search-field-container {
+    width: 90% !important;
+  }
 }
 
 /* // Large devices (desktops, less than 1200px) */
-@media (max-width: 1199px) {  }
+@media (max-width: 1199px) {
+}

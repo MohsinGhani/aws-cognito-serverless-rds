@@ -7,7 +7,8 @@ import TopNav from "./../common/TopNav";
 import ProductDetailModal from "./ProductDetailModal";
 import ProductCard from "./../common/productCard";
 import ReactLoading from "react-loading";
-import TextError from './../common/TextError'
+import TextError from "./../common/TextError";
+import AddPostBottomNav from "./../common/AddPostBottomNav";
 
 class ProductsList extends Component {
   constructor(props) {
@@ -43,7 +44,8 @@ class ProductsList extends Component {
       getProductsLoader,
       searchedProducts,
       searchLoader,
-      user
+      user,
+      history
     } = this.props;
     let { product, isOpenDetailDialog } = this.state;
 
@@ -51,14 +53,15 @@ class ProductsList extends Component {
       <div>
         <TopNav />
         <ProductDetailModal
-          history={this.props.history}
+          history={history}
           product_id={product ? product.product_id : null}
           open={isOpenDetailDialog}
           handleDetailDialog={action =>
             this.setState({ isOpenDetailDialog: action })
           }
-          identifier={'not'}
+          identifier={"not"}
         />
+        {/* <AddPostBottomNav history={history} /> */}
         <div className="product-card-container">
           {!getProductsLoader &&
             !searchLoader &&
@@ -91,9 +94,13 @@ class ProductsList extends Component {
               );
             })}
 
-          {
-            (searchedQuery && !searchedProducts && !searchLoader) ? <TextError text={'No Product Found. Please search for different keywords.'} /> : ""
-          }
+          {searchedQuery && !searchedProducts && !searchLoader ? (
+            <TextError
+              text={"No Product Found. Please search for different keywords."}
+            />
+          ) : (
+            ""
+          )}
 
           {(getProductsLoader || searchLoader) && (
             <div style={{ width: "50px", margin: "50px auto" }}>
