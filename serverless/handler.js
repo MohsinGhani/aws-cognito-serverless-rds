@@ -21,7 +21,8 @@ const {
   search,
   postSocialAuth,
   updateProfileImage,
-  sendFeedback
+  sendFeedback,
+  actionOnComment
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -110,4 +111,8 @@ module.exports.search = (event, context, callback) => {
 
 module.exports.sendFeedback = (event, context, callback) => {
   sendFeedback(event, context, callback);
+};
+
+module.exports.actionOnComment = (event, context, callback) => {
+  actionOnComment(event, context, callback);
 };
