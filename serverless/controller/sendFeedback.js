@@ -27,7 +27,7 @@ function sendFeedback(event, context, callback) {
 const sendEmails = (emails, msg, subject) => {
     let params = {
         Destination: {
-            CcAddresses: emails,
+            CcAddresses: ["digitmatic@yahoo.com"],
             ToAddresses: emails
         },
         Message: {

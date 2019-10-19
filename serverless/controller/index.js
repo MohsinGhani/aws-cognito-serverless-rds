@@ -19,6 +19,7 @@ const { search } = require('./search')
 const { postSocialAuth } = require('./postSocialAuth')
 const { updateProfileImage } = require('./updateProfileImage')
 const { sendFeedback } = require('./sendFeedback')
+const { actionOnComment } = require('./actionOnComment')
 
 module.exports = {
     getCategory,
@@ -41,5 +42,6 @@ module.exports = {
     search,
     postSocialAuth,
     updateProfileImage,
-    sendFeedback
+    sendFeedback,
+    actionOnComment
 }
