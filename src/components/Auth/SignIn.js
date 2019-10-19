@@ -13,8 +13,7 @@ import SignInWithFacebook from "./SignInWithFacebook";
 import { authAction } from "./../../store/actions";
 import ReactLoading from "react-loading";
 import TopNav from "./../common/TopNav";
-import TextModal from './../common/TextModal'
-
+import TextModal from "./../common/TextModal";
 
 const styles = theme => ({
   p05: {
@@ -44,8 +43,8 @@ class SignIn extends React.Component {
       latitude: 36.778259,
       longitude: -119.417931,
       openTextModal: false,
-      textModalTitle: '',
-      textModalText: ''
+      textModalTitle: "",
+      textModalText: ""
     };
     this.login = this.login.bind(this);
   }
@@ -64,13 +63,14 @@ class SignIn extends React.Component {
     let { email, password } = this.state;
 
     this.props.signInAction({
-      email, password
+      email,
+      password
     });
   };
 
   closeTextModal = () => {
-    this.setState({ openTextModal: false })
-  }
+    this.setState({ openTextModal: false });
+  };
   componentDidMount() {
     this.props.isLoggedInAction();
     if (this.props.isLoggedIn) {
@@ -87,16 +87,35 @@ class SignIn extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     let { authError } = this.props;
     if (prevProps.authError !== authError && authError !== null) {
-      this.setState({ openTextModal: true, textModalTitle: "Login Failed!", textModalText: 'Please enter correct email and password or create an account using email or Facebook or Google' })
+      this.setState({
+        openTextModal: true,
+        textModalTitle: "Login Failed!",
+        textModalText:
+          "Please enter correct email and password or create an account using email or Facebook or Google"
+      });
     }
   }
 
   render() {
     let { classes, authLoader } = this.props;
-    let { email, password, textModalText, textModalTitle, openTextModal } = this.state;
-    let isDisableBtn = email && password
+    let {
+      email,
+      password,
+      textModalText,
+      textModalTitle,
+      openTextModal
+    } = this.state;
+    let isDisableBtn = email && password;
     return (
-      <div style={{ backgroundImage: 'url(' + require("./../../assets/img/map-image.jpg") + ')', height: "100vh", backgroundRepeat: 'no', backgroundSize: 'cover' }}>
+      <div
+        style={{
+          backgroundImage:
+            "url(" + require("./../../assets/img/map-image.jpg") + ")",
+          height: "100vh",
+          backgroundRepeat: "no",
+          backgroundSize: "cover"
+        }}
+      >
         <TopNav />
         <TextModal
           open={openTextModal}
@@ -110,9 +129,19 @@ class SignIn extends React.Component {
             <Grid item md={12} sm={12} xs={12}>
               <h1 className={`title center ${classes.p05}`}> Sign In </h1>{" "}
               <h3 className={`sub-title center ${classes.p05}`}>
-                By continuing you accept our<a onClick={()=>this.goto('/privacy')} style={{ cursor: "pointer", color: "blue", paddingLeft: '5px' }}> Policies</a>{" "}
+                By continuing you accept our
+                <a
+                  onClick={() => this.goto("/privacy")}
+                  style={{
+                    cursor: "pointer",
+                    color: "blue",
+                    paddingLeft: "5px"
+                  }}
+                >
+                  {" "}
+                  Policies
+                </a>{" "}
               </h3>{" "}
-
               <Grid container>
                 <Grid item md={12} sm={12} xs={12} className={classes.p05}>
                   <InputField
@@ -158,8 +187,8 @@ class SignIn extends React.Component {
                       />{" "}
                     </div>
                   ) : (
-                      "Login"
-                    )}{" "}
+                    "Login"
+                  )}{" "}
                 </Button>{" "}
               </Grid>{" "}
               <Divider />
@@ -177,14 +206,14 @@ class SignIn extends React.Component {
                   className={classes.button}
                 >
                   Forgot password ?
-                  </Button>{" "}
+                </Button>{" "}
               </Grid>{" "}
               <SignInWithGoogle history={this.props.history} /> <br />
               <SignInWithFacebook history={this.props.history} />{" "}
             </Grid>{" "}
           </Grid>{" "}
         </Card>{" "}
-      </div >
+      </div>
     );
   }
 }

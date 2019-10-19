@@ -7,16 +7,11 @@ import Fab from "@material-ui/core/Fab";
 import TextModal from "./../common/TextModal";
 import "./index.css";
 
-// const stylesTheme = theme => ({
-//   margin: {
-//     margin: theme.spacing.unit
-//   }
-// });
 const styles = () => ({
   root: {
     position: "fixed",
     left: "0",
-    zIndex: 99999,
+    zIndex: 1001,
     bottom: "0",
     width: "100%",
     height: "auto",
@@ -29,52 +24,56 @@ const styles = () => ({
   }
 });
 
-const AddPostBottomNav = props => {
-  const [openTextModal, setOpenTextModal] = useState(false);
-  const { classes } = props;
+class AddPostBottomNav extends React.Component {
+  state = {
+    openTextModal: false
+  };
 
-  function handleAddPostClick() {
-    const { user } = props;
+  handleAddPostClick = () => {
+    const { user } = this.props;
     if (user) {
-      props.history.push("/add-product");
+      this.props.history.push("/add-product");
     } else {
-      setOpenTextModal(true);
+      this.setState({ openTextModal: true });
     }
-  }
-  //   function showLoginModal() {}
-  function closeTextModal() {
-    setOpenTextModal(false);
-  }
+  };
+  closeTextModal = () => {
+    this.setState({ openTextModal: false });
+  };
 
-  return (
-    <div className={`${classes.root} product-modal-footer`}>
-      <div>
-        <Fab
-          aria-label="Add"
-          className={classes.margin}
-          id="add-product-fabbtn"
-          onClick={handleAddPostClick}
-        >
-          <AddIcon />
-        </Fab>
+  render() {
+    const { classes } = this.props;
+    const { openTextModal } = this.state;
+    return (
+      <div className={`${classes.root} product-modal-footer`}>
+        <div>
+          <Fab
+            aria-label="Add"
+            className={classes.margin}
+            id="add-product-fabbtn"
+            onClick={this.handleAddPostClick}
+          >
+            <AddIcon />
+          </Fab>
+        </div>
+        <TextModal
+          open={openTextModal}
+          handleClose={this.closeTextModal}
+          title={"Login Required!"}
+          text={"You must login to perform this action"}
+          isTimer={true}
+          btnAction={() => {
+            this.props.history.push("/signin");
+          }}
+          btnTitle={"Login"}
+          strickedAction={() => {
+            this.props.history.push("/signin");
+          }}
+        />
       </div>
-      <TextModal
-        open={openTextModal}
-        handleClose={closeTextModal}
-        title={"Login Required!"}
-        text={"You must login to perform this action"}
-        isTimer={true}
-        btnAction={() => {
-          props.history.push("/signin");
-        }}
-        btnTitle={"Login"}
-        strickedAction={() => {
-          props.history.push("/signin");
-        }}
-      />
-    </div>
-  );
-};
+    );
+  }
+}
 AddPostBottomNav.propTypes = {
   classes: PropTypes.object.isRequired
 };
@@ -88,7 +87,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return;
 };
 
 export default connect(

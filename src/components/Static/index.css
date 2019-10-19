@@ -2,9 +2,23 @@
   padding-left: 16px;
   /* padding-right: 16px; */
 }
-
+.privacy {
+  margin-bottom: 82px;
+}
+.Bookmark {
+  margin-bottom: 82px;
+}
+.cookie {
+  margin-bottom: 82px;
+}
+.terms {
+  margin-bottom: 82px;
+}
 .yellow-color {
   color: #fab904;
+}
+.how-to-use {
+  margin-bottom: 82px;
 }
 
 .static-heading {

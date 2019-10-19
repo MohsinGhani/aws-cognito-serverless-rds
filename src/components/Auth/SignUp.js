@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import { InputField, InputFieldWithEndAdornment } from "./../MaterialUI";
 import Hidden from "@material-ui/core/Hidden";
 import Button from "@material-ui/core/Button";
-import Typography from '@material-ui/core/Typography';
-import { authAction } from './../../store/actions'
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TopNav from './../common/TopNav'
+import Typography from "@material-ui/core/Typography";
+import { authAction } from "./../../store/actions";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TopNav from "./../common/TopNav";
 import "./index.css";
 
 const styles = theme => ({
@@ -29,16 +29,16 @@ const styles = theme => ({
     marginTop: "5px"
   },
   formControl: {
-    margin: theme.spacing.unit * 3,
+    margin: theme.spacing.unit * 3
   },
   group: {
     margin: `${theme.spacing.unit}px 0`,
-    display: 'flex'
+    display: "flex"
   },
   root: {
     backgroundColor: "transparent",
-    width: '100%',
-    height: "90%",
+    width: "100%",
+    height: "90%"
   },
 
   paper: {
@@ -48,26 +48,26 @@ const styles = theme => ({
     // backgroundColor: 'white',
     // boxShadow: theme.shadows[50],
     width: theme.spacing.unit * 50,
-    margin: '20px',
-    padding: '10px 0px',
-    position: 'relative',
-    borderRadius: '20px',
-    marginTop: '-200px',
-    textAlign: 'center',
+    margin: "20px",
+    padding: "10px 0px",
+    position: "relative",
+    borderRadius: "20px",
+    marginTop: "-200px",
+    textAlign: "center"
   },
   errorModel: {
-    backgroundColor: 'red',
-    opacity: '0px',
-    fontSize: '40px',
-    border: '10px solid 	#E8E8E8',
-    borderTop: '20px solid 	#E8E8E8',
+    backgroundColor: "red",
+    opacity: "0px",
+    fontSize: "40px",
+    border: "10px solid 	#E8E8E8",
+    borderTop: "20px solid 	#E8E8E8"
   },
   confirmModel: {
-    backgroundColor: 'green',
-    opacity: '0px',
-    fontSize: '40px',
-    border: '10px solid 	#E8E8E8',
-    borderTop: '20px solid 	#E8E8E8',
+    backgroundColor: "green",
+    opacity: "0px",
+    fontSize: "40px",
+    border: "10px solid 	#E8E8E8",
+    borderTop: "20px solid 	#E8E8E8"
   }
 });
 
@@ -75,12 +75,12 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: '',
-      lastname: '',
-      email: '',
-      phone: '',
-      password: '',
-      confirmPassword: '',
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
       isPhoneVerificationEnable: false,
       open: false,
       error: {
@@ -94,86 +94,141 @@ class SignUp extends Component {
       isSignupButtonDisabled: true,
       latitude: 36.778259,
       longitude: -119.417931
-    }
+    };
   }
 
   goto = path => {
     this.props.history.push(path);
   };
 
-  handleInput = (e) => {
+  handleInput = e => {
     this.setState({
       [e.target.id]: e.target.value
-    })
-  }
+    });
+  };
   handleClickOpen = () => {
     this.setState({
-      open: true,
+      open: true
     });
   };
   handleClose = () => {
     this.setState({ open: false });
   };
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.firstname !== this.state.firstname || prevState.lastname !== this.state.lastname || prevState.password !== this.state.password || prevState.confirmPassword !== this.state.confirmPassword) {
-      this.validateSignupForm()
+    if (
+      prevState.firstname !== this.state.firstname ||
+      prevState.lastname !== this.state.lastname ||
+      prevState.password !== this.state.password ||
+      prevState.confirmPassword !== this.state.confirmPassword
+    ) {
+      this.validateSignupForm();
     }
 
-    if (prevProps.authLoader && !this.props.authLoader && !this.props.authError && this.props.signupUser) {
-      this.goto('/confirm-signup')
+    if (
+      prevProps.authLoader &&
+      !this.props.authLoader &&
+      !this.props.authError &&
+      this.props.signupUser
+    ) {
+      this.goto("/confirm-signup");
     }
   }
 
   validateSignupForm = () => {
-    let { firstname, lastname, email, password, confirmPassword, error } = this.state
-    if (firstname.length >= 3 && lastname.length >= 3 && confirmPassword.length >= 8 && password.length >= 8 && confirmPassword === password && email) {
-      error = { firstname: null, lastname: null, email: null, password: null, confirmPassword: null }
-      this.setState({ isSignupButtonDisabled: false, error })
+    let {
+      firstname,
+      lastname,
+      email,
+      password,
+      confirmPassword,
+      error
+    } = this.state;
+    if (
+      firstname.length >= 3 &&
+      lastname.length >= 3 &&
+      confirmPassword.length >= 8 &&
+      password.length >= 8 &&
+      confirmPassword === password &&
+      email
+    ) {
+      error = {
+        firstname: null,
+        lastname: null,
+        email: null,
+        password: null,
+        confirmPassword: null
+      };
+      this.setState({ isSignupButtonDisabled: false, error });
+    } else if (confirmPassword && password && confirmPassword !== password) {
+      error.confirmPassword = "Confirm Password do not match";
+      this.setState({ isSignupButtonDisabled: true, error });
+    } else if (confirmPassword.length < 8 && password.length < 8) {
+      error.password = "password does not meet the requirements";
+      this.setState({ isSignupButtonDisabled: true, error });
+    } else {
+      error = {
+        firstname: null,
+        lastname: null,
+        email: null,
+        password: null,
+        confirmPassword: null
+      };
+      this.setState({ isSignupButtonDisabled: true, error });
     }
-    else if (confirmPassword && password && confirmPassword !== password) {
-      error.confirmPassword = 'Confirm Password do not match'
-      this.setState({ isSignupButtonDisabled: true, error })
-    }
-    else if (confirmPassword.length < 8 && password.length < 8) {
-      error.password = "password does not meet the requirements"
-      this.setState({ isSignupButtonDisabled: true, error })
-    }
-    else {
-      error = { firstname: null, lastname: null, email: null, password: null, confirmPassword: null }
-      this.setState({ isSignupButtonDisabled: true, error })
-    }
-  }
+  };
 
   handleSignUp = () => {
     this.setState({ open: true });
-    let { firstname, lastname, email, phone, password, isPhoneVerificationEnable } = this.state
-    this.props.signUpAction({ firstname, lastname, email, phone, password, isPhoneVerificationEnable })
-  }
+    let {
+      firstname,
+      lastname,
+      email,
+      phone,
+      password,
+      isPhoneVerificationEnable
+    } = this.state;
+    this.props.signUpAction({
+      firstname,
+      lastname,
+      email,
+      phone,
+      password,
+      isPhoneVerificationEnable
+    });
+  };
 
   componentDidMount() {
-    this.props.isLoggedInAction()
+    this.props.isLoggedInAction();
     if (this.props.isLoggedIn) {
-      this.goto('/add-product')
+      this.goto("/add-product");
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn) {
       setTimeout(() => {
-        this.goto('/add-product')
-      }, 500)
+        this.goto("/add-product");
+      }, 500);
     }
   }
 
-  handleVerificationOption = (e) => {
-    debugger
-  }
+  handleVerificationOption = e => {
+    debugger;
+  };
 
   render() {
     let { classes, authLoader, authError } = this.props;
 
     return (
-      <div style={{ backgroundImage: 'url(' + require("./../../assets/img/map-image.jpg") + ')', height: "100vh", backgroundRepeat: 'no', backgroundSize: 'cover' }}>
+      <div
+        style={{
+          backgroundImage:
+            "url(" + require("./../../assets/img/map-image.jpg") + ")",
+          height: "100vh",
+          backgroundRepeat: "no",
+          backgroundSize: "cover"
+        }}
+      >
         <TopNav />
         <br />
         <Card className="signup-container">
@@ -183,9 +238,15 @@ class SignUp extends Component {
                 Create your Productmania Account
               </h1>
               <h3 className={`sub-title ${classes.p05}`}>
-                By continuing you accept our <a onClick={() => this.goto('/privacy')} style={{ cursor: "pointer", color: "blue" }}> Policies</a>{" "}
+                By continuing you accept our{" "}
+                <a
+                  onClick={() => this.goto("/privacy")}
+                  style={{ cursor: "pointer", color: "blue" }}
+                >
+                  {" "}
+                  Policies
+                </a>{" "}
               </h3>
-
 
               <Grid container>
                 <Grid item md={6} sm={12} xs={12} className={classes.p05}>
@@ -304,7 +365,7 @@ class SignUp extends Component {
                   className={classes.button}
                 >
                   Sign in instead
-              </Button>
+                </Button>
                 <Button
                   variant="contained"
                   color="primary"
@@ -313,7 +374,7 @@ class SignUp extends Component {
                   onClick={this.handleSignUp}
                 >
                   Next
-              </Button>
+                </Button>
               </Grid>
             </Grid>
             <Hidden smDown>
@@ -321,114 +382,126 @@ class SignUp extends Component {
                 <figure className="vertical-center">
                   <center>
                     <img
-                      src={require("./../../assets/img/account.svg")}
+                      src={require("./../../assets/img/man-user.jpg")}
                       alt="Signup"
                       height="244"
                       width="244"
                     />
                     <figcaption className="figcaption">
-                      One account. All of Productmania working for you.
-                  </figcaption>
+                      To provide quality content we ensure to register our users
+                    </figcaption>
                   </center>
                 </figure>
               </Grid>
             </Hidden>
           </Grid>
         </Card>
-        {
-          authError ? (
-            <div>
-              <Dialog
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-                open={this.state.open}
-                style={{ backgroundColor: 'red' }}
-                className={classes.errorModel}
-                onClose={this.handleClose}
-                BackdropProps={{
-                  classes: {
-                    root: classes.root
-                  }
+        {authError ? (
+          <div>
+            <Dialog
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+              open={this.state.open}
+              style={{ backgroundColor: "red" }}
+              className={classes.errorModel}
+              onClose={this.handleClose}
+              BackdropProps={{
+                classes: {
+                  root: classes.root
                 }
+              }}
+              PaperProps={{
+                classes: {
+                  root: classes.paper
                 }
-                PaperProps={{
-                  classes: {
-                    root: classes.paper
-                  }
-                }}
-              >
-                <div>
-                  <DialogTitle variant="h1" id="dialogTitle">Oops!</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="dialogText">
-                      {authError}
-                    </DialogContentText>
-                  </DialogContent>
-                  <Typography>
-                    <Button onClick={this.handleClose} id="closeButton">
-                      OK
-                    </Button>
-                  </Typography>
-                </div>
-              </Dialog>
-            </div>
-          ) : () => {
-            setTimeout(() => (
+              }}
+            >
               <div>
-                <Dialog
-                  aria-labelledby="simple-modal-title"
-                  aria-describedby="simple-modal-description"
-                  open={this.state.open}
-                  className={classes.confirmModel}
-                  onClose={this.handleClose}
-                  BackdropProps={{
-                    classes: {
-                      root: classes.root
-                    }
-                  }
-                  }
-                  PaperProps={{
-                    classes: {
-                      root: classes.paper
-                    }
-                  }}
-                >
-                  <div>
-                    <DialogTitle variant="h1" id="dialogTitle">Thank You!</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id="dialogText">
-                        You have succesfully submitted the form
-                          </DialogContentText>
-                    </DialogContent>
-                    <Typography>
-                      <Button onClick={this.handleClose} id="closeButton">
-                        OK
-                          </Button>
-                    </Typography>
-                  </div>
-                </Dialog>
-              </div>), 3000)
+                <DialogTitle variant="h1" id="dialogTitle">
+                  Oops!
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="dialogText">
+                    {authError}
+                  </DialogContentText>
+                </DialogContent>
+                <Typography>
+                  <Button onClick={this.handleClose} id="closeButton">
+                    OK
+                  </Button>
+                </Typography>
+              </div>
+            </Dialog>
+          </div>
+        ) : (
+          () => {
+            setTimeout(
+              () => (
+                <div>
+                  <Dialog
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.open}
+                    className={classes.confirmModel}
+                    onClose={this.handleClose}
+                    BackdropProps={{
+                      classes: {
+                        root: classes.root
+                      }
+                    }}
+                    PaperProps={{
+                      classes: {
+                        root: classes.paper
+                      }
+                    }}
+                  >
+                    <div>
+                      <DialogTitle variant="h1" id="dialogTitle">
+                        Thank You!
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText id="dialogText">
+                          You have succesfully submitted the form
+                        </DialogContentText>
+                      </DialogContent>
+                      <Typography>
+                        <Button onClick={this.handleClose} id="closeButton">
+                          OK
+                        </Button>
+                      </Typography>
+                    </div>
+                  </Dialog>
+                </div>
+              ),
+              3000
+            );
           }
-        }
-      </div >
+        )}
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  const { authReducer: { signupUser, authLoader, authError, isLoggedIn } } = state;
+const mapStateToProps = state => {
+  const {
+    authReducer: { signupUser, authLoader, authError, isLoggedIn }
+  } = state;
   return {
-    signupUser, authLoader, authError, isLoggedIn
-  }
-}
+    signupUser,
+    authLoader,
+    authError,
+    isLoggedIn
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    signUpAction: (payload) => dispatch(authAction.signUp(payload)),
-    isLoggedInAction: (payload) => dispatch(authAction.isLoggedIn(payload)),
+    signUpAction: payload => dispatch(authAction.signUp(payload)),
+    isLoggedInAction: payload => dispatch(authAction.isLoggedIn(payload))
   };
 };
 
 export default connect(
-  mapStateToProps, mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(withRouter(withStyles(styles)(SignUp)));

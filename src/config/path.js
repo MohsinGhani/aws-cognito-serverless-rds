@@ -15,6 +15,7 @@ export default class path {
     static LIKE_OR_DISLIKE = `${credentials.BASE_URL}/like`;
     static SEND_FEEDBACK = `${credentials.BASE_URL}/sendFeedback`;
     static DO_COMMENT_ON_PRODUCT = `${credentials.BASE_URL}/comment`;
+    static ACTION_ON_COMMENT = `${credentials.BASE_URL}/actionOnComment`;
     static SEARCH = `${credentials.BASE_URL}/search`;
     static REVERSE_GEOCODING = `https://api.mapbox.com/geocoding/v5/mapbox.places`;
 

@@ -61,7 +61,7 @@ class ProductsList extends Component {
           }
           identifier={"not"}
         />
-        {/* <AddPostBottomNav history={history} /> */}
+        <AddPostBottomNav history={history} />
         <div className="product-card-container">
           {!getProductsLoader &&
             !searchLoader &&

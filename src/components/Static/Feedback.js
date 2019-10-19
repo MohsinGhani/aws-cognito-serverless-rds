@@ -9,6 +9,7 @@ import { ProductAction, authAction } from "../../store/actions";
 import uuidv1 from "uuid/v1";
 import ReactLoading from "react-loading";
 import TextModal from "./../common/TextModal";
+import AddPostBottomNav from "./../common/AddPostBottomNav";
 import "./index.css";
 
 class Feedback extends Component {
@@ -211,6 +212,7 @@ class Feedback extends Component {
             </Button>
           </div>
         </div>
+        <AddPostBottomNav history={this.props.history} />
       </div>
     );
   }

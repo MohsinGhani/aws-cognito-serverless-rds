@@ -247,6 +247,23 @@ list {
 /* product cards */
 
 .product-card-container {
+  margin-bottom: 82px !important;
   max-width: 1024px;
   margin: 0 auto;
+}
+
+.thumb-up-span {
+  padding-right: 16px;
+  cursor: default;
+}
+.thumb-up-span > span {
+  padding-left: 4px;
+  font-size: 16px;
+}
+.thumb-down-span {
+  cursor: pointer;
+}
+.thumb-down-span > span {
+  padding-left: 4px;
+  font-size: 16px;
 }

@@ -1,8 +1,8 @@
 import React from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { withRouter } from 'react-router-dom';
-import { authAction } from './../../store/actions'
+import { withRouter } from "react-router-dom";
+import { authAction } from "./../../store/actions";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
 import { InputField } from "./../MaterialUI";
@@ -33,7 +33,7 @@ const styles = theme => ({
     backgroundColor: "#c1e1c5",
     color: "#4caf50",
     borderRadius: 2,
-    padding: "5px 4px",
+    padding: "5px 4px"
   },
   recoveryLinkMessageError: {
     textAlign: "center",
@@ -42,7 +42,7 @@ const styles = theme => ({
     backgroundColor: "rgba(211, 47, 47, 0.2)",
     color: "#d32f2f",
     borderRadius: 2,
-    padding: "5px 4px",
+    padding: "5px 4px"
   }
 });
 
@@ -63,133 +63,177 @@ class ForgotPassword extends React.Component {
       },
       isSignupButtonDisabled: true,
       isHideMessage: true
-    }
+    };
   }
 
   goto = path => {
     this.props.history.push(path);
   };
 
-  handleInput = (e) => {
+  handleInput = e => {
     this.setState({
       [e.target.id]: e.target.value
-    })
-  }
+    });
+  };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.userEmail !== this.state.userEmail || prevState.confirmationCode !== this.state.confirmationCode || prevState.userPass !== this.state.userPass || prevState.confirmPassword !== this.state.confirmPassword) {
-      this.validateSignupForm()
+    if (
+      prevState.userEmail !== this.state.userEmail ||
+      prevState.confirmationCode !== this.state.confirmationCode ||
+      prevState.userPass !== this.state.userPass ||
+      prevState.confirmPassword !== this.state.confirmPassword
+    ) {
+      this.validateSignupForm();
     }
 
     if (this.props.confirmNewPassword !== prevProps.confirmNewPassword) {
-      this.goto('/signin')
+      this.goto("/signin");
     }
-    
-    if (this.props.forgotPasswordError !== prevProps.forgotPasswordError || this.props.confirmNewPasswordError !== prevProps.confirmNewPasswordError) {
+
+    if (
+      this.props.forgotPasswordError !== prevProps.forgotPasswordError ||
+      this.props.confirmNewPasswordError !== prevProps.confirmNewPasswordError
+    ) {
       this.setState({
         isHideMessage: false
-      })
+      });
     }
   }
 
   validateSignupForm = () => {
-    let { userEmail, error, confirmPassword, userPass, confirmationCode } = this.state
+    let {
+      userEmail,
+      error,
+      confirmPassword,
+      userPass,
+      confirmationCode
+    } = this.state;
 
     if (userEmail) {
-      this.setState({ isSignupButtonDisabled: false, error })
+      this.setState({ isSignupButtonDisabled: false, error });
 
-      if ((confirmPassword && confirmPassword.length >= 8) && (userPass && userPass.length >= 8) && (confirmPassword && confirmPassword === userPass) && (confirmationCode && confirmationCode.length === 6)) {
-        error = { userPass: null, confirmPassword: null, confirmationCode: null }
-        this.setState({ isSignupButtonDisabled: false, error })
-      }
-      else if (confirmPassword && userPass && confirmPassword !== userPass) {
+      if (
+        confirmPassword &&
+        confirmPassword.length >= 8 &&
+        (userPass && userPass.length >= 8) &&
+        (confirmPassword && confirmPassword === userPass) &&
+        (confirmationCode && confirmationCode.length === 6)
+      ) {
+        error = {
+          userPass: null,
+          confirmPassword: null,
+          confirmationCode: null
+        };
+        this.setState({ isSignupButtonDisabled: false, error });
+      } else if (confirmPassword && userPass && confirmPassword !== userPass) {
         this.setState(prevState => ({
-          isSignupButtonDisabled: true, error: {
+          isSignupButtonDisabled: true,
+          error: {
             ...prevState.error,
-            confirmPassword: 'Confirm Password do not match'
+            confirmPassword: "Confirm Password do not match"
           }
-        }))
-      }
-      else if ((confirmPassword && confirmPassword.length < 8) && (userPass && userPass.length < 8)) {
-
+        }));
+      } else if (
+        confirmPassword &&
+        confirmPassword.length < 8 &&
+        (userPass && userPass.length < 8)
+      ) {
         this.setState(prevState => ({
-          isSignupButtonDisabled: true, error: {
+          isSignupButtonDisabled: true,
+          error: {
             ...prevState.error,
             userPass: "password does not meet the requirements"
           }
-        }))
-      }
-      else if ((confirmationCode && confirmationCode.length !== 6)) {
-
+        }));
+      } else if (confirmationCode && confirmationCode.length !== 6) {
         this.setState(prevState => ({
-          isSignupButtonDisabled: true, error: {
+          isSignupButtonDisabled: true,
+          error: {
             ...prevState.error,
             confirmationCode: "Incorrect confirmation code"
           }
-        }))
+        }));
       }
-    }
-    else {
+    } else {
       this.setState(prevState => ({
-        isSignupButtonDisabled: true, error: {
+        isSignupButtonDisabled: true,
+        error: {
           ...prevState.error,
           userEmail: "Please provide correct email address"
         }
-      }))
+      }));
     }
-  }
+  };
 
   handleConfirmNewPass = () => {
-
     let { userPass, confirmationCode, userEmail } = this.state;
 
-    this.props.confirmNewPasswordAction({ userEmail, code: confirmationCode, userPass });
-  }
+    this.props.confirmNewPasswordAction({
+      userEmail,
+      code: confirmationCode,
+      userPass
+    });
+  };
 
   handleForgotPassword = () => {
     let { userEmail } = this.state;
 
     this.props.forgotPasswordAction(userEmail);
-  }
+  };
 
   componentDidMount() {
-    this.props.isLoggedInAction()
+    this.props.isLoggedInAction();
     if (this.props.isLoggedIn) {
-      this.goto('/add-product')
+      this.goto("/add-product");
     }
   }
 
-  errorMessage = (message) => {
+  errorMessage = message => {
+    let { classes } = this.props;
 
-    let {classes} = this.props;
-    
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setState({
         isHideMessage: true
-      })
-    }, 5000)
-    
+      });
+    }, 5000);
+
     return (
       <Grid container>
         <Grid item md={12} sm={12} xs={12} className={classes.p05}>
           <p className={classes.recoveryLinkMessageError}>{message}</p>
         </Grid>
       </Grid>
-    )
-  }
+    );
+  };
 
   render() {
-    let { classes, forgotPassword, forgotPasswordError, confirmNewPasswordLoader, confirmNewPasswordError } = this.props;
-    let { userEmail, userPass, confirmPassword, confirmationCode, error, isSignupButtonDisabled, isHideMessage } = this.state;
+    let {
+      classes,
+      forgotPassword,
+      forgotPasswordError,
+      confirmNewPasswordLoader,
+      confirmNewPasswordError
+    } = this.props;
+    let {
+      userEmail,
+      userPass,
+      confirmPassword,
+      confirmationCode,
+      error,
+      isSignupButtonDisabled,
+      isHideMessage
+    } = this.state;
 
     return (
-      <Card className="signip-container">
-        <Grid container spacing={16}>
-          <Grid item md={12} sm={12} xs={12}>
-            <h1 className={`title center ${classes.p05}`}>Account recovery</h1>
+      <div className="forgot-pwd-container">
+        <Card className="signip-container">
+          <Grid container spacing={16}>
+            <Grid item md={12} sm={12} xs={12}>
+              <h1 className={`title center ${classes.p05}`}>
+                Account recovery
+              </h1>
 
-            {
-              !forgotPassword && !confirmNewPasswordLoader ? (
+              {!forgotPassword && !confirmNewPasswordLoader ? (
                 <React.Fragment>
                   <Grid container>
                     <Grid item md={12} sm={12} xs={12} className={classes.p05}>
@@ -226,96 +270,95 @@ class ForgotPassword extends React.Component {
                   </Grid>
                 </React.Fragment>
               ) : (
-                  <Grid container>
-                    <Grid item md={12} sm={12} xs={12} className={classes.p05}>
-                      <InputField
-                        label={"Confirmation Code"}
-                        variant={"outlined"}
-                        id={"confirmationCode"}
-                        fullWidth={true}
-                        type={"number"}
-                        onChange={this.handleInput}
-                        value={confirmationCode ? confirmationCode : ""}
-                        error={error.confirmationCode}
-                        helperText={error.confirmationCode}
-                      />
-                    </Grid>
-                    <Grid item md={12} sm={12} xs={12} className={classes.p05}>
-                      <InputField
-                        label={"New Password"}
-                        variant={"outlined"}
-                        id={"userPass"}
-                        fullWidth={true}
-                        type={"password"}
-                        onChange={this.handleInput}
-                        value={userPass ? userPass : ""}
-                        error={error.userPass}
-                        helperText={error.userPass}
-                      />
-                    </Grid>
-                    <Grid item md={12} sm={12} xs={12} className={classes.p05}>
-                      <InputField
-                        label={"Confirm New Password"}
-                        variant={"outlined"}
-                        id={"confirmPassword"}
-                        fullWidth={true}
-                        type={"password"}
-                        onChange={this.handleInput}
-                        value={confirmPassword ? confirmPassword : ""}
-                        error={error.confirmPassword}
-                        helperText={error.confirmPassword}
-                      />
-                    </Grid>
-                    <label className={`custom-input-label ${classes.p05}`}>
-                      Use 8 or more characters with a mix of letters, numbers &amp;
-                      symbols
-                    </label>
-
-                    <Grid container className={classes.btns_parent}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        onClick={this.handleConfirmNewPass}
-                        disabled={isSignupButtonDisabled || confirmNewPasswordLoader}
-                      >
-                        Next
-                    </Button>
-                    </Grid>
+                <Grid container>
+                  <Grid item md={12} sm={12} xs={12} className={classes.p05}>
+                    <InputField
+                      label={"Confirmation Code"}
+                      variant={"outlined"}
+                      id={"confirmationCode"}
+                      fullWidth={true}
+                      type={"number"}
+                      onChange={this.handleInput}
+                      value={confirmationCode ? confirmationCode : ""}
+                      error={error.confirmationCode}
+                      helperText={error.confirmationCode}
+                    />
                   </Grid>
-                )
-            }
+                  <Grid item md={12} sm={12} xs={12} className={classes.p05}>
+                    <InputField
+                      label={"New Password"}
+                      variant={"outlined"}
+                      id={"userPass"}
+                      fullWidth={true}
+                      type={"password"}
+                      onChange={this.handleInput}
+                      value={userPass ? userPass : ""}
+                      error={error.userPass}
+                      helperText={error.userPass}
+                    />
+                  </Grid>
+                  <Grid item md={12} sm={12} xs={12} className={classes.p05}>
+                    <InputField
+                      label={"Confirm New Password"}
+                      variant={"outlined"}
+                      id={"confirmPassword"}
+                      fullWidth={true}
+                      type={"password"}
+                      onChange={this.handleInput}
+                      value={confirmPassword ? confirmPassword : ""}
+                      error={error.confirmPassword}
+                      helperText={error.confirmPassword}
+                    />
+                  </Grid>
+                  <label className={`custom-input-label ${classes.p05}`}>
+                    Use 8 or more characters with a mix of letters, numbers
+                    &amp; symbols
+                  </label>
 
-            {
-              forgotPasswordError && !isHideMessage ? (
-                this.errorMessage(forgotPasswordError)
-              ) : null
-            }
+                  <Grid container className={classes.btns_parent}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      onClick={this.handleConfirmNewPass}
+                      disabled={
+                        isSignupButtonDisabled || confirmNewPasswordLoader
+                      }
+                    >
+                      Next
+                    </Button>
+                  </Grid>
+                </Grid>
+              )}
 
-            {
-              confirmNewPasswordError && !isHideMessage ? (
-                this.errorMessage(confirmNewPasswordError)
-              ) : null
-            }
+              {forgotPasswordError && !isHideMessage
+                ? this.errorMessage(forgotPasswordError)
+                : null}
 
+              {confirmNewPasswordError && !isHideMessage
+                ? this.errorMessage(confirmNewPasswordError)
+                : null}
+            </Grid>
           </Grid>
-        </Grid>
-      </Card>
+        </Card>
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  const { authReducer: {
-    forgotPassword,
-    forgotPasswordError,
-    authLoader,
-    authError,
-    isLoggedIn,
-    confirmNewPassword,
-    confirmNewPasswordError,
-    confirmNewPasswordLoader
-  } } = state;
+const mapStateToProps = state => {
+  const {
+    authReducer: {
+      forgotPassword,
+      forgotPasswordError,
+      authLoader,
+      authError,
+      isLoggedIn,
+      confirmNewPassword,
+      confirmNewPasswordError,
+      confirmNewPasswordLoader
+    }
+  } = state;
   return {
     forgotPassword,
     forgotPasswordError,
@@ -325,17 +368,20 @@ const mapStateToProps = (state) => {
     authError,
     isLoggedIn,
     confirmNewPasswordLoader
-  }
-}
+  };
+};
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    forgotPasswordAction: (payload) => dispatch(authAction.forgotPassword(payload)),
-    confirmNewPasswordAction: (payload) => dispatch(authAction.confirmNewPassword(payload)),
-    isLoggedInAction: (payload) => dispatch(authAction.isLoggedIn(payload)),
+    forgotPasswordAction: payload =>
+      dispatch(authAction.forgotPassword(payload)),
+    confirmNewPasswordAction: payload =>
+      dispatch(authAction.confirmNewPassword(payload)),
+    isLoggedInAction: payload => dispatch(authAction.isLoggedIn(payload))
   };
 };
 
 export default connect(
-  mapStateToProps, mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(withRouter(withStyles(styles)(ForgotPassword)));

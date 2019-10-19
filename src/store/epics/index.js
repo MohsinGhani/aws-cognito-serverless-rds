@@ -26,6 +26,7 @@ const rootEpic = combineEpics(
     ProductEpic.doCommentOnProduct,
     ProductEpic.search,
     ProductEpic.sendFeedback,
+    ProductEpic.actionOnComment
 );
 
 export default rootEpic;

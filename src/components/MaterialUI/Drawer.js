@@ -9,8 +9,8 @@ import Drawer from "@material-ui/core/Drawer";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { authAction, ProductAction } from "./../../store/actions";
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import TextModal from './../common/TextModal'
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import TextModal from "./../common/TextModal";
 import "./index.css";
 
 const styles = theme => ({
@@ -98,7 +98,7 @@ class SwipeableTemporaryDrawer extends React.Component {
       { label: "Copy App Link", path: "/copy-app-link" },
       { label: "Bookmark", path: "/bookmark" },
       // { label: "Profile", path: "/profile" },
-      { label: "My Product", path: "/my-product" },
+      { label: "My Product", path: "/my-product" }
       // { label: "Login", path: "/signin" }
     ],
     openTextModal: false
@@ -138,7 +138,7 @@ class SwipeableTemporaryDrawer extends React.Component {
           { label: "Share App Link", path: "/share-app-link" },
           { label: "Copy App Link", path: "/copy-app-link" },
           { label: "Bookmark", path: "/bookmark" },
-          { label: "My Product", path: "/my-product" },
+          { label: "My Product", path: "/my-product" }
         ]
       });
     }
@@ -161,7 +161,7 @@ class SwipeableTemporaryDrawer extends React.Component {
           { label: "Share App Link", path: "/share-app-link" },
           { label: "Copy App Link", path: "/copy-app-link" },
           { label: "Bookmark", path: "/bookmark" },
-          { label: "My Product", path: "/my-product" },
+          { label: "My Product", path: "/my-product" }
         ]
       });
     } else {
@@ -194,7 +194,7 @@ class SwipeableTemporaryDrawer extends React.Component {
           <Drawer
             open={left}
             className={classes.drawer}
-            onClose={this.toggleDrawer('left', false)}
+            onClose={this.toggleDrawer("left", false)}
           >
             <div
               tabIndex={0}
@@ -221,49 +221,61 @@ class SwipeableTemporaryDrawer extends React.Component {
                     <i className="material-icons clear">clear</i>
                   </Typography>
                 </ListItem>
-                <h4 style={{ textAlign: 'center' }}>Productmania</h4>
-                {
-                  navItems.map(item => {
-                    if (!isLoggedIn && item.label === 'My Product') return <span></span>
+                <h4 style={{ textAlign: "center" }}>Productmania</h4>
+                {navItems.map(item => {
+                  if (!isLoggedIn && item.label === "My Product")
+                    return <span></span>;
 
-                    // when user want to copy url
-                    if (item.label === "Share App Link" || item.label === "Copy App Link") {
-                      return (
-                        <ListItem
-                          className={classes.listItem}
-                        >
-                          <CopyToClipboard text={window.location.origin}
-                            onCopy={() => this.setState({ openTextModal: true })}>
-                            <span>{item.label}</span>
-                          </CopyToClipboard>
-                        </ListItem>
-                      )
-                    }
+                  // when user want to copy url
+                  if (
+                    item.label === "Share App Link" ||
+                    item.label === "Copy App Link"
+                  ) {
                     return (
-                      <ListItem
-                        className={classes.listItem}
-                        onClick={() => this.goto(item.path)}
-                      >
-                        {item.label}
+                      <ListItem className={classes.listItem}>
+                        <CopyToClipboard
+                          text={window.location.origin}
+                          onCopy={() => this.setState({ openTextModal: true })}
+                        >
+                          <span>{item.label}</span>
+                        </CopyToClipboard>
                       </ListItem>
                     );
-                  })
-                }
-                {
-                  isLoggedIn ? (
-                    <div>
-                      <ListItem className={classes.listItem} onClick={() => { this.props.history.push("/profile"); }}>
-                        Profile
-                  </ListItem>
-                      <ListItem className={classes.listItem} onClick={this.logout}>
-                        Logout
+                  }
+                  return (
+                    <ListItem
+                      className={classes.listItem}
+                      onClick={() => this.goto(item.path)}
+                    >
+                      {item.label}
                     </ListItem>
-                    </div>
-                  ) :
-                    <ListItem className={classes.listItem} onClick={() => this.login("/signin")}>
-                      Login
+                  );
+                })}
+                {isLoggedIn ? (
+                  <div>
+                    <ListItem
+                      className={classes.listItem}
+                      onClick={() => {
+                        this.props.history.push("/profile");
+                      }}
+                    >
+                      Profile
+                    </ListItem>
+                    <ListItem
+                      className={classes.listItem}
+                      onClick={this.logout}
+                    >
+                      Logout
+                    </ListItem>
+                  </div>
+                ) : (
+                  <ListItem
+                    className={classes.listItem}
+                    onClick={() => this.login("/signin")}
+                  >
+                    Login
                   </ListItem>
-                }
+                )}
               </List>
             </div>
           </Drawer>
