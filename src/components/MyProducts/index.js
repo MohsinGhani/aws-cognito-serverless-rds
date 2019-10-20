@@ -83,7 +83,7 @@ class MyProducts extends Component {
 
     return (
       <div>
-        <TopNav />
+        {/* <TopNav /> */}
         <ProductDetailModal
           history={this.props.history}
           product_id={product ? product.product_id : null}

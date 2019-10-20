@@ -6,7 +6,7 @@ class Bookmark extends Component {
   render() {
     return (
       <div className="Bookmark">
-        <TopNav />
+        {/* <TopNav /> */}
 
         <div className="privacy-content">
           <h1 className="yellow-color static-heading">Bookmark</h1>

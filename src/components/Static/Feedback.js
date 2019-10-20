@@ -107,7 +107,7 @@ class Feedback extends Component {
 
     return (
       <div className="privacy">
-        <TopNav />
+        {/* <TopNav /> */}
         <div className="privacy-content-form">
           <TextModal
             open={openTextModal}

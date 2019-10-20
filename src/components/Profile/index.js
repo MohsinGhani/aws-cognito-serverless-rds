@@ -139,7 +139,7 @@ class Profile extends Component {
 
     return (
       <div>
-        <TopNav />
+        {/* <TopNav /> */}
         <div className="profile-container">
           {user && (
             <div className="profile-info">

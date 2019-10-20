@@ -5,7 +5,7 @@ class TermOfUse extends Component {
   render() {
     return (
       <div className="terms">
-        <TopNav />
+        {/* <TopNav /> */}
         <div className="privacy-content">
           <h1 className="yellow-color static-heading">Terms of service</h1>
           <div className="headline">

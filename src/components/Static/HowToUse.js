@@ -5,7 +5,7 @@ class HowToUse extends Component {
   render() {
     return (
       <div className="how-to-use">
-        <TopNav />
+        {/* <TopNav /> */}
         <div className="privacy-content">
           <h1 className="yellow-color static-heading">How To Use</h1>
           <div className="headline">

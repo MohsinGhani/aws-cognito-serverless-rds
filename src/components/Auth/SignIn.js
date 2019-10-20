@@ -116,7 +116,7 @@ class SignIn extends React.Component {
           backgroundSize: "cover"
         }}
       >
-        <TopNav />
+        {/* <TopNav /> */}
         <TextModal
           open={openTextModal}
           handleClose={this.closeTextModal}

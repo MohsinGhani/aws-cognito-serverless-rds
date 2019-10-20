@@ -13,6 +13,7 @@ import Location from "./../common/Location";
 import SignInWithGoogle from "./../Auth/SignInWithGoogle";
 import SignInWithFacebook from "./../Auth/SignInWithFacebook";
 import ReactLoading from "react-loading";
+import AddPostBottomNav from "./../common/AddPostBottomNav";
 
 const Map = ReactMapboxGl({
   accessToken: credentials.MAP_ACCESS_TOCKEN
@@ -57,13 +58,6 @@ class Products extends React.Component {
     this.props.getProductsAction();
   }
 
-  componentDidUpdate(prevProps) {
-    const { searchedProducts } = this.props;
-    if (searchedProducts && searchedProducts.length) {
-      this.goto("/products-list");
-    }
-  }
-
   goto = path => this.props.history.push(path);
 
   render() {
@@ -90,7 +84,7 @@ class Products extends React.Component {
             this.setState({ isOpenDetailDialog: action })
           }
         />
-        <TopNav />
+        {/* <TopNav /> */}
         <div>
           {searchLoader ? (
             <div style={{ width: "100px", margin: "70px auto" }}>
@@ -216,6 +210,7 @@ class Products extends React.Component {
             </Map>
           )}
         </div>
+        <AddPostBottomNav history={this.props.history} />
       </div>
     );
   }

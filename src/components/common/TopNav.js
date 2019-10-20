@@ -110,11 +110,20 @@ class TopNav extends React.Component {
     if (searchedQuery) {
       this.setState({
         query: searchedQuery
-      }, () => {
-        const { history } = this.props
-        if ((history && history.location) && history.location.pathname !== "/my-product") {
-          this.goto('/products-list');
-        }
+      })
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.searchedQuery && !this.props.searchedQuery) {
+      this.setState({
+        query: this.props.searchedQuery
+      })
+    }
+
+    if (this.props.searchedQuery && !this.state.query) {
+      this.setState({
+        query: this.props.searchedQuery
       })
     }
   }
@@ -128,17 +137,8 @@ class TopNav extends React.Component {
   };
 
   handleSearch = e => {
-    this.setState(
-      {
-        [e.target.id]: e.target.value
-      }, () => {
-        this.props.searchAction({ query: this.state.query });
-        const { history } = this.props
-        if ((history && history.location) && history.location.pathname !== "/my-product") {
-          this.goto('/products-list');
-        }
-      }
-    );
+    let { value, id } = e.target
+    this.setState({ [id]: value }, () => this.props.searchAction({ query: value }));
   };
 
   render() {
@@ -174,6 +174,7 @@ class TopNav extends React.Component {
                 onChange={this.handleSearch}
                 id="query"
                 placeholder={'Search...'}
+                autoFocus={true}
               />
               <div className={'search-field-addon'}>
                 {query ?

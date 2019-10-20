@@ -46,7 +46,7 @@ class Product extends React.Component {
           open={showCommentModal}
           handleClose={() => this.setState({ showCommentModal: false })}
         />
-        <TopNav />
+        {/* <TopNav /> */}
         <div className="product-detail-modal-body">
           <ProductDetailModal
             history={this.props.history}

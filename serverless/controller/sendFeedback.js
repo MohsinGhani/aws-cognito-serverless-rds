@@ -14,7 +14,7 @@ function sendFeedback(event, context, callback) {
     let { id, email, description, subject } = JSON.parse(event.body);
     return client.query(`INSERT INTO public."Feedback" (id, email, description, created_timestamp) VALUES('${id}', '${email}','${description}', '${new Date().getTime()}')`)
         .then((data) => {
-            return sendEmails(emails, `${email} sent a feedback, "${description}"`, subject)
+            return sendEmails(emails, `${email} sent a feedback, "${description}"`, `Message from productMania: ${subject}`)
         })
         .then(() => {
             sendSuccessRes(context, 200, null, 'success', 1)

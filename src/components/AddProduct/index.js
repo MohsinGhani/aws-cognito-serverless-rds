@@ -159,11 +159,6 @@ class AddProduct extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
 
-    const { searchedProducts } = this.props
-    if(searchedProducts && searchedProducts.length){
-      this.goto('/products-list')
-    }
-
     if (!Number(prevProps.selectedCountry)) {
       if (
         prevState.selectedCountry !== this.state.selectedCountry &&
@@ -455,7 +450,7 @@ class AddProduct extends React.Component {
             this.setState({ latitude, longitude });
           }}
         />
-        <TopNav />
+        {/* <TopNav /> */}
         <p
           className="add-product-title"
           style={{ fontSize: 30, fontWeight: "bold" }}

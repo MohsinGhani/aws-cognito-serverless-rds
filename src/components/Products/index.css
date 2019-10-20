@@ -229,11 +229,10 @@ list {
   padding: 12px 12px 0 0;
 }
 
-.product-modal-footer {
+.common-footer {
   display: flex;
   justify-content: space-evenly;
   background: #fff;
-  border-top: 1px solid #eaeaea;
 }
 
 .action-popover-wrapper {
@@ -248,22 +247,17 @@ list {
 
 .product-card-container {
   margin-bottom: 82px !important;
+  width: 100%;
   max-width: 1024px;
   margin: 0 auto;
 }
 
 .thumb-up-span {
-  padding-right: 16px;
-  cursor: default;
-}
-.thumb-up-span > span {
-  padding-left: 4px;
-  font-size: 16px;
-}
-.thumb-down-span {
   cursor: pointer;
+  margin: 5px;
 }
-.thumb-down-span > span {
-  padding-left: 4px;
-  font-size: 16px;
+
+.thumb-up-span > span {
+  padding: 5px;
+  font-size: 14px;
 }

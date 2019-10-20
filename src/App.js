@@ -27,6 +27,8 @@ import Privacy from './components/Static/Privacy';
 import ShareAppLink from './components/Static/ShareAppLink';
 import TermOfUse from './components/Static/TermsOfUse';
 import Profile from "./components/Profile"
+import SearchModal from './components/SearchModal'
+import TopNav from './components/common/TopNav'
 
 Amplify.configure(awsConfig)
 const customHistory = createBrowserHistory();
@@ -60,6 +62,8 @@ class App extends Component {
       <Provider store={store}>
         <Router history={customHistory}>
           <div className="App" >
+            <SearchModal  history={customHistory}/>
+            <TopNav />
             <Route exact path="/" component={Products} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/signin" component={SignIn} />

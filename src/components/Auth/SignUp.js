@@ -229,7 +229,7 @@ class SignUp extends Component {
           backgroundSize: "cover"
         }}
       >
-        <TopNav />
+        {/* <TopNav /> */}
         <br />
         <Card className="signup-container">
           <Grid container spacing={16}>

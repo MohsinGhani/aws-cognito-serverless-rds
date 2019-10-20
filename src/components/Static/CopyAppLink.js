@@ -6,7 +6,7 @@ class CopyAppLink extends Component {
   render() {
     return (
       <div className="privacy">
-        <TopNav />
+        {/* <TopNav /> */}
         <div className="privacy-content">
           <h1 className="yellow-color static-heading">Copy App Link</h1>
           <div className="headline">

@@ -92,7 +92,7 @@ export default class ProductEpic {
         })
         .catch(err => {
           return Observable.of(
-            ProductAction.searchFailure({ error: err.message })
+            ProductAction.searchFailure({ error: err.message, query: payload.query })
           );
         });
     });
@@ -157,7 +157,7 @@ export default class ProductEpic {
             return Observable.of(
               ProductAction.actionOnCommentSuccess(response.data),
               ProductAction.getProductById({ product_id: payload.product_id }),
-              
+
             );
           }
         })

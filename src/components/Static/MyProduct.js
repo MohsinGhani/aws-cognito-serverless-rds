@@ -4,7 +4,7 @@ class MyProduct extends Component {
   render() {
     return (
       <div className="MyProduct">
-        <TopNav />
+        {/* <TopNav /> */}
         <h1>My Product</h1>
       </div>
     );

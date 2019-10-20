@@ -6,7 +6,7 @@ class CookiePolicy extends Component {
   render() {
     return (
       <div className="cookie">
-        <TopNav />
+        {/* <TopNav /> */}
         <div className="privacy-content">
           <h1 className="yellow-color static-heading">Cookies</h1>
           <div className="headline">

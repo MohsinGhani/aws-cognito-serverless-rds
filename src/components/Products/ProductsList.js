@@ -24,18 +24,18 @@ class ProductsList extends Component {
     this.props.getProductsAction();
   }
 
-  handleLikeAndDislikeProduct = action => {
-    const { user, match, likeProductAction } = this.props;
-    if (user && user.user_id && match.params && match.params.product_id) {
-      likeProductAction({
-        user_id: user.user_id,
-        product_id: match.params.product_id,
-        action
-      });
-    } else {
-      alert("you can't perform any action before authentication");
-    }
-  };
+  // handleLikeAndDislikeProduct = action => {
+  //   const { user, match, likeProductAction } = this.props;
+  //   if (user && user.user_id && match.params && match.params.product_id) {
+  //     likeProductAction({
+  //       user_id: user.user_id,
+  //       product_id: match.params.product_id,
+  //       action
+  //     });
+  //   } else {
+  //     alert("you can't perform any action before authentication");
+  //   }
+  // };
 
   render() {
     let {
@@ -51,7 +51,7 @@ class ProductsList extends Component {
 
     return (
       <div>
-        <TopNav />
+        {/* <TopNav /> */}
         <ProductDetailModal
           history={history}
           product_id={product ? product.product_id : null}

@@ -105,7 +105,7 @@ export default function ProductReducer(state = initialState, action) {
     case SEARCH:
       return {
         ...state,
-        searchedQuery: "",
+        // searchedQuery: "",
         searchedProducts: null,
         searchLoader: true,
         searchError: null
@@ -126,9 +126,10 @@ export default function ProductReducer(state = initialState, action) {
     case SEARCH_FAILURE:
       return {
         ...state,
+        searchedQuery: action.error["query"],
         searchedProducts: null,
         searchLoader: false,
-        searchError: action.error
+        searchError: action.error['error']
       };
 
     ///////////////////////

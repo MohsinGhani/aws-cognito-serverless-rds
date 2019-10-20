@@ -16,7 +16,8 @@ const styles = () => ({
     width: "100%",
     height: "auto",
     paddingTop: "10px",
-    paddingBottom: "10px"
+    paddingBottom: "10px",
+    backgroundColor: "transparent"
   },
   margin: {
     backgroundColor: "#9e7339",
@@ -45,7 +46,7 @@ class AddPostBottomNav extends React.Component {
     const { classes } = this.props;
     const { openTextModal } = this.state;
     return (
-      <div className={`${classes.root} product-modal-footer`}>
+      <div className={`${classes.root} common-footer`}>
         <div>
           <Fab
             aria-label="Add"

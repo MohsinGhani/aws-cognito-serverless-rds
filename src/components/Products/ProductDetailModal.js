@@ -86,7 +86,7 @@ class ProductDetailModal extends React.Component {
           textModalTitle: "Successfull!",
           textModalText: `you have successfully ${
             action ? "Like" : "Dislike"
-          } this product`,
+            } this product`,
           btnTitle: "Close",
           btnAction: () => {
             this.setState({ openTextModal: false });
@@ -361,11 +361,11 @@ class ProductDetailModal extends React.Component {
                                         )
                                       }
                                     >
-                                      <ThumbUp fill={""} />
                                       <span>{0}</span>
+                                      <ThumbUp fill={""} height={15} />
                                     </span>
                                     <span
-                                      className="thumb-down-span"
+                                      className="thumb-up-span"
                                       onClick={() =>
                                         this.handleActionComment(
                                           false,
@@ -374,7 +374,7 @@ class ProductDetailModal extends React.Component {
                                         )
                                       }
                                     >
-                                      <ThumbDown fill={""} />
+                                      <ThumbDown fill={""} height={15} />
                                       <span>{0}</span>
                                     </span>
                                   </div>
@@ -465,8 +465,8 @@ class ProductDetailModal extends React.Component {
                                 {product._comments.length}
                               </span>
                             ) : (
-                              ""
-                            )}
+                                ""
+                              )}
                           </span>
                         </ListItem>
                         <ListItem
@@ -510,8 +510,8 @@ class ProductDetailModal extends React.Component {
                 </Card>
               </div>
             ) : (
-              ""
-            )}
+                ""
+              )}
           </div>
         </Dialog>
       </div>
