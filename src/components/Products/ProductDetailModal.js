@@ -173,8 +173,11 @@ class ProductDetailModal extends React.Component {
   handleActionComment = (action, comment_id, product_id) => {
     const {
       actionOnCommentAction,
-      user: { user_id }
+      user: { user_id },
+      doActionCommentLoader
     } = this.props;
+    // don't make network request if previous req in pending
+    if (doActionCommentLoader) return
 
     actionOnCommentAction({
       comment_id,
@@ -184,6 +187,21 @@ class ProductDetailModal extends React.Component {
       product_id
     });
   };
+
+  handleCommentThumbHighlight = (comment_action, action) => {
+    const { user: { user_id } } = this.props
+    let check = comment_action && comment_action.filter(item => item.user_id === user_id && item.action === action)
+
+    if (check && check.length) return true
+  }
+
+  handleCommentLikeDislikeCount = (comment_action, action) => {
+    let check = comment_action && comment_action.filter(item => item.action === action)
+    if (check && check.length) {
+      return check.length
+    }
+    return 0
+  }
 
   render() {
     const {
@@ -331,7 +349,7 @@ class ProductDetailModal extends React.Component {
                     {(() => {
                       if (product && product._comments) {
                         return product._comments.reverse().map((comment, i) => {
-                          const { comment_id } = comment;
+                          const { comment_id, _comment_action } = comment;
                           return (
                             <div className="container">
                               <List key={i}>
@@ -361,8 +379,8 @@ class ProductDetailModal extends React.Component {
                                         )
                                       }
                                     >
-                                      <span>{0}</span>
-                                      <ThumbUp fill={""} height={15} />
+                                      <span>{this.handleCommentLikeDislikeCount(_comment_action, true)}</span>
+                                      <ThumbUp fill={this.handleCommentThumbHighlight(_comment_action, true) ? "#9e7339" : ""} height={15} />
                                     </span>
                                     <span
                                       className="thumb-up-span"
@@ -374,8 +392,8 @@ class ProductDetailModal extends React.Component {
                                         )
                                       }
                                     >
-                                      <ThumbDown fill={""} height={15} />
-                                      <span>{0}</span>
+                                      <ThumbDown fill={this.handleCommentThumbHighlight(_comment_action, false) ? "#9e7339" : ""} height={15} />
+                                      <span>{this.handleCommentLikeDislikeCount(_comment_action, false)}</span>
                                     </span>
                                   </div>
                                 </Typography>
@@ -697,7 +715,8 @@ const mapStateToProps = state => {
       liked,
       likeProductLoader,
       likeProductError,
-      actionOnComment
+      actionOnComment,
+      doActionCommentLoader
     },
     authReducer: { user }
   } = state;
@@ -709,7 +728,8 @@ const mapStateToProps = state => {
     likeProductLoader,
     likeProductError,
     user,
-    actionOnComment
+    actionOnComment,
+    doActionCommentLoader
   };
 };
 
