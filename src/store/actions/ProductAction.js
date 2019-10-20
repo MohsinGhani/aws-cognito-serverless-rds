@@ -28,7 +28,8 @@ import {
   SEND_FEEDBACK_FAILURE,
   ACTION_ON_COMMENT,
   ACTION_ON_COMMENT_FAILURE,
-  ACTION_ON_COMMENT_SUCCESS
+  ACTION_ON_COMMENT_SUCCESS,
+  CLEAR_SEARCH
 } from "./../constants";
 
 export class ProductAction {
@@ -73,6 +74,13 @@ export class ProductAction {
     return {
       type: SEARCH_FAILURE,
       error
+    };
+  }
+
+  /////////////////
+  static clearSearch() {
+    return {
+      type: CLEAR_SEARCH
     };
   }
 

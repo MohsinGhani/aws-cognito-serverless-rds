@@ -178,7 +178,7 @@ class TopNav extends React.Component {
               />
               <div className={'search-field-addon'}>
                 {query ?
-                  <div onClick={() => { this.setState({ query: '' }); this.props.searchAction({ query: '' }); }} className={'search-field-addon-icon'}>X</div>
+                  <div onClick={() => { this.setState({ query: '' }); this.props.clearSearchAction(); }} className={'search-field-addon-icon'}>X</div>
                   : <SearchIcon className={'search-field-addon-icon'} />
                 }
               </div>
@@ -213,6 +213,7 @@ const mapDispatchToProps = dispatch => {
   return {
     logoutAction: () => dispatch(authAction.logout()),
     searchAction: payload => dispatch(ProductAction.search(payload)),
+    clearSearchAction: () => dispatch(ProductAction.clearSearch()),
     uploadProfileImageAction: payload =>
       dispatch(authAction.uploadProfileImage(payload))
   };

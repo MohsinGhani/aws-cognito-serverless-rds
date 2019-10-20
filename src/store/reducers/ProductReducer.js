@@ -28,7 +28,8 @@ import {
   SEND_FEEDBACK_FAILURE,
   ACTION_ON_COMMENT,
   ACTION_ON_COMMENT_SUCCESS,
-  ACTION_ON_COMMENT_FAILURE
+  ACTION_ON_COMMENT_FAILURE,
+  CLEAR_SEARCH
 } from "./../constants";
 
 const initialState = {
@@ -130,6 +131,16 @@ export default function ProductReducer(state = initialState, action) {
         searchedProducts: null,
         searchLoader: false,
         searchError: action.error['error']
+      };
+
+    ///////////////////////
+    case CLEAR_SEARCH:
+      return {
+        ...state,
+        searchedQuery: "",
+        searchedProducts: null,
+        searchLoader: false,
+        searchError: null
       };
 
     ///////////////////////
