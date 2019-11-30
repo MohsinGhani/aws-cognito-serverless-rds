@@ -22,7 +22,10 @@ const {
   postSocialAuth,
   updateProfileImage,
   sendFeedback,
-  actionOnComment
+  actionOnComment,
+  bookmarkProduct,
+  getBookmarkProducts,
+  bookmarkProductRemove
 } = require('./controller/index')
 
 module.exports.getCategory = (event, context, callback) => {
@@ -115,4 +118,17 @@ module.exports.sendFeedback = (event, context, callback) => {
 
 module.exports.actionOnComment = (event, context, callback) => {
   actionOnComment(event, context, callback);
+};
+
+// bookmark product section start
+module.exports.bookmarkProduct = (event, context, callback) => {
+  bookmarkProduct(event, context, callback);
+};
+
+module.exports.getBookmarkProducts = (event, context, callback) => {
+  getBookmarkProducts(event, context, callback);
+};
+
+module.exports.bookmarkProductRemove = (event, context, callback) => {
+  bookmarkProductRemove(event, context, callback);
 };

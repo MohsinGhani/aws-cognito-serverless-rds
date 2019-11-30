@@ -173,26 +173,31 @@ class ProductDetailModal extends React.Component {
   handleActionComment = (action, comment_id, product_id) => {
     const {
       actionOnCommentAction,
-      user: { user_id },
+      user,
       doActionCommentLoader
     } = this.props;
+
     // don't make network request if previous req in pending
     if (doActionCommentLoader) return
 
-    actionOnCommentAction({
-      comment_id,
-      user_id,
-      id: uuidv1(),
-      action,
-      product_id
-    });
+    if (user && user.user_id) {
+      actionOnCommentAction({
+        comment_id,
+        user_id: user.user_id,
+        id: uuidv1(),
+        action,
+        product_id
+      });
+    }
   };
 
   handleCommentThumbHighlight = (comment_action, action) => {
-    const { user: { user_id } } = this.props
-    let check = comment_action && comment_action.filter(item => item.user_id === user_id && item.action === action)
-
-    if (check && check.length) return true
+    const { user } = this.props
+    if (user && user.user_id) {
+      const { user_id } = user
+      let check = comment_action && comment_action.filter(item => item.user_id === user_id && item.action === action)
+      if (check && check.length) return true
+    }
   }
 
   handleCommentLikeDislikeCount = (comment_action, action) => {
@@ -380,7 +385,7 @@ class ProductDetailModal extends React.Component {
                                       }
                                     >
                                       <span>{this.handleCommentLikeDislikeCount(_comment_action, true)}</span>
-                                      <ThumbUp fill={this.handleCommentThumbHighlight(_comment_action, true) ? "#9e7339" : ""} height={15} />
+                                      <ThumbUp fill={() => this.handleCommentThumbHighlight(_comment_action, true) ? "#9e7339" : ""} height={15} />
                                     </span>
                                     <span
                                       className="thumb-up-span"
@@ -392,7 +397,7 @@ class ProductDetailModal extends React.Component {
                                         )
                                       }
                                     >
-                                      <ThumbDown fill={this.handleCommentThumbHighlight(_comment_action, false) ? "#9e7339" : ""} height={15} />
+                                      <ThumbDown fill={() => this.handleCommentThumbHighlight(_comment_action, false) ? "#9e7339" : ""} height={15} />
                                       <span>{this.handleCommentLikeDislikeCount(_comment_action, false)}</span>
                                     </span>
                                   </div>

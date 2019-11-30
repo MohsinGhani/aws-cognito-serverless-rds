@@ -198,6 +198,15 @@ functions:
          path: get-product/{product_id}
          method: GET
          cors: true
+         
+  getBookmarkProducts:
+    handler: handler.getBookmarkProducts
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:
+         path: get-bookmark-products/{user_id}
+         method: GET
+         cors: true
 
   ################ LIKE SECTION START ###################
   likeProduct:
@@ -263,6 +272,24 @@ functions:
      - http:  
          path: actionOnComment
          method: POST
+         cors: true
+  
+  bookmarkProduct:
+    handler: handler.bookmarkProduct
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:  
+         path: bookmarkProduct
+         method: POST
+         cors: true
+  
+  bookmarkProductRemove:
+    handler: handler.bookmarkProductRemove
+    memorySize: 512 # optional, in MB, default is 1024
+    events:
+     - http:  
+         path: bookmark-product-remove/{user_id}/{product_id}
+         method: DELETE
          cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

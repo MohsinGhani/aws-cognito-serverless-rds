@@ -20,6 +20,9 @@ const { postSocialAuth } = require('./postSocialAuth')
 const { updateProfileImage } = require('./updateProfileImage')
 const { sendFeedback } = require('./sendFeedback')
 const { actionOnComment } = require('./actionOnComment')
+const { bookmarkProduct } = require('./bookmarkProduct')
+const { getBookmarkProducts } = require('./getBookmarkProducts')
+const { bookmarkProductRemove } = require('./bookmarkProductRemove')
 
 module.exports = {
     getCategory,
@@ -43,5 +46,8 @@ module.exports = {
     postSocialAuth,
     updateProfileImage,
     sendFeedback,
-    actionOnComment
+    actionOnComment,
+    bookmarkProduct,
+    getBookmarkProducts,
+    bookmarkProductRemove
 }
